@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Squeezol_Payment>
+            <version>0.1.0</version>
+        </Squeezol_Payment>
+    </modules>
+
+    <global>
+        <models>
+            <squeezol_payment>
+                <class>Squeezol_Payment_Model</class>
+                <resourceModel>squeezol_payment_mysql4</resourceModel>
+            </squeezol_payment>
+
+            <squeezol_payment_mysql4>
+                <class>Squeezol_Payment_Model_Mysql4</class>
+                <entities>
+                    <params>
+                        <table>squeezol_payment_params</table>
+                    </params>
+                </entities>
+            </squeezol_payment_mysql4>
+        </models>
+
+        <blocks>
+            <squeezol_payment>
+                <class>Squeezol_Payment_Block</class>
+            </squeezol_payment>
+        </blocks>
+
+        <helpers>
+            <squeezol_payment>
+                <class>Squeezol_Payment_Helper</class>
+            </squeezol_payment>
+        </helpers>
+
+        <resources>
+            <squeezol_payment_setup>
+                <setup>
+                    <module>Squeezol_Payment</module>
+                    <class>Squeezol_Payment_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </squeezol_payment_setup>
+
+            <squeezol_payment_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </squeezol_payment_read>
+
+            <squeezol_payment_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </squeezol_payment_write>
+        </resources>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <squeezol_payment module="squeezol_payment">
+                    <file>squeezol_payment.xml</file>
+                </squeezol_payment>
+            </updates>
+        </layout>
+
+        <routers>
+            <squeezol_payment>
+                <use>standard</use>
+                <args>
+                    <module>Squeezol_Payment</module>
+                    <frontName>squeezol</frontName>
+                </args>
+            </squeezol_payment>
+        </routers>
+
+        <translate>
+            <modules>
+                <Squeezol_Payment>
+                    <files>
+                        <default>Squeezol_Payment.csv</default>
+                    </files>
+                </Squeezol_Payment>
+            </modules>
+        </translate>
+    </frontend>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <Squeezol_Payment>
+                    <files>
+                        <default>Squeezol_Payment.csv</default>
+                    </files>
+                </Squeezol_Payment>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <default>
+        <payment>
+            <squeezol_payment>
+                <active>1</active>
+                <model>squeezol_payment/paymentMethod</model>
+                <order_status>pending</order_status>
+                <title>Paga con Squeezol</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+            </squeezol_payment>
+        </payment>
+    </default>
+</config>

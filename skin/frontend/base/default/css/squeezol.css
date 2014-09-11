@@ -1,0 +1,214 @@
+@font-face {
+  font-family:"DejaVu Sans Condensed Bold Oblique";
+  src:url("DejaVuSansCondensed-BoldOblique.eot");
+  src:url("DejaVuSansCondensed-BoldOblique.woff") format("woff"),
+      url("DejaVuSansCondensed-BoldOblique.ttf") format("truetype"),
+      url("DejaVuSansCondensed-BoldOblique.eot?#iefix") format("embedded-opentype"),
+      url("DejaVuSansCondensed-BoldOblique.svg#DejaVuSansCondensed-BoldOblique") format("svg");
+  font-weight:normal;
+  font-style:normal;
+}
+@font-face {
+    font-family: 'dejavu_sanscondensed_bold';
+    src: url('dejavusanscondensed-bold-webfont.eot');
+    src: url('dejavusanscondensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('dejavusanscondensed-bold-webfont.woff') format('woff'),
+         url('dejavusanscondensed-bold-webfont.ttf') format('truetype'),
+         url('dejavusanscondensed-bold-webfont.svg#dejavu_sanscondensed_bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h4 {
+  font-family: "DejaVu Sans Condensed Bold Oblique";
+  color: #08b3c7;
+  font-weight: 100;
+}
+
+#squeezol_view select, input, textarea {
+	color: black;
+	font-weight: 10;
+}
+
+label { font-weight: bold; color: #08B3C7; }
+
+
+#squeezol_button, .buttonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_, #SqueezolInvitation_ { 
+	cursor: pointer;
+	background-color: #08B3C7;
+	border: #08B3C7;
+	color: white;
+	font-family: "DejaVu Sans Condensed Bold Oblique";
+}
+
+#SqueezolRefund_ {
+	font-family: "DejaVu Sans Condensed Bold Oblique";	
+}
+
+#squeezol_btn_container p strong {
+  color: #08B3C7;
+}
+
+.buttonEmail {
+	background-color: #FC8F1A;
+	border: #FC8F1A;
+	color: white;
+	font-family: "DejaVu Sans Condensed Bold Oblique";
+}
+
+.buttonFb {
+	background-color: #3B5998;
+	border: #3B5998;
+	color: white;
+	font-family: "DejaVu Sans Condensed Bold Oblique";
+}
+
+.separator {
+	border-bottom: 1px solid #dcdcdc;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.separator-blu {
+	border-bottom: 1px solid #08b3c7;
+	margin-top: 40px;
+}
+
+.separator-active {
+	border-bottom: 3px solid #08b3c7;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.separator-inactive {
+	border-bottom: 3px solid #dcdcdc;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.text-step-active {
+	color: #08b3c7;
+}
+
+.text-step-inactive {
+	color: #dcdcdc;
+}
+
+.text-step-refused {
+  color: red;
+}
+
+.text-step-accepted {
+  color: green;
+}
+
+.squeezol-btn-header {
+ width:80%;
+ margin: 5px;
+ padding: 5px;
+}
+
+/* Invitation */
+.imgAvatar{
+  width: 100%;
+  max-height: 40px;
+  max-width: 40px;
+}
+
+h4.summary strong{
+  font-family: "Arial";
+  color: #404040;
+  font-weight: 100;
+}
+.pipa { padding-top: 30px;}
+
+/* WIZARD */
+.wizard img{ 
+	width: 80%;
+}
+.wizard h4 {
+	color: #808080;
+}
+
+div.wizardOpen{
+	cursor: pointer;
+	float:left;
+} 
+h4.wizardOpen{
+	cursor: pointer;
+	display: block;
+}
+
+.squeezol_button_big{
+	width:15%;
+	float:left;
+}
+/* END */
+
+.squeezol_button_big img{ 
+	width: 90%;
+	cursor: pointer;
+}
+
+h3.popover-title {
+	font-family: "DejaVu Sans Condensed Bold Oblique";
+	color: #808080;
+	padding-left:40px;
+}
+
+p.alert-danger, #squeezolNotifyAmount_ {
+	margin-top: 5px;
+}
+
+.container-body {
+  height: 100%;
+  margin-top: -75px;
+  padding-top: 95px;
+  padding-bottom: 100px;
+}
+
+.container-dashboard {
+  background-color: #FFFFFF;
+  border-radius: 1em;
+  border: 1px solid #dcdcdc;
+  padding-top:50px;
+  padding-bottom:50px;
+  box-shadow: 5px 5px 2px #dcdcdc;
+}
+iframe {
+	position: absolute;
+	top: 250px;
+	left:250px;
+}
+
+.form-group > select {
+	margin-left: 2px;
+}
+
+.invitationContainer, .buttonEmail{
+	margin-bottom:20px;
+}
+
+.icon {
+  color: #7F8389;
+  padding-left: 4px;
+  font-size: 100%;
+  cursor: pointer;
+}
+
+#closeModal {
+  background-color: #FFFFFF;
+  border-radius: 1em;
+  border: 1px solid #dcdcdc;
+  position: absolute;
+  top: 100px;
+  right:100px;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  -moz-opacity: 1.0;
+  -khtml-opacity: 1.0;
+  opacity: 1.0;
+  width: 10%;
+  height:5%;
+}

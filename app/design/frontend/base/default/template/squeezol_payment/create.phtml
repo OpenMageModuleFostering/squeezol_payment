@@ -1,0 +1,45 @@
+<script>
+var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+var css_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/css/';
+var js_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/js/';
+</script>
+
+<?php 
+    $order = $this->getOrderData(); 
+    $model = Mage::getModel('squeezol_payment/params');
+
+    $items = $this->getOrderItems();
+?>
+<div id="squeezol_view"></div>
+
+<?php
+    $model = Mage::getModel('squeezol_payment/params');
+     $invitation_url  = Mage::getBaseUrl() . '/squeezol/index/invitation/?page=group_id';
+     $digest_url  = Mage::getBaseUrl() .  '/squeezol/index/digest/?page=group_id';
+?>
+
+<script>
+SqueezolApi.createGroup(
+    '<?php echo money_format('%.2n', $order['base_grand_total']) ?>',
+    '<?php echo $order['base_currency_code']; ?>',
+    '<?php echo json_encode($this->getProductsIds()) ?>',
+    '<?php echo Mage::getBaseUrl() . '/squeezol/index/pay'; ?>',
+    '<?php echo $invitation_url; ?>',
+    '<?php echo $digest_url; ?>'
+);
+</script>
+
+<style>
+.col-main {
+    width: 100% !important;
+    float: left !important;
+}
+
+.col-md-8 {
+    width: 90% !important;
+}
+
+.col-md-offset-2 {
+    margin-left: 0px !important;
+}
+</style>

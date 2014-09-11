@@ -1,0 +1,114 @@
+<layout version="0.1.0">
+    <customer_logged_in>
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="squeezol_payment">
+                <label>Collette Squeezol</label>
+                <path>squeezol/index/review</path>
+                <title>Collette Squeezol</title>
+                <urlParams helper="core/url/getHomeUrl"/> 
+                <prepare/>
+                <position>20</position>
+            </action>
+        </reference>
+    </customer_logged_in>
+
+    <squeezol_payment_index_gateway>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/bootstrap.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/_squeezol3.js</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block name="squeezol_payment.start" as="squeezol_payment_start" type="squeezol_payment/start" template="squeezol_payment/start.phtml" />
+        </reference>
+    </squeezol_payment_index_gateway>
+
+    <squeezol_payment_index_pay>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/bootstrap.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/_squeezol3.js</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block name="squeezol_payment.create" as="squeezol_payment_create" type="squeezol_payment/start" template="squeezol_payment/create.phtml" />
+        </reference>
+    </squeezol_payment_index_pay>
+
+    <squeezol_payment_index_invitation>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/bootstrap.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/_squeezol3.js</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block name="squeezol_payment.invitation" as="squeezol_payment_invitation" type="squeezol_payment/start" template="squeezol_payment/invitation.phtml" />
+        </reference>
+    </squeezol_payment_index_invitation>
+
+    <squeezol_payment_index_digest>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/bootstrap.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/_squeezol3.js</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block name="squeezol_payment.digest" as="squeezol_payment_digest" type="squeezol_payment/start" template="squeezol_payment/digest.phtml" />
+        </reference>
+    </squeezol_payment_index_digest>
+
+    <squeezol_payment_index_review>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/bootstrap.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/_squeezol3.js</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block name="squeezol_payment.review" as="squeezol_payment_review" type="squeezol_payment/start" template="squeezol_payment/review.phtml" />
+        </reference>
+    </squeezol_payment_index_review>
+</layout>

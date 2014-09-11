@@ -1,0 +1,27 @@
+<script>
+var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+var css_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/css/';
+var js_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/js/';
+</script>
+
+<div id="squeezol_view"></div>
+
+<script>
+    SqueezolApi.getDigestData( '<?php echo $_GET['page']; ?>', '<?php echo Mage::getBaseUrl(); ?>/squeezol/index/getdigest');
+</script>
+
+<style>
+.col-main {
+    width: 100% !important;
+    float: left !important;
+}
+
+.col-md-8 {
+    width: 90% !important;
+}
+
+.col-md-offset-2 {
+    margin-left: 0px !important;
+}
+</style>
+

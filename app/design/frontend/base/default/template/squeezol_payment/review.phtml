@@ -1,0 +1,26 @@
+<?php $groups = Mage::helper('squeezol_payment')->getGroupsData(); ?>
+
+<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/fenicottero.png" style="height: 100px;float: left;" />
+<h2 style="float: left;margin-left: 20px; margin-top: 62px;">Collette attive</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Nome colletta</th>
+        <th>Immagine</th>
+        <th>Giorni mancanti</th>
+        <th>Totale da pagare</th>
+        <th>Totale pagato</th>
+        <th></th>
+    </tr>
+
+    <?php foreach ($groups as $g): ?>
+    <tr>
+        <td><?php echo $g['name']; ?></td>
+        <td><img style="width: 80px;" src="<?php echo $g['picture']; ?>" /></td>
+        <td><?php echo $g['days_left']; ?></td>
+        <td><?php echo money_format('%.2n', $g['amount']); ?></td>
+        <td><?php echo money_format('%.2n', $g['total_paid']); ?></td>
+        <td><a href="<?php echo Mage::getBaseUrl(); ?>squeezol/index/digest/?page=<?php echo $g['id']; ?>">Vai alla colletta</a></td>
+    </tr>
+    <?php endforeach; ?>
+</table>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Squeezol_Payment>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Squeezol_Payment>
+    </modules>
+</config>

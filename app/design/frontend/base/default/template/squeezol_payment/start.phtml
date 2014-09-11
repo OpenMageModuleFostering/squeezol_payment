@@ -1,0 +1,42 @@
+<script>
+var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+</script>
+
+<h3>Paga con Squeezol</h3>
+
+<h4>Stai per pagare i seguenti oggetti con Squeezol</h4>
+<table class="shipping-data table table-bordered">
+    <tr>
+        <th>Oggetto</th>
+        <th>Quantit&agrave;</th>
+        <th>Prezzo</th>
+    </tr>
+
+    <?php foreach ($this->getOrderItems() as $item): ?>
+    <?php
+        $data  = $item->getData(); 
+    ?>
+
+        <tr>
+            <td><?php echo $data['name']; ?></td>
+            <td><?php echo round($data['qty_ordered']); ?></td>
+            <td><?php echo money_format('%.2n', $data['price_incl_tax']); ?></td>
+        </tr>
+    <?php endforeach; ?>
+
+    <?php $order = $this->getOrderData(); ?>
+    <tr>
+        <td></td>
+        <td class="bld">Spedizione</td>
+        <td><?php echo money_format('%.2n', $order['base_shipping_amount']); ?></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="bld">Totale</td>
+        <td><?php echo money_format('%.2n', $order['base_grand_total']); ?></td>
+    </tr>
+</table>
+
+<div id="squeezol_btn"></div>
+
+<script> SqueezolApi.createSqButton('<?php echo Mage::getBaseUrl(); ?>/squeezol/index/oauth', 'big'); </script>
