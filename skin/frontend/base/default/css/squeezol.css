@@ -1,5 +1,50 @@
 @font-face {
-  font-family:"DejaVu Sans Condensed Bold Oblique";
+    font-family: 'DejaVuSansCondensed';
+    src: url('dejavusanscondensed-webfont.eot');
+    src: url('dejavusanscondensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('dejavusanscondensed-webfont.woff') format('woff'),
+         url('dejavusanscondensed-webfont.ttf') format('truetype'),
+         url('dejavusanscondensed-webfont.svg#dejavu_sanscondensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DejaVuSansCondensed-Bold';
+    src: url('dejavusanscondensed-bold-webfont.eot');
+    src: url('dejavusanscondensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('dejavusanscondensed-bold-webfont.woff') format('woff'),
+         url('dejavusanscondensed-bold-webfont.ttf') format('truetype'),
+         url('dejavusanscondensed-bold-webfont.svg#dejavu_sanscondensed_bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AbsolutProCond';
+    src: url('absolut_pro_bookcondensed-webfont.eot');
+    src: url('absolut_pro_bookcondensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('absolut_pro_bookcondensed-webfont.woff') format('woff'),
+         url('absolut_pro_bookcondensed-webfont.ttf') format('truetype'),
+         url('absolut_pro_bookcondensed-webfont.svg#absolut_pro_condensed_reducRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'AbsolutProCond-Bold';
+    src: url('absolut_pro_boldcondensed-webfont.eot');
+    src: url('absolut_pro_boldcondensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('absolut_pro_boldcondensed-webfont.woff') format('woff'),
+         url('absolut_pro_boldcondensed-webfont.ttf') format('truetype'),
+         url('absolut_pro_boldcondensed-webfont.svg#absolut_pro_condensed_reducRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family:"DejaVuSansCondensed-BoldOblique";
   src:url("DejaVuSansCondensed-BoldOblique.eot");
   src:url("DejaVuSansCondensed-BoldOblique.woff") format("woff"),
       url("DejaVuSansCondensed-BoldOblique.ttf") format("truetype"),
@@ -8,60 +53,53 @@
   font-weight:normal;
   font-style:normal;
 }
-@font-face {
-    font-family: 'dejavu_sanscondensed_bold';
-    src: url('dejavusanscondensed-bold-webfont.eot');
-    src: url('dejavusanscondensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('dejavusanscondensed-bold-webfont.woff') format('woff'),
-         url('dejavusanscondensed-bold-webfont.ttf') format('truetype'),
-         url('dejavusanscondensed-bold-webfont.svg#dejavu_sanscondensed_bold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
 
 h4 {
-  font-family: "DejaVu Sans Condensed Bold Oblique";
+  font-family: "DejaVuSansCondensed-BoldOblique";
   color: #08b3c7;
   font-weight: 100;
 }
 
-#squeezol_view select, input, textarea {
-	color: black;
+#squeezol_view input, textarea {
 	font-weight: 10;
 }
 
 label { font-weight: bold; color: #08B3C7; }
 
 
-#squeezol_button, .buttonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_, #SqueezolInvitation_ { 
+#squeezol_button, .buttonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_ { 
 	cursor: pointer;
 	background-color: #08B3C7;
 	border: #08B3C7;
 	color: white;
-	font-family: "DejaVu Sans Condensed Bold Oblique";
+	font-family: "DejaVuSansCondensed-BoldOblique";
+}
+
+#squeezol_next, #SqueezolInvitation_ {
+  background-color: #DA396F;
 }
 
 #SqueezolRefund_ {
-	font-family: "DejaVu Sans Condensed Bold Oblique";	
-}
-
-#squeezol_btn_container p strong {
-  color: #08B3C7;
+	font-family: "DejaVuSansCondensed-BoldOblique";	
 }
 
 .buttonEmail {
 	background-color: #FC8F1A;
 	border: #FC8F1A;
 	color: white;
-	font-family: "DejaVu Sans Condensed Bold Oblique";
+	font-family: "DejaVuSansCondensed-BoldOblique";
 }
 
 .buttonFb {
 	background-color: #3B5998;
 	border: #3B5998;
 	color: white;
-	font-family: "DejaVu Sans Condensed Bold Oblique";
+	font-family: "DejaVuSansCondensed-BoldOblique";
+}
+
+div.row-separata {
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
 .separator {
@@ -76,7 +114,7 @@ label { font-weight: bold; color: #08B3C7; }
 }
 
 .separator-active {
-	border-bottom: 3px solid #08b3c7;
+	border-bottom: 3px solid #DA396F;
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
@@ -104,9 +142,63 @@ label { font-weight: bold; color: #08B3C7; }
 }
 
 .squeezol-btn-header {
- width:80%;
- margin: 5px;
- padding: 5px;
+ width:25%;
+ display:inline;
+ margin-right: -8px;
+ padding-right: 5px;
+ padding-bottom: 10px;
+}
+
+.alert-info{
+  background-color: #A9E4EB;
+}
+
+.pad-it {
+  padding: 5px;
+  margin: 5px;
+}
+
+.content-title {
+  font-family: AbsolutProCond-Bold;
+  font-size: 24.2px;
+  font-style: normal;
+  text-align: left;
+  line-height: 29px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #4f424a !important; 
+  margin-bottom: 25px;
+  padding-left: 0px;
+  cursor: default;
+}
+
+.content-body {
+  font-family: DejaVuSansCondensed;
+  font-size: 14px;
+  font-style: normal;
+  text-align: left;
+  line-height: 16.8px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #4f424a !important;
+}
+
+.withBorder {
+  border: 1px solid #DDD;
+  border-radius: 4px;
+}
+
+.squeezol-label {
+  font-family: AbsolutProCond;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 100;
+  text-align: left;
+  line-height: 16.8px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #4f424a;
+  display:inline;
 }
 
 /* Invitation */
@@ -152,10 +244,11 @@ h4.wizardOpen{
 }
 
 h3.popover-title {
-	font-family: "DejaVu Sans Condensed Bold Oblique";
+	font-family: "DejaVuSansCondensed-BoldOblique";
 	color: #808080;
 	padding-left:40px;
 }
+
 
 p.alert-danger, #squeezolNotifyAmount_ {
 	margin-top: 5px;
@@ -174,7 +267,7 @@ p.alert-danger, #squeezolNotifyAmount_ {
   border: 1px solid #dcdcdc;
   padding-top:50px;
   padding-bottom:50px;
-  box-shadow: 5px 5px 2px #dcdcdc;
+  box-shadow: 3px 3px 1px #dcdcdc;
 }
 iframe {
 	position: absolute;
@@ -190,13 +283,167 @@ iframe {
 	margin-bottom:20px;
 }
 
+.form-group select, #datepicker1 , #datepicker2, .panel-heading {
+  background-color:#A9E4EB !important;
+  border:#A9E4EB !important;
+  cursor: pointer;
+  text-align: center;
+  
+}
+
+.input-group-addon{
+  color:#FFF !important;
+  background-color:#0AB3C6 !important;
+  cursor:default;
+}
+
+.form-group select {
+  padding-top: 5px;
+  padding-bottom:5px;
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.form-group select, .form-group option  {
+  margin-left: 4px;
+  color:#665558 !important;
+}
+
+.pin {
+  font-family: DejaVuSansCondensed;
+  font-size: 14px;
+  font-style: normal;
+  text-align: left;
+  line-height: 30px;
+  letter-spacing: 0em;
+  opacity: 1;
+  background-color: #A9E4EB;
+}
+
+.glyph-ok {
+
+  background-color: #DFF0D8 !important;
+  color: #3C763D !important;
+}
+
+div.glyph-info-sign {
+  display: inline;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  padding-left: 1px;
+  color: rgb(255, 255, 255) !important; 
+  box-shadow: 1px 1px 0.5px #B3B3B3;
+  border-radius: 20px;
+}
+
+.glyph-question-sign {
+  
+}
+
+.icon p {
+  font-family: "AbsolutePro-BoldOblique";
+  color: #000;
+  width: 30px;
+  height: 30px;
+  display: inline;
+  margin:3px;
+  padding:3px;
+}
+
 .icon {
   color: #7F8389;
+  width: 100px;
+  height: 100px;
+  display: inline;
   padding-left: 4px;
+  margin-left: 4px;
   font-size: 100%;
   cursor: pointer;
 }
 
+.target-A {
+  font-family: DejaVuSansCondensed;
+  font-size: 12px;
+  background-color:#0AB3C6;
+  font-style: normal;
+  text-align: left;
+  line-height: 14px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #FFF;
+}
+
+.target-P {
+  font-family: DejaVuSansCondensed;
+  font-size: 12px;
+  background-color:#0AB3C6;
+  font-style: normal;
+  text-align: left;
+  line-height: 14px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #FFF;
+}
+
+.target-R {
+  font-family: DejaVuSansCondensed;
+  font-size: 12px;
+  background-color:#6B6868;
+  font-style: normal;
+  text-align: left;
+  line-height: 14px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #FFF;
+}
+
+.target-P, .pin {
+  padding: 2px;
+  text-align:center;
+}
+
+.box-blu-digest {
+  border: 2px solid #0AB3C6;
+  margin-left: -15px;
+  margin-right: 0px;
+}
+
+.box-blu {
+  border: 2px solid #0AB3C6;
+}
+
+
+.box-blu p{
+  font-family: DejaVuSansCondensed;
+  font-size: 14px;
+  font-style: normal;
+  text-align: left;
+  line-height: 16px;
+  letter-spacing: 0em;
+  opacity: 1;
+  text-align: center;
+  padding: 10px;
+  color: #000;
+}
+
+.pink-link a {
+  cursor: pointer;
+  color:#DA396F;
+  margin-top:25px;
+  font-size: 14px;
+}
+
+div.withPaddedBorder {
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  padding:20px;
+}
+
+.part h4{
+  font-family: 'AbsolutProCond';
+}
 #closeModal {
   background-color: #FFFFFF;
   border-radius: 1em;
@@ -212,3 +459,480 @@ iframe {
   width: 10%;
   height:5%;
 }
+
+.target-small {
+  font-family: DejaVuSansCondensed-Bold;
+  font-size: 12px;
+  background-color:#0AB3C6;
+  font-style: normal;
+  text-align: center;
+  line-height: 10px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #FFF;
+  padding: 5px;
+}
+
+.no-pad {
+  padding:4px;
+}
+
+/* -------------------------------------
+ * Bar container
+ * ------------------------------------- */
+.progress-radial {
+  left: 50%;
+  margin-left: -50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #DA396F;
+}
+
+/* -------------------------------------
+ * Optional centered circle w/text
+ * ------------------------------------- */
+.progress-radial .overlay {
+  font-family: DejaVuSansCondensed-Bold;
+  font-size: 30.2px;
+  font-style: normal;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-color: #E5E5E5;
+  border-radius: 50%;
+  margin-left: 15px;
+  margin-top: 15px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 16px;
+  color: #DA396F;
+}
+
+/* -------------------------------------
+ * Text inside overlay
+ * ------------------------------------- */
+
+
+.text-overlay {
+  font-family: DejaVuSansCondensed-Bold;
+  font-size: 10px;
+  font-style: normal;
+  text-align: center;
+  line-height: 10px;
+  letter-spacing: 0em;
+  opacity: 1;
+  color: #000 !important;
+}
+
+
+/* -------------------------------------
+ * Mixin for progress-% class
+ * ------------------------------------- */
+.progress-0 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-1 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(93.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-2 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(97.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-3 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(100.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-4 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(104.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-5 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-6 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(111.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-7 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(115.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-8 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(118.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-9 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(122.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-10 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-11 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(129.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-12 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(133.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-13 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(136.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-14 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(140.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-15 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-16 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(147.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-17 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(151.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-18 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(154.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-19 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(158.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-20 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-21 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(165.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-22 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(169.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-23 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(172.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-24 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(176.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-25 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-26 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(183.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-27 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(187.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-28 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(190.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-29 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(194.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-30 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-31 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(201.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-32 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(205.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-33 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(208.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-34 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(212.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-35 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-36 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(219.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-37 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(223.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-38 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(226.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-39 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(230.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-40 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-41 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(237.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-42 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(241.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-43 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(244.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-44 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(248.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-45 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-46 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(255.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-47 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(259.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-48 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(262.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-49 {
+  background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(266.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-50 {
+  background-image: linear-gradient(-90deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-51 {
+  background-image: linear-gradient(-86.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-52 {
+  background-image: linear-gradient(-82.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-53 {
+  background-image: linear-gradient(-79.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-54 {
+  background-image: linear-gradient(-75.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-55 {
+  background-image: linear-gradient(-72deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-56 {
+  background-image: linear-gradient(-68.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-57 {
+  background-image: linear-gradient(-64.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-58 {
+  background-image: linear-gradient(-61.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-59 {
+  background-image: linear-gradient(-57.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-60 {
+  background-image: linear-gradient(-54deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-61 {
+  background-image: linear-gradient(-50.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-62 {
+  background-image: linear-gradient(-46.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-63 {
+  background-image: linear-gradient(-43.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-64 {
+  background-image: linear-gradient(-39.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-65 {
+  background-image: linear-gradient(-36deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-66 {
+  background-image: linear-gradient(-32.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-67 {
+  background-image: linear-gradient(-28.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-68 {
+  background-image: linear-gradient(-25.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-69 {
+  background-image: linear-gradient(-21.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-70 {
+  background-image: linear-gradient(-18deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-71 {
+  background-image: linear-gradient(-14.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-72 {
+  background-image: linear-gradient(-10.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-73 {
+  background-image: linear-gradient(-7.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-74 {
+  background-image: linear-gradient(-3.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-75 {
+  background-image: linear-gradient(0deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-76 {
+  background-image: linear-gradient(3.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-77 {
+  background-image: linear-gradient(7.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-78 {
+  background-image: linear-gradient(10.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-79 {
+  background-image: linear-gradient(14.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-80 {
+  background-image: linear-gradient(18deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-81 {
+  background-image: linear-gradient(21.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-82 {
+  background-image: linear-gradient(25.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-83 {
+  background-image: linear-gradient(28.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-84 {
+  background-image: linear-gradient(32.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-85 {
+  background-image: linear-gradient(36deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-86 {
+  background-image: linear-gradient(39.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-87 {
+  background-image: linear-gradient(43.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-88 {
+  background-image: linear-gradient(46.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-89 {
+  background-image: linear-gradient(50.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-90 {
+  background-image: linear-gradient(54deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-91 {
+  background-image: linear-gradient(57.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-92 {
+  background-image: linear-gradient(61.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-93 {
+  background-image: linear-gradient(64.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-94 {
+  background-image: linear-gradient(68.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-95 {
+  background-image: linear-gradient(72deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-96 {
+  background-image: linear-gradient(75.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-97 {
+  background-image: linear-gradient(79.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-98 {
+  background-image: linear-gradient(82.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-99 {
+  background-image: linear-gradient(86.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+
+.progress-100 {
+  background-image: linear-gradient(90deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
+}
+

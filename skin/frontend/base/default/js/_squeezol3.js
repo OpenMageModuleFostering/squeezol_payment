@@ -606,7 +606,7 @@ throw new SyntaxError('JSON.parse');
 		  input = document.createElement('input');
 		  input.type = 'text';
 		  input.name = name;
-			input.value = init;
+			input.value = init.getDate() + '-' + (parseInt(init.getMonth())+1).toString() + '-' + init.getFullYear();
 			input.className = "form-control";
 		  obj.el = input;  
 		  return this;
@@ -642,6 +642,9 @@ throw new SyntaxError('JSON.parse');
 		  obj.el['type'] = 'checkbox';
 		  obj.el['name'] = properties.name;
 		  obj.el['value'] = properties.value;
+      if (properties.checked){
+        obj.el['checked'] = properties.checked;
+      }
 		  return this;
 		},
 		that.labelize = function(labelName, helpText) {
@@ -678,7 +681,7 @@ throw new SyntaxError('JSON.parse');
 	var Inputs = function() {
 		var that = {},
 		parentNode = undefined, 
-		inputs = []; 
+		inputs = [];
 		that.push = function(elem) {
 			inputs.push(elem);
 		};
@@ -690,8 +693,9 @@ throw new SyntaxError('JSON.parse');
 		  };
 		that.getValues = function() {
 			var ind, values = {};
-		  for(ind=0; ind<inputs.length; ind++) 
-		  	values[inputs[ind].getName()] = inputs[ind].getValue();
+		  for(ind=0; ind<inputs.length; ind++){
+  		  	values[inputs[ind].getName()] = inputs[ind].getValue();
+        }
 		  return values;
 		};
 		that.getInputs = function() {
@@ -761,44 +765,47 @@ throw new SyntaxError('JSON.parse');
 			var active='blu';
 			var inactive='grigia';
 			var crea = invita = gestisci = 'inactive';
-			var c_ghianda = i_ghianda = d_ghianda = 'grigia';
+      var title = '';
+			var c_var = i_var = d_var = '';
 			switch(page){
 				case 'create':
 					crea='active';
-					c_ghianda='blu'
+					c_var='-pink';
+          title = 'Crea Split';
 					break;
 				case 'invitation':
 					invita='active';
-					i_ghianda='blu'
+					i_var='-pink';
+          title = 'Invita';
 					break;
 				case 'digest':
 					gestisci='active';
-					d_ghianda='blu';
+					d_var='-pink';
+          title = 'Gestisci';
 					break;
 			}
 			// Bootstrap 3 Implementation
 			viewPortDiv = jQuery('#squeezol_view');
-			viewPortDiv.addClass("container-fluid container-body");
-      modalDiv = '<div class="col-xs-12 col-md-8 col-md-offset-2 container-dashboard">'+
+			viewPortDiv.addClass("container-fluid");
+      modalDiv = '<div class="col-xs-10 col-xs-offset-1 container-dashboard">'+
+                   '<div class="row" style="margin-top: -30px;">'+
+                     '<div class="col-xs-4 col-xs-offset-4" style="padding-top: 10px; padding-left:50px;">'+
+                       '<img class="squeezol-btn-header img-responsive" src="' + img_url + 'squeezol.png"></img>'+
+                       '<p class="content-title" style="display:inline; margin-left:20px;">'+title+'</p>'+
+                     '</div>'+
+									 '</div>'+
 								   '<div id="squeezol_view">'+
-									   '<div class="row">'+
-										   '<div class="col-xs-3 col-xs-offset-1 separator-blu"></div>'+
-											 '<div class="col-xs-4">'+
-											   '<img class="squeezol-btn-header img-responsive" src="' + img_url + 'pay_button.png"></img>'+
-											 '</div>'+
-											 '<div class="col-xs-3 separator-blu"></div>'+
-										 '</div>'+
-										 '<div class="row">'+
-										   '<div class="col-xs-4">'+
-											   '<h4 class="text-center text-step-'+crea+'"><img class="img-responsive" style="display:inline;" src="' + img_url + 'ghianda_step_'+c_ghianda+'.png"/>Crea Colletta</h4>'+
-											 '</div>'+
-											 '<div class="col-xs-4 ">'+
-											   '<h4 class="text-center text-step-'+invita+'"><img class="img-responsive" style="display:inline;" src="' + img_url + 'ghianda_step_'+i_ghianda+'.png"/>Invita Amici</h4>'+
-											 '</div>'+
-											 '<div class="col-xs-3 ">'+
-											   '<h4 class="text-center text-step-'+gestisci+'"><img class="img-responsive" style="display:inline;" src="' + img_url + 'ghianda_step_'+d_ghianda+'.png"/>Gestisci, Paga</h4>'+
-											 '</div>'+
-										 '</div>'+
+										 '<div class="row row-separator row-separata">'+
+                      '<div class="col-md-3 col-md-offset-1">'+
+                        '<p class="text-center"><img class="img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
+                      '</div>'+
+                      '<div class="col-md-4">'+
+                        '<p class="text-center"><img class="img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
+                      '</div>'+
+                      '<div class="col-md-3">'+
+                        '<p class="text-center"><img class="img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
+                      '</div>'+
+                     '</div>'+
 										 '<div class="row">'+
 											'<div class="col-xs-3 col-xs-offset-1 separator-'+crea+'"></div>'+
 											'<div class="col-xs-4 separator-'+invita+'"></div>'+
@@ -813,11 +820,33 @@ throw new SyntaxError('JSON.parse');
 	  that.drawSeparator = function(text){
 			var viewPortDiv = jQuery('#squeezol_view');
 			var separator;
-			separator = '<div class="row">'+
-	  								'<div class="col-md-4 col-md-offset-1 col-xs-12"><h4>'+text+'</h4></div>'+
+			separator = '<div class="row row-separata">'+
+	  								'<div class="col-md-4 col-md-offset-1 col-xs-12"><h4 class="content-body">'+text+'</h4></div>'+
 										'<div class="col-xs-10 col-xs-offset-1 separator"></div>'+
 									'</div>';
       viewPortDiv.append(separator);
+      return;
+	  },
+    that.drawSeparatorCollapse = function(text){
+      var viewPortDiv = jQuery('#squeezol_view');
+      var panel = '<div class="row row-separata" id="squeezol-accordion-container">'+
+                    '<div class="col-md-6 col-md-offset-1 col-xs-12">'+
+                      '<div class="panel-group">'+
+                        '<div class="panel panel-default">'+
+                          '<div class="panel-heading alert alert-info">'+
+                            '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">'+
+                              '<p class="squeezol-label">'+text+'</p>'+
+                            '</a>'+
+                          '</div>'+
+                          '<div id="collapseOne" class="panel-collapse collapse out">'+
+                            '<div class="panel-body" id="squeezol-accordion">'+
+                            '</div>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>';
+      viewPortDiv.append(panel);
       return;
 	  },
     that.drawWizard = function(position, clickElem){
@@ -839,21 +868,23 @@ throw new SyntaxError('JSON.parse');
                 '<h4 class="text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... &egrave; gratis!'+
               '</div>';
       jQuery('#squeezol_btn').popover({ title:'Come funziona',
-			 		                         html:true ,
-																	 content: div,
-																	 delay: { show: 100, hide:100 },
-																	 placement: position,
-																 	 trigger: 'manual' });
+		       		                          html:true ,
+																        content: div,
+																        delay: { show: 100, hide:100 },
+																        placement: position,
+															       	  trigger: 'manual' });
       
       jQuery(clickElem).on('click', function(){
 				jQuery('#squeezol_btn').popover('toggle');
 			});
 			jQuery('#squeezol_btn').on('shown.bs.popover', function(){
-				jQuery('.popover').attr('style','display: block; top: -280px; left: 127px;max-width:1000px;');
+				jQuery('.popover').attr('style','display: block; top: -20px; left: 127px;max-width:800px;');
 			});
 			jQuery('#squeezol_btn').on('hidden.bs.popover', function(){
 				jQuery('.popover').attr('style','');
+        jQuery(this).css("display", "");
 			});
+
 	  },
 		that.getText = function(text){
 			var textElem='<a target="_blank" ><h4>'+text+'</h4></a>';
@@ -878,16 +909,17 @@ throw new SyntaxError('JSON.parse');
 				if(invObj.fb_id) {
 					tmp.className = 'row fbElement';
 					tmp.innerHTML += '<div class="col-xs-4 has-success input-group"> <input type="hidden" class="fbEntry form-control" value="'+invObj.fb_id+'"disabled></input>'+
-													 		'<input value="'+invObj.name+'" class="form-control" type="text" name="email"  disabled>'+
-															'<span class="input-group-addon glyphicon glyphicon-ok form-control-feedback"></span>'+
+											 		   '<input value="'+invObj.name+'" class="form-control" type="text" name="email"  disabled>'+
+                             '<span class="input-group-addon glyph-ok">@</span>'+
 													 '</div>';
 				}
 				else {
 					tmp.className = 'row emailElement';
 					tmp.innerHTML+= '<div class="col-xs-4 form-group has-success input-group">'+
+                            
 														'<input value="'+invObj.email+'" class="form-control" type="email" name="email" placeholder="email address" disabled>'+
-														'<span class="input-group-addon glyphicon glyphicon-ok form-control-feedback"></span>'+
-													 '</div>';
+                            '<span class="input-group-addon glyph-ok">@</span>'+
+													'</div>';
 				}
 				jQuery(container).append(tmp);
 			}
@@ -959,12 +991,14 @@ throw new SyntaxError('JSON.parse');
 		},
     that.textWithHelper = function(labelName, helpText){
       var txt = document.createElement('p')
-      var $question = jQuery('<span />');
+      var $question = jQuery('<div />');
+      txt.className = 'squeezol-label';
       txt.appendChild(document.createTextNode(labelName));
       $question.attr('data-toggle', 'popover');
       $question.attr('data-placement', 'top');
       $question.attr('title', helpText);
-      $question.addClass('icon glyphicon glyphicon-question-sign');
+      $question.addClass('icon glyph-info-sign');
+      $question.append('<p>i</p>');
       jQuery(txt).append($question);
       return txt;
     },
@@ -976,6 +1010,10 @@ throw new SyntaxError('JSON.parse');
       jQuery('.icon').on('mouseout', function(){
         jQuery(this).popover('hide');
       });
+      jQuery('.icon').on('hidden.bs.popover', function(){
+        jQuery(this).css("display", "");
+			});
+
     };
     return that;
   };
@@ -990,35 +1028,62 @@ throw new SyntaxError('JSON.parse');
 		    button = Button(),
 		    dp1={}, dp2={};
 		that.addButtonHandler = function(handler) { buttonHandler = handler; };
-		that.initDatePickers = function() {
+		that.initDatePickers = function(d1, d2) {
 			var datePicker = DatePicker();
 
+			var i18n_ita = { previousMonth : 'Mese precedente',
+                       nextMonth     : 'Mese successivo',
+                       months        : ['Gennaio','February','March','April','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+                       weekdays      : ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'],
+                       weekdaysShort : ['Dom','Lun','Mar','Merc','Gio','Ven','Sab']
+                     }
+
 			datePicker.regCallBack( function() {
-		  dp1.dp = new Pikaday({ field: document.getElementById('datepicker1') });
-			dp2.dp = new Pikaday({ field: document.getElementById('datepicker2') });
-			});    
+		    dp1.dp = new Pikaday({ field: document.getElementById('datepicker1'),
+                               i18n: i18n_ita,
+                               format: 'DD-MM-YY',
+                               DefaultDate: d1,
+                               setDefaultDate: true,
+                               //minDate: d1,
+                               onSelect:  function(date) {
+                                 document.getElementById('datepicker1').value = date.getDate() + '-' + (parseInt(date.getMonth())+1).toString() + '-' + date.getFullYear();
+                               }
+                            });
+			  dp2.dp = new Pikaday({ field: document.getElementById('datepicker2'),
+                               i18n: i18n_ita,
+                               format: 'DD-MM-YY',
+                               DefaultDate: d2,
+                               setDefaultDate: true,
+                               //minDate: d1,
+                               onSelect: function(date) {
+                                 document.getElementById('datepicker2').value = date.getDate() + '-' + (parseInt(date.getMonth())+1).toString() + '-' + date.getFullYear();
+                               }
+                            });
+      });
 			datePicker.load(js_url + 'pikaday.js');
 		};
 		that.draw = function(id) {
-			var viewPortDiv, headDiv, icoDiv, tmpDiv, date1, date2, input, checkBox, wrapper;
+			var viewPortDiv, headDiv, icoDiv, tmpDiv, date1, date2, input, checkBox,
+          wrapper, accordion, tempAcc;
       var opt = [];
-			var tempRowDiv;
-			var tmp, startDate, d;
+			var tempRowDiv, spanCurr;
+			var tmp, startDate, d1, d2;
 			var day = 24 * 60 * 60 * 1000;
 			var ui = UserInterface();
       var placeholder = { 'name': 'Regalo di compleanno, viaggio, cena...',
                           'description': 'Descrivi cosa intendi fare con la somma raccolta'}
-      var helpText = { 'name': 'Dai un titolo alla tua colletta. Per esempio: regalo per Marco, week end in Montagna ecc.',
+      var helpText = { 'name': 'Dai un titolo allo Split. Per esempio: regalo per Marco, week end in Montagna ecc.',
                        'description': 'Il posto giusto dove inserire qualche dettaglio che invogli i tuoi amici a partecipare',
                        'max_acceptance_date': 'Scegli la data entro la quale gli invitati dovranno confermare la propria partecipazione',
                        'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita è 25 giorni',
-                       'occurrence': 'Comunica ai tuoi amici che tipo di evento stai organizzando',
+                       'occurrence': 'Fai sapere ai partecipanti per quale occasione si effettua l\'acquisto',
                        'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sulla colletta',
                        'alert_email': 'Disattiva le notifiche email sulle azioni degli invitati',
                        'hide_contribution': 'Nasconde ai soli partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
                        'hide_invitation': 'Nasconde l\' identità dei partecipanti tra di loro.',
                        'isOpen': 'Colletta aperta a chiunque abbia un invito, senza PIN e a donazione libera' }
 			wrapper_row = { wrapper: 'div', className: 'row'};
+      wrapper_row_pad = { wrapper: 'div', className: 'row pad-it'};
 			wrapper_left = { wrapper: 'div', className : 'col-md-6 col-md-offset-1 col-xs-12' }
 			wrapper_left_small = { wrapper: 'div', className : 'col-md-4 col-md-offset-1 col-xs-12' }
       wrapper_right = { wrapper: 'div', className: 'col-md-4 col-xs-12'};
@@ -1037,16 +1102,19 @@ throw new SyntaxError('JSON.parse');
       input.get().setAttribute('placeholder', placeholder['name']);
 			inputs.push(input);
 			// Data Accettazione
-			tempRowDiv.append(input.labelize('Nome Colletta', helpText['name']).wrap(wrapper_left));
+			tempRowDiv.append(input.labelize('Nome Split', helpText['name']).wrap(wrapper_left));
 
 			date1 = DateInput();
-			d = new Date(new Date().getTime() + 7*day);
+			d1 = new Date(new Date().getTime() + 7*day);
 			//startDate = ('0' + d.getDate()).slice(-2) + "-" + ('0' + d.getMonth()).slice(-2) + "-" + d.getFullYear();
-		  date1.create('max_acceptance_date', d);
+		  date1.create('max_acceptance_date', d1);
 			date1.get().id = 'datepicker1';
 			date1.addPicker(dp1);
 			inputs.push(date1);
-			tempRowDiv.append(date1.labelize('Data Accettazione', helpText['max_acceptance_date']).wrap(wrapper_right));
+      spanCurr = document.createElement('span');
+			spanCurr.className = 'input-group-addon';
+			spanCurr.innerHTML = '#';
+			tempRowDiv.append(date1.labelizeWithSpan('Scadenza Invito', spanCurr, helpText['max_acceptance_date']).wrap(wrapper_right));
 			// Append first row
 			viewPortDiv.append(tempRowDiv.get());
 			// Temp Div
@@ -1061,14 +1129,17 @@ throw new SyntaxError('JSON.parse');
 		  tempRowDiv.append(input.labelize('Descrizione', helpText['description']).wrap(wrapper_left));
 			// Data Pagamenti
 		  date2 = DateInput();
-			d = new Date(new Date().getTime() + 25*day);
+			d2 = new Date(new Date().getTime() + 25*day);
 			//startDate = ('0' + d.getDate()).slice(-2) + "-" + ('0' + d.getMonth()).slice(-2) + "-" + d.getFullYear();
-		  date2.create('max_payment_date', d);
+		  date2.create('max_payment_date', d2);
 		  date2.get().id = 'datepicker2';
 		  date2.addPicker(dp2);
+      
 		  inputs.push(date2);
-	
-			tempRowDiv.append(date2.labelize('Data Pagamenti', helpText['max_payment_date']).wrap(wrapper_right));
+	    spanCurr = document.createElement('span');
+			spanCurr.className = 'input-group-addon';
+			spanCurr.innerHTML = '#';
+			tempRowDiv.append(date2.labelizeWithSpan('Scadenza Pagamenti', spanCurr, helpText['max_payment_date']).wrap(wrapper_right));
 		  this.initDatePickers();
 		  opt.push({value: 'R', text: 'Acquisto regalo'});
 		  opt.push({value: 'V', text: 'Viaggio di gruppo'}); 
@@ -1078,56 +1149,54 @@ throw new SyntaxError('JSON.parse');
 		  opt.push({value: 'A', text: 'Altro ...'}); 
 		  combo = ComboBox();
 		  combo.create(opt);
-		  tempRowDiv.append(combo.labelize('Occorrenza', helpText['occurrence']).wrap(wrapper_right));
-			viewPortDiv.append(tempRowDiv.get())
-			
-			ui.drawSeparator('Opzioni aggiuntive');
-						
-			// Temp Div
-			tmp=document.createElement('div');
+      viewPortDiv.append(tempRowDiv.get())
+
+      tmp=document.createElement('div');
 			tempRowDiv = Div(tmp);
 			tempRowDiv.addClass('row');
-
+		  tempRowDiv.append(combo.labelize('Occorrenza', helpText['occurrence']).wrap(wrapper_left));
+			viewPortDiv.append(tempRowDiv.get())
+			ui.drawSeparator('');
+			ui.drawSeparatorCollapse('Opzioni aggiuntive');
+						
+      //squeezol-accordion
+      tempAcc = document.getElementById('squeezol-accordion');
+			accordion = Div(tempAcc);
+      
 		  checkBox = CheckBox();
 		  checkBox.create({name: 'alert_email', value: 'Email notifications'}); 
 		  checkBoxes.push(checkBox);
-		  tempRowDiv.append(checkBox.labelize('Disattiva notifiche', helpText['alert_email']).wrap(wrapper_left));
+		  accordion.append(checkBox.labelize('Disattiva notifiche', helpText['alert_email']).wrap(wrapper_row_pad));
 						
 		  checkBox = CheckBox();
 		  checkBox.create({name: 'hide_contribution', value: 'Hide Contribution'}); 
 		  checkBoxes.push(checkBox);
-			tempRowDiv.append(checkBox.labelize('Nascondi le quote versate', helpText['hide_contribution']).wrap(wrapper_right));
-			viewPortDiv.append(tempRowDiv.get());
-			
-			tempRowDiv = Div(tmp);
-			tempRowDiv.addClass('row');
+			accordion.append(checkBox.labelize('Nascondi le quote versate', helpText['hide_contribution']).wrap(wrapper_row_pad));
 
 			checkBox = CheckBox();
 		  checkBox.create({name: 'hide_invitation', value: 'Hide Invitation'});
 		  checkBoxes.push(checkBox);
-		  tempRowDiv.append(checkBox.labelize('Nascondi partecipanti', helpText['hide_invitation']).wrap(wrapper_left));
+		  accordion.append(checkBox.labelize('Nascondi partecipanti', helpText['hide_invitation']).wrap(wrapper_row_pad));
 
 			checkBox = CheckBox();
-		  checkBox.create({name: 'isOpen', value: 'Open funding'}); 
+		  checkBox.create({name: 'isOpen', value: 'Open funding', checked: 'true'}); 
 			checkBoxes.push(checkBox);
-		  tempRowDiv.append(checkBox.labelize('Colletta a donazione libera', helpText['isOpen']).wrap(wrapper_right));
-			viewPortDiv.append(tempRowDiv.get());
-
-			tempRowDiv = Div(tmp);
-			tempRowDiv.addClass('row');
+		  accordion.append(checkBox.labelize('Colletta a donazione libera', helpText['isOpen']).wrap(wrapper_row_pad));
 			
 			promo = TextInput();
 		  promo.create('promo_code');
-		  tempRowDiv.append(promo.labelize('Codice Promozionale', helpText['promo_code']).wrap(wrapper_left_small));
+		  accordion.append(promo.labelize('Codice Promozionale', helpText['promo_code']).wrap(wrapper_row_pad));
 						
-			viewPortDiv.append(tempRowDiv.get());
+			
 		  button.create('Prosegui', 'big', 'squeezol_button');
 			button.addClass('btn')
 		  button.regHandler('click', buttonHandler);
-			button = Div(button.wrap(wrapper_push_right));
-			ui.drawSeparator('');
-		  viewPortDiv.append(button.wrap(wrapper_row));
+			button = Div(button.wrap(wrapper_right));
+			tmp = document.getElementById('squeezol-accordion-container');
+      tempRowDiv = Div(tmp);
+		  tempRowDiv.append(button.wrap(wrapper_row));
 		  ui.iconPopover();
+
       return this; 
 		};     
 		that.getInputs = function() { 
@@ -1148,6 +1217,8 @@ throw new SyntaxError('JSON.parse');
 		makeData = function() {
 			var prop, temp = {};
 			temp.inputs = inputs.inputs.getValues();
+      temp.inputs['max_acceptance_date'] = document.getElementById('datepicker1').value;
+      temp.inputs['max_payment_date'] = document.getElementById('datepicker2').value;
 		  temp.checkBoxes = inputs.checkBoxes.getValues();
 			temp.trolley = trolley;    
 			temp.occurrence = inputs.occurrence.getValue();
@@ -1204,17 +1275,30 @@ throw new SyntaxError('JSON.parse');
 						error.className = 'alert alert-danger';
 						error.innerHTML = 'Questo campo &egrave; obbligatorio';
 						Div(wrapDiv).addClass('has-error');
-						Div(wrapDiv).append(error);
+						jQuery(wrapDiv).after(error);
 		      }
 		    }
-        if('non_field_errors' in answer) {
+        else if('non_field_errors' in answer) {
           wrapDiv = inp.getInput('max_payment_date').getWrapDiv();
           error = document.createElement('p');
 				  error.className = 'alert alert-danger';
 					error.innerHTML = answer.non_field_errors;
 					Div(wrapDiv).addClass('has-error');
-					Div(wrapDiv).append(error);
+					jQuery(wrapDiv).after(error);
         }
+        else {
+          for (prop in answer){
+            if (prop != "status"){
+              wrapDiv = inp.getInput(prop).getWrapDiv();
+						  error = document.createElement('p');
+						  error.className = 'alert alert-danger';
+						  error.innerHTML = answer[prop];
+						  Div(wrapDiv).addClass('has-error'); 
+						  jQuery(wrapDiv).after(error);
+            }
+          }
+        }
+        
 		  }
 			else if(answer.status == 'anauth_request'){
       	window.location.replace(answer.redirect_url);
@@ -1480,17 +1564,18 @@ throw new SyntaxError('JSON.parse');
 				for (i=0; i<email_list.length; i++ ) {
 					if (emailInputList[j].value == email_list[i] ) {
 						tempObj = DomElement({'el': emailInputList[j].parentNode})
-						tempObj.addClass('has-error input-group');
-						tmpSpan = document.createElement('span');
-						tmpSpan.className = 'input-group-addon glyphicon glyphicon-remove';
+						tempObj.addClass('has-error');
+						//tmpSpan = document.createElement('span');
+						//tmpSpan.className = 'input-group-addon glyphicon glyphicon-remove';
 					}
 					else {
 						tempObj = DomElement({'el': emailInputList[j].parentNode})
-						tempObj.addClass('has-success input-group');
-						tmpSpan = document.createElement('span');
-						tmpSpan.className = 'input-group-addon glyphicon glyphicon-ok form-control-feedback';
+						tempObj.addClass('has-success');
+						//tmpSpan = document.createElement('span');
+						//tmpSpan.className = 'input-group-addon glyphicon glyphicon-ok form-control-feedback';
 					}
-					tempObj.append(tmpSpan);
+          // TODO: Decommentare, non riesco ad appendere tmpSpan
+					//jQuery(tmpSpan).appendTo(tempObj);
 				}
 			}
 		},
@@ -1646,7 +1731,9 @@ throw new SyntaxError('JSON.parse');
                           '</div>'+
 													'<div class="col-xs-4 form-group has-success input-group">'+
 													  '<input value="'+currSent.value+'" class="form-control" type="email" name="email" placeholder="email address" disabled>'+
-														'<span class="input-group-addon glyphicon glyphicon-ok form-control-feedback"></span>'+
+														'<span class="input-group-addon glyph-ok">'+
+                            '@<span/>'+
+                            '</div>'+
 													'</div>';
 					container.appendChild(div);
 				} 
@@ -1663,18 +1750,19 @@ throw new SyntaxError('JSON.parse');
 		that.renderGET = function(invitationUrl) {
 			var params, participantAdmin, group, alreadyInvited, socialProviders,
 			grId, grAmount, gData, pAdminId;
-			var btnText = ['Email', 'Facebook', 'Invia E-mail'],
+			var btnText = ['Email', 'f Facebook', 'Invia E-mail'],
 					btnId = ['squeezolEmail_', 'squeezolFb_', 'squeezolSubmit_' ],
 					btnSize = ['small', 'small', 'big'],
-					btnClass = ['btn btn-sm buttonEmail', 'btn btn-sm buttonFb', 'buttonSuccess btn btn-lg'];
+					btnClass = ['btn btn-lg buttonEmail', 'btn btn-lg buttonFb', 'buttonSuccess btn btn-lg'];
 			var fbBtn, emailBtn, submitBtn, emailDiv, fbDiv, selectBox, nextBtn,
 				  invitationBtn, removeBtn, containerDiv, submitDiv, nextDiv;
 			var fbUid, friendList;
 			var sqDiv, tmpObj, tmpDiv, emailModal;
+      var copiaUrl, a_temp, a_link;
 			var i, j, currBtn, ui;
 			var wrapper_left = { wrapper: 'div', className : 'col-xs-2' };
 			var wrapper_center = { wrapper: 'div', className : 'col-xs-4' };
-			var wrapper_btn = { wrapper: 'div', className : 'col-xs-2 col-xs-offset-1' };
+			var wrapper_btn = { wrapper: 'div', className : 'col-xs-3 col-xs-offset-1' };
 			var wrapper_row = { wrapper: 'div', className : 'row' };
 			if(answer.status === 'ok') {
 				// Parsing Parametri
@@ -1689,7 +1777,6 @@ throw new SyntaxError('JSON.parse');
 				// RENDER
 				ui = UserInterface()
 				ui.drawHeader('invitation', 'modal');
-				ui.drawSeparator('Divisione quote');
 				this.renderGroupData(answer.group, participantAdmin, params.admin_email, alreadyInvited);
         ui.iconPopover();
 				SqDiv = document.getElementById('squeezol_view')
@@ -1700,8 +1787,8 @@ throw new SyntaxError('JSON.parse');
 				fbDiv.className = 'fbInvitation';
 				fbDiv.id = 'squeezolFb'
 				invitationBtn = InvitationObj();
-				emailBtn = invitationBtn.createButton('+ Email', btnId[0], btnSize[0], 'btn btn-sm buttonEmail');
-				emailModal = invitationBtn.createButton('Email', 'emailModal_', 'small', 'btn btn-sm buttonEmail');
+				emailBtn = invitationBtn.createButton('@ Email', btnId[0], btnSize[0], 'btn btn-sm buttonEmail');
+				emailModal = invitationBtn.createButton('@ Invia Email', 'emailModal_', 'big', 'btn btn-lg buttonEmail');
 				
 				// SEND EMAIL handler:
 				submitBtn = invitationBtn.createButton(btnText[2], btnId[2], btnSize[2], btnClass[2]);
@@ -1749,13 +1836,12 @@ throw new SyntaxError('JSON.parse');
 					});
 					newEmail = document.createElement('div');
 					newEmail.className = 'row emailElement';
-					// TODO: remove $()
 					jQuery(newEmail).append('<div class="col-xs-2">'+
-															 '<img style="display:inline;" class="imgAvatar thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
-														 '</div>'+
-														 '<div class="col-xs-5">'+
-													     '<input class="form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
-														 '</div>');
+															      '<img style="display:inline;" class="imgAvatar thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
+		  											      '</div>'+
+														      '<div class="col-xs-5">'+
+													          '<input class="form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
+														      '</div>');
 					newEmail.appendChild(removeBtn.wrap(wrapper_left));
 					emailDiv.appendChild(newEmail);
 					if (contribType === 'D'){
@@ -1768,13 +1854,14 @@ throw new SyntaxError('JSON.parse');
 					var ui = UserInterface();
 					ui.sqModal(emailDiv, submitDiv, 'emailModal');
 				});
+
 				tmpObj = document.createElement('div');
-				tmpObj.className = 'row';
+				tmpObj.className = 'row row-separata';
 				tmpObj.appendChild(emailModal.wrap(wrapper_btn));
 
 				// FACEBOOK IFRAME handler:
         if (params.fb_url) {
-				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], btnSize[1], btnClass[1]);
+				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'big', btnClass[1]);
 					fbBtn.regHandler('click', function(){
 						var iFrameModal;
 						var ui=UserInterface();
@@ -1801,10 +1888,28 @@ throw new SyntaxError('JSON.parse');
 						ui.sqModal(iFrameModal,'', 'facebookModal')
 					  return
 					});
-					tmpObj.appendChild(fbBtn.wrap(wrapper_left));
+					tmpObj.appendChild(fbBtn.wrap(wrapper_center));
         }
 				
-				ui.drawSeparator('Invita i tuoi amici con');
+        copiaUrl = document.createElement('div')
+        copiaUrl.className = 'col-xs-3 pink-link';
+        copiaUrl.setAttribute('data-placement', 'top');
+        copiaUrl.setAttribute('title', 'Copia URL della colletta e incollalo dove preferisci');
+        a_temp = document.createElement('a');
+        a_temp.innerHTML = 'Copia url split';
+        a_link=DomElement({'el': a_temp});
+        a_link.id='clipBoardLink';
+        a_link.regHandler('click', function(e) {
+          var message = 'Copia negli appunti con CTLR+C. Poi clicca OK';
+          if (answer.group.isOpen){
+            window.prompt(message, params.link_url);
+          }
+          else {
+            window.prompt(message, params.link_url+'?pin='+group.pin);
+          }
+        });
+        copiaUrl.appendChild(a_link.get());
+        tmpObj.appendChild(copiaUrl);
 				SqDiv.appendChild(tmpObj);
 				
 				// NEXT Button handler
@@ -1867,49 +1972,96 @@ throw new SyntaxError('JSON.parse');
 		that.renderGroupData = function(group, participantAdmin, adminEmail, alreadyInvited) {
 			var groupDigest, status, contrib, options;
 			var disabled='';
+      var isOpen='';
+      var groupDigest2;
+      var date1=new Date(group.max_acceptance_date);
+      var date2=new Date(group.max_payment_date);
 			var sqDiv = document.getElementById('squeezol_view');
+      if (group.isOpen == false){
+        isOpen = '<div class="row pin">'+
+                   '<p><strong>PIN:'+group.pin+'</strong></p>'+
+                 '</div>';
+      }
 			if (group.fundraising == 'S'){
 				contrib = parseFloat(group.amount/(alreadyInvited.length+1)).toFixed(2);
 				options = '<option value="D">Equa</option>'+
 								  '<option value="S" selected>Suggerita</option>';
 			}
 			else {
-				contrib = participantAdmin.single_contribution;
+				contrib = participantAdmin.single_amount;
 				options = '<option value="D" selected>Equa</option>'+
 								  '<option value="S">Suggerita</option>';
-        disabled = 'disabled'
+        disabled = 'disabled';
 			}
+     
 			groupDigest=document.createElement('div');
 			groupDigest.id = "squeezol_btn_container";
-			groupDigest.className = "row";
-			groupDigest.innerHTML='<div class="col-md-3 col-md-offset-1 col-xs-10 col-xs-offset-1">'+
-				                      '<p>Importo totale: </p>'+
-															'<p><strong>'+group.amount+group.currency+'</strong></p>'+
-														'</div>'+
-														'<div class="col-md-3 col-md-offset-1 col-xs-10 col-xs-offset-1">'+
-														 	'<p>Tipo quota'+
-                                '<span data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
-                                'quota che verrà visualizzata dagli invitati. Altrimenti la quota proposta '+
-                                'verrà calcolata in base al numero di invitati"'+
-                                'class="icon glyphicon glyphicon-question-sign"></span>'+
-                              '</p>'+
-															'<select class="selectContrib" id="contributionType">'+options+'</select>'+
-															'<input value="'+adminEmail+'"type="hidden" name="email" disabled>'+
-														'</div>'+
-														'<div class="squeezol_quota col-md-3 col-xs-10 col-xs-offset-1">'+
-															'<p>Quota'+
-                                '<span data-toggle="popover" data-placement="top" title="La quota è un '+
-                                  'suggerimento per gli invitati."'+
-                                  'class="icon glyphicon glyphicon-question-sign">'+
-                                '</span>'+
-                              '</p>'+
-															'<div class="input-group">'+
-															  '<input id="squeezol_admin_contrib" value="'+contrib+'" name="email_contribution"'+
-																	'type="text" class="squeezolPrice form-control" '+disabled+'><span class="input-group-addon">'+group.currency+'</span>'
-  														'</div>'+
-														'</div>';
-			groupDigest=Div(groupDigest);
+			groupDigest.className = "row row-separata";
+      groupDigest2=document.createElement('div');
+      groupDigest2.className='row row-separata';
+      groupDigest2.innerHTML = '<div class="col-xs-2 col-xs-offset-1 col-left">'+
+                                 '<p class="content-title">'+ group.name +'<p>'+
+                               '</div>'+
+                               '<div class="col-xs-2">'+
+                                 '<p class="content-body">Scadenza invito:</p>'+
+                                 '<p class="content-body">'+
+                                   date1.getDate() + '.' + (parseInt(date1.getMonth())+1).toString() + '.' + date1.getFullYear()+
+                                 '</p>'+
+                               '</div>'+
+                               '<div class="col-xs-2">'+
+                                 '<p class="content-body">Scadenza pagamento:</p>'+
+                                 '<p class="content-body">'+
+                                   date2.getDate() + '.' + (parseInt(date2.getMonth())+1).toString() + '.' + date2.getFullYear()+
+                                 '</p>'+
+                               '</div>'+
+                               '<div class="col-xs-3">'+
+                                 '<div class="row target-P">'+
+                                   '<p> Obiettivo:</p>'+
+                                   '<p><strong>'+group.amount + group.currency +'</p>'+
+                                 '</div>'+
+                                 isOpen+
+                               '</div>';
+
+			groupDigest.innerHTML= '<div class="col-xs-10 col-xs-offset-1 withBorder">'+
+                                '<div class="row">'+   
+                                  '<div class="col-xs-1 col-left">'+
+                                    '<div class="box-blu">'+
+                                      '<p><strong>'+alreadyInvited.length+'</strong></p>'+
+                                      '<p>invitati</p>'+
+                                    '</div>'+
+                                  '</div>'+
+														      '<div class="col-xs-4 form-group" style="margin: 10px 0px 0px 20px;">'+
+														       	'<p class="squeezol-label">Tipo quota:'+
+                                      '<div data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
+                                        'quota che verrà visualizzata dagli invitati. Altrimenti la quota proposta '+
+                                        'verrà calcolata in base al numero di invitati"'+
+                                        'class="icon glyph-info-sign">'+
+                                        '<p>i</p>'+
+                                      '</div>'+
+                                    '</p>'+
+															      '<select class="selectContrib" id="contributionType">'+options+'</select>'+
+															      '<input value="'+adminEmail+'"type="hidden" name="email" disabled>'+
+														      '</div>'+
+														      '<div class="squeezol_quota col-xs-4" style="margin: 10px 0px 0px 20px;">'+
+															      '<p class="squeezol-label">Quota singola:'+
+                                      '<div data-toggle="popover" data-placement="top" title="La quota è un '+
+                                        'suggerimento per gli invitati."'+
+                                        'class="icon glyph-info-sign">'+
+                                        '<p>i</p>'+
+                                      '</div>'+
+                                    '</p>'+
+															      '<div class="input-group">'+
+															        '<input id="squeezol_admin_contrib" value="'+contrib+'" name="email_contribution"'+
+																	      'type="text" class="squeezolPrice form-control" '+disabled+'><span class="input-group-addon">'+group.currency+'</span>'
+        														'</div>'+
+                                  '</div>'+
+                                '</div>'+
+														  '</div>';
+		  groupDigest2=Div(groupDigest2);
+			sqDiv.appendChild(groupDigest2.get());
+      groupDigest=Div(groupDigest);
 			sqDiv.appendChild(groupDigest.get());
+
 		};
 		return that;
 	};
@@ -1928,7 +2080,8 @@ throw new SyntaxError('JSON.parse');
 			var i, j, k, p, spanCurr, quotaDiv, labelQuota;
 			var status, ui, state, ghianda, avatar_url, alertDes, contribution_amount;
 			var wrapper = {wrapper: 'div', className: 'col-md-4 col-md-offset-1 col-xs-6 col-xs-offset-1'};
-			var wrapBtn = {wrapper: 'div', className: 'col-md-3 pipa col-xs-6 col-xs-offset-1'};
+			var wrapBtn = {wrapper: 'div', className: 'col-md-2 col-xs-6 col-xs-offset-1'};
+      
 
       var helpText = { 'p_quota': 'Inserisci la quota che intendi versare' }
 
@@ -1947,9 +2100,9 @@ throw new SyntaxError('JSON.parse');
 				// Render Group Data
         ui = UserInterface()
 				ui.drawHeader('digest', 'modal');
-				ui.drawSeparator('Riassunto');
-				this.renderGroupData(answer.group, params, SqDiv);
-				ui.drawSeparator('');
+				
+				this.renderGroupData(answer.group, params, SqDiv, participants);
+				ui.drawSeparator('Pagamenti');
 				renderDiv=Div(document.createElement('div'));
 				renderDiv.addClass('row');
 
@@ -1986,20 +2139,12 @@ throw new SyntaxError('JSON.parse');
 						renderDiv.append(singleAmountBtn.wrap(wrapBtn));
             SqDiv.appendChild(renderDiv.get());
 					}
-          if (isAdmin && params.invitation_url && (groupStatus == 'WAC' || answer.group.isOpen) ){
-            inviteBtn = Button();
-            inviteBtn.create('Invita', 'ui', 'SqueezolInvitation_');
-            inviteBtn.get().className='btn btn-lg';
-            inviteBtn.regHandler('click', function(){
-              window.location.replace(params.invitation_url);
-            });
-            renderDiv.append(inviteBtn.wrap(wrapBtn));
-          }
-					ui.drawSeparator('Pagamenti');
+          
           ui.iconPopover();
 					// Se admin
 					if(isAdmin==true) {
-						// Se puo' aprire i pagamenti
+            
+            // Se puo' aprire i pagamenti
 						if(canOpenPay==true){
 							renderBtn.create('Inizia i pagamenti!', 'ui', 'SqueezolStartPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
@@ -2089,21 +2234,23 @@ throw new SyntaxError('JSON.parse');
 							}
 					  }
 					}
-					// Render 
+					// Render
+          
+          console.log(renderBtn.get())
 					renderDiv=Div(document.createElement('div'));
-					renderDiv.addClass('row');
+					renderDiv.addClass('row row-separata');
 					renderDiv.get().id='squeezolPayBox';
 					renderDiv.append(renderBtn.wrap(wrapper));
-					totalPaid=0.00;
-					for (j=0; j<participants.length; j++){
-						p=participants[j];
-						if (p.status == 'P'){
-							totalPaid+=parseFloat(p.single_amount);
-						}
-					}
-
-					SqDiv.appendChild(renderDiv.get());
-					ui.progressBar(parseInt(totalPaid), targetAmount);
+          if (params.invitation_url && isAdmin && (answer.group.status == 'WPA' || answer.group.status == 'WAC')){
+            inviteBtn = Button();
+            inviteBtn.create('Invita', 'ui', 'SqueezolInvitation_');
+            inviteBtn.get().className='btn btn-lg buttonSuccess';
+            inviteBtn.regHandler('click', function(){
+              window.location.replace(params.invitation_url);
+            });
+            renderDiv.append(inviteBtn.wrap(wrapBtn));
+          }
+          SqDiv.appendChild(renderDiv.get());
 				}
 				// Group deserted
 				else if(answer.group.status == 'DES') {
@@ -2121,12 +2268,11 @@ throw new SyntaxError('JSON.parse');
 				}
 				
 				// Render Partecipanti
-
         if (answer.group.hide_invitation == false || isAdmin){
 				  ui.drawSeparator('Partecipanti');
 				  for (j=0; j<participants.length; j++){
 				    part=document.createElement('div');
-					  part.className = 'row';
+					  part.className = 'row part';
 					  p=participants[j];
 					  status=this.switchStatus(p.status);
             var img = new Image();
@@ -2153,13 +2299,10 @@ throw new SyntaxError('JSON.parse');
 					  part.innerHTML= '<div class="col-md-1 col-md-offset-1 col-xs-4">'+
 						                  '<img id="thumb'+j+'" class="imgAvatar thumbnail img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
 													  '</div>'+
-													  '<div class="col-md-3 col-xs-4 has-success">'+
-														  '<div class="input-group">'+
-															  '<input value="'+p.name+'" class="form-control" type="text" name="name" disabled>'+
-															  '<span class="input-group-addon glyphicon glyphicon-ok form-control-feedback"></span>'+
-														  '</div>'+
+													  '<div class="col-md-4 col-xs-4 has-success">'+
+														  '<p class="content-body text-center">'+p.name+'</p>'+
 													  '</div>'+
-													  '<div class="col-md-3 col-xs-10">'+
+													  '<div class="col-md-2 col-xs-10">'+
 														  '<h4 class="text-center">'+contribution_amount+'</h4>'+
 													  '</div>'+
 													  '<div class="col-md-2 col-xs-10">'+
@@ -2236,27 +2379,106 @@ throw new SyntaxError('JSON.parse');
 					}
 				}
       },
-			that.renderGroupData = function(group, params, parent) {
+			that.renderGroupData = function(group, params, parent, participants) {
 				var groupDigest, status, sqDiv;
-				var ui;
+				var ui, p, admin_name, participant, testo, classe;
+        var totalPaid=0.00;
         ui = UserInterface()
         sqDiv = document.getElementById('squeezol_view');
         groupDigest=document.createElement('div');
 				groupDigest.id = "squeezol_btn_container";
 				groupDigest.className = "squeezol_group_box row";
 				status = this.switchGroupStatus(group.status);
-        groupDigest.innerHTML=  '<div class="col-xs-12">'+
-																	'<div class="row">'+
-																		'<div class="col-xs-5 col-xs-offset-1"><h4 class="summary">Nome colletta: <strong> '+group.name+'</strong></h4></div>'+
-																		'<div class="col-xs-6"><h4 class="summary">Importo totale: <strong>'+group.amount+group.currency+'</strong></h4></div>'+
-																	'</div>'+
-																	'<div class="row">'+
-																		'<div class="col-xs-5 col-xs-offset-1"><h4 class="summary">Stato: <strong> '+status+' </strong></hs></div>'+
-																		'<div class="col-xs-6"><h4 class="summary">Scadenza: <strong>'+group.max_payment_date+'</strong></h4></div>'+
-																	'</div>'+
-																'</div>';
-																
+
+        for (var i=0; i<participants.length; i++){
+          p = participants[i];
+          if (p.status == 'P'){
+							totalPaid+=parseFloat(p.single_amount);
+				  }
+          if (p.id == params.pAdminId){
+            if (p.name)
+              admin_name = p.name;
+            else
+              admin_name = p.email;
+          }
+          if (p.id == params.participant_id){
+            participant = p;
+          }
+        }
+
+        if (group.fundraising == 'D'){
+          testo = 'Quota che intendo versare';
+        }
+        else if (group.fundraising == 'S'){
+          testo = 'Quota da versare';
+        }
+        else if (group.fundraising == 'F'){
+          testo = 'Quota fissa';
+        }
+        if (participant.status == 'P'){
+          classe = 'target-P';
+          testo = 'Quota pagata';
+        }
+        else if(participant.status == 'A'){
+          classe='box-blu-digest content-body';
+        }
+        else
+          classe='target-R';
+        groupDigest.innerHTML= '<div class="col-xs-3 col-xs-offset-1 col-left">'+
+                                 '<p class="content-title">'+ group.name +'<p>'+
+                               '</div>'+
+                               '<div class="col-xs-3">'+
+                                 '<p class="content-body">Organizzatore:</p>'+  
+                                 '<strong>'+admin_name+'</strong>'+
+                               '</div>'+
+                               '<div class="col-xs-3 col-xs-offset-1 ">'+
+                                 '<div class="row box-blu-digest content-body" style="padding:5px;">'+
+                                   '<p class="text-center"> Scelta:'+this.switchStatus(participant.status)+'</p>'+
+                                 '</div>'+
+                               '</div>';
 				groupDigest=Div(groupDigest);
+				sqDiv.appendChild(groupDigest.get());
+
+        groupDigest=document.createElement('div');
+				groupDigest.className = "row row-separata";
+        groupDigest.innerHTML = '<div class="col-xs-10 col-xs-offset-1">'+
+                                  '<div class="row withPaddedBorder">'+
+                                    '<div class="col-xs-4">'+
+                                      '<h4>TERMINA FRA</h4>'+
+                                      '<div class="col-xs-4 no-pad">'+
+                                        '<p class="target-small">'+params.daysLeft+' G</p>'+
+                                      '</div>'+
+                                      '<div class="col-xs-4 no-pad">'+
+                                        '<p class="target-small">'+params.hoursLeft+' H</p>'+
+                                      '</div>'+
+                                      '<div class="col-xs-4 no-pad">'+
+                                        '<p class="target-small">'+params.minutesLeft+' M</p>'+
+                                      '</div>'+
+                                    '</div>'+
+                                    '<div class="col-xs-4">'+
+                                      '<div class="progress-radial-container">'+
+                                        '<div class="progress-radial progress-'+params.totalPerc+'">'+
+                                          '<div class="overlay">'+totalPaid+' '+group.currency+
+                                            '<div style="margin-top: 20px; ">'+
+                                              '<p class="text-overlay">'+
+                                                'di'+group.amount+' '+group.currency+
+                                              '</p>'+
+                                            '</div>'+
+                                          '</div>'+
+                                        '</div>'+
+                                      '</div>'+
+                                    '</div>'+
+                                    '<div class="col-xs-4 '+classe+'">'+
+                                      '<p class="text-center" style="font-family: DejavuSansCondensed-Bold;">'+
+                                          participant.single_amount+' '+group.currency+
+                                      '</p>'+
+                                      '<p class="text-center">'+
+                                        testo+
+                                      '</p>'
+                                    '</div>'+
+                                  '</div>'+
+                                '</div>';
+        groupDigest=Div(groupDigest);
 				sqDiv.appendChild(groupDigest.get());
 
 			},
@@ -2298,7 +2520,7 @@ throw new SyntaxError('JSON.parse');
 					  form.action='https://test.squeezol.com'+answer.redirect_url;
 					  form.method='POST';
 					  form.innerHTML='<input type="hidden" name="group_id" value="' + answer.group_id + '">'+
-					                '<input type="hidden" name="participant_id" value="' + answer.participant_id + '">'
+					                 '<input type="hidden" name="participant_id" value="' + answer.participant_id + '">'
 					  document.body.appendChild(form);
 					  form.submit();
           } else if(answer.status == 'error'){
