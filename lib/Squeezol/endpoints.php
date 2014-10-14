@@ -1,6 +1,16 @@
 <?php
 
-$model = Mage::getModel('squeezol_payment/params');
+$model1 = Mage::getModel('squeezol_payment/paymentMethod');
+
+if ($model1->getConfigData('use_sandbox') == 1) {
+
+    $model = Mage::getModel('squeezol_payment/paramsandbox');
+
+} else {
+
+    $model = Mage::getModel('squeezol_payment/params');
+}
+
 
 define('RESOURCE_GROUP_URL',      $model::RESOURCE_GROUP_URL);
 define('RESOURCE_INVITATION_URL', $model::RESOURCE_INVITATION_URL);
@@ -54,12 +64,12 @@ class SqueezolEndpoint
   public function call($method='POST')
   {
     $u = new UrlRequest;
-    $this->raw_response = $u->run($this->url, $this->data,$this->headers, $method);
+    $this->raw_response = $u->run($this->url, $this->data, $this->headers, $method);
     /*echo 'Url:'      . $this->url . '<br>';
     echo 'Headers:'  . json_encode($this->headers) . '<br>';
     echo 'Request:'  . json_encode($this->data) . '<br>';
     echo 'Response:' . $this->raw_response;*/
-
+    error_log('url is' . $this->url);
     error_log('headers are: ' . json_encode($this->headers));
     error_log('request is: ' . json_encode($this->data));
     error_log('response is: ' . $this->raw_response);
@@ -80,7 +90,7 @@ class URLRequest
   public function run($url, $data, $headers, $method='POST'){
     // create curl resource
     $ch = curl_init();
-
+    error_log("Data: " . json_encode($data));
     // set url
     if ($method == 'GET')
     {
@@ -103,7 +113,8 @@ class URLRequest
     }
     curl_setopt($ch, CURLOPT_HTTPHEADER, $this->convert_header($headers));
     // TODO: Only for testing purposes
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    
     // $output contains the output string
     $output = curl_exec($ch);

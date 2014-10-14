@@ -55,351 +55,381 @@
 }
 
 h4 {
-  font-family: "DejaVuSansCondensed-BoldOblique";
-  color: #08b3c7;
-  font-weight: 100;
+  font-family: "DejaVuSansCondensed-BoldOblique" !important;
+  color: #08b3c7 !important;
+  font-weight: 100 !important;
 }
 
 #squeezol_view input, textarea {
-	font-weight: 10;
+	font-weight: 10 !important;
 }
 
-label { font-weight: bold; color: #08B3C7; }
+label { font-weight: bold !important; color: #08B3C7 !important; }
 
-
-#squeezol_button, .buttonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_ { 
-	cursor: pointer;
-	background-color: #08B3C7;
-	border: #08B3C7;
-	color: white;
+.popover {
+  z-index:1000 !important;
+}
+#squeezol_button, .squeezolButtonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_ { 
+	cursor: pointer !important;
+	background-color: #08B3C7 !important;
+	border: #08B3C7 !important;
+	color: white !important;
 	font-family: "DejaVuSansCondensed-BoldOblique";
 }
 
 #squeezol_next, #SqueezolInvitation_ {
-  background-color: #DA396F;
+  background-color: #DA396F !important;
 }
 
 #SqueezolRefund_ {
 	font-family: "DejaVuSansCondensed-BoldOblique";	
 }
 
+#SqueezolStartPay_, #SqueezolInvitation_, #SqueezolModifyAmount_, #SqueezolPay_, #SqueezolDeserted_ {
+  height: 40px !important;
+   font-size: 12px !important;
+}
+
+#SqueezolModifyAmount_ {
+  margin-top: 15px;
+}
+
+#emailModal_ {
+  height: 30px !important;
+  background-color: #FC8F1A !important;
+  display: block !important;
+  border-radius: 1em !important;
+  font-family: DejaVuSansCondensed-BoldOblique;
+  font-size: 12px !important;
+  color: #FFF !important;
+  font-style: normal !important;
+  text-align: center !important;
+  line-height: 10px !important;
+  letter-spacing: 0em !important;
+  cursor: pointer !important; 
+}
+
+
 .buttonEmail {
-	background-color: #FC8F1A;
-	border: #FC8F1A;
-	color: white;
+	background-color: #FC8F1A !important;
+	border: #FC8F1A !important;
+  border-radius: 1em ;
+  font-size: 12px;
+  color: #FFF;
+  font-style: normal;
+  text-align: center;
+  line-height: 10px;
+  letter-spacing: 0em;
+  cursor: pointer;
 	font-family: "DejaVuSansCondensed-BoldOblique";
 }
 
 .buttonFb {
-	background-color: #3B5998;
-	border: #3B5998;
-	color: white;
+	background-color: #3B5998 !important;
+	border: #3B5998 !important;
+	color: white !important;
 	font-family: "DejaVuSansCondensed-BoldOblique";
 }
 
 div.row-separata {
-  margin-top: 10px;
-  padding-top: 10px;
+  margin-top: 10px !important;
+  padding-top: 10px !important;
 }
 
 .separator {
-	border-bottom: 1px solid #dcdcdc;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	border-bottom: 1px solid #dcdcdc !important;
+	margin-top: 15px !important;
+	margin-bottom: 15px !important;
 }
 
 .separator-blu {
-	border-bottom: 1px solid #08b3c7;
-	margin-top: 40px;
+	border-bottom: 1px solid #08b3c7 !important;
+	margin-top: 40px !important;
 }
 
 .separator-active {
-	border-bottom: 3px solid #DA396F;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	border-bottom: 3px solid #DA396F !important;
+	margin-top: 15px !important;
+	margin-bottom: 15px !important;
 }
 
 .separator-inactive {
-	border-bottom: 3px solid #dcdcdc;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	border-bottom: 3px solid #dcdcdc !important;
+	margin-top: 15px !important;
+	margin-bottom: 15px !important;
 }
 
 .text-step-active {
-	color: #08b3c7;
+	color: #08b3c7 !important;
 }
 
 .text-step-inactive {
-	color: #dcdcdc;
+	color: #dcdcdc !important;
 }
 
 .text-step-refused {
-  color: red;
+  color: red !important;
 }
 
 .text-step-accepted {
-  color: green;
+  color: green !important;
 }
 
 .squeezol-btn-header {
- width:25%;
- display:inline;
- margin-right: -8px;
- padding-right: 5px;
- padding-bottom: 10px;
+ width:25% !important;
+ display:inline !important;
+ margin-right: -8px !important;
+ padding-right: 5px !important;
+ padding-bottom: 10px !important;
 }
 
 .alert-info{
-  background-color: #A9E4EB;
+  background-color: #A9E4EB !important;
 }
 
 .pad-it {
-  padding: 5px;
-  margin: 5px;
+  padding: 5px !important;
+  margin: 5px !important;
 }
 
 .content-title {
   font-family: AbsolutProCond-Bold;
-  font-size: 24.2px;
-  font-style: normal;
-  text-align: left;
-  line-height: 29px;
-  letter-spacing: 0em;
-  opacity: 1;
+  font-size: 24.2px !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 29px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
   color: #4f424a !important; 
-  margin-bottom: 25px;
-  padding-left: 0px;
-  cursor: default;
+  margin-bottom: 25px !important;
+  padding-left: 0px !important;
+  cursor: default !important;
 }
 
 .content-body {
   font-family: DejaVuSansCondensed;
-  font-size: 14px;
-  font-style: normal;
-  text-align: left;
-  line-height: 16.8px;
-  letter-spacing: 0em;
-  opacity: 1;
+  font-size: 14px !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 16.8px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
   color: #4f424a !important;
 }
 
 .withBorder {
-  border: 1px solid #DDD;
-  border-radius: 4px;
+  border: 1px solid #DDD !important;
+  border-radius: 4px !important;
 }
 
 .squeezol-label {
   font-family: AbsolutProCond;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 100;
-  text-align: left;
-  line-height: 16.8px;
-  letter-spacing: 0em;
-  opacity: 1;
-  color: #4f424a;
-  display:inline;
+  font-size: 15px !important;
+  font-style: normal !important;
+  font-weight: 100 !important;
+  text-align: left !important;
+  line-height: 16.8px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
+  color: #4f424a !important;
+  display:inline !important;
 }
 
 /* Invitation */
 .imgAvatar{
-  width: 100%;
-  max-height: 40px;
-  max-width: 40px;
+  width: 100% !important;
+  max-height: 40px !important;
+  max-width: 40px !important;
 }
 
 h4.summary strong{
   font-family: "Arial";
-  color: #404040;
-  font-weight: 100;
+  color: #404040 !important;
+  font-weight: 100 !important;
 }
-.pipa { padding-top: 30px;}
+.pipa { padding-top: 30px !important;}
 
 /* WIZARD */
 .wizard img{ 
-	width: 80%;
+	width: 80% !important;
 }
 .wizard h4 {
-	color: #808080;
+	color: #808080 !important;
 }
 
 div.wizardOpen{
-	cursor: pointer;
-	float:left;
+	cursor: pointer !important;
+	float:left !important;
 } 
 h4.wizardOpen{
-	cursor: pointer;
-	display: block;
+	cursor: pointer !important;
+	display: block !important;
 }
 
 .squeezol_button_big{
-	width:15%;
-	float:left;
+	width:20% !important;
+	margin-left: auto !important;
+  margin-right: auto !important;
 }
 /* END */
 
 .squeezol_button_big img{ 
-	width: 90%;
-	cursor: pointer;
+	width: 100% !important;
+	cursor: pointer !important;
 }
 
 h3.popover-title {
 	font-family: "DejaVuSansCondensed-BoldOblique";
-	color: #808080;
-	padding-left:40px;
+	color: #808080 !important;
+	padding-left:40px !important;
 }
 
 
 p.alert-danger, #squeezolNotifyAmount_ {
-	margin-top: 5px;
+	margin-top: 5px !important;
 }
 
 .container-body {
-  height: 100%;
-  margin-top: -75px;
-  padding-top: 95px;
-  padding-bottom: 100px;
+  height: 100% !important;
+  margin-top: -75px !important;
+  padding-top: 95px !important;
+  padding-bottom: 100px !important;
 }
 
 .container-dashboard {
-  background-color: #FFFFFF;
-  border-radius: 1em;
-  border: 1px solid #dcdcdc;
-  padding-top:50px;
-  padding-bottom:50px;
-  box-shadow: 3px 3px 1px #dcdcdc;
+  background-color: #FFFFFF !important;
+  border-radius: 1em !important;
+  border: 1px solid #dcdcdc !important;
+  padding-top:50px !important;
+  padding-bottom:50px !important;
+  box-shadow: 3px 3px 1px #dcdcdc !important;
 }
 iframe {
-	position: absolute;
-	top: 250px;
-	left:250px;
+	position: absolute !important;
+	top: 250px !important;
+	left:250px !important;
 }
 
 .form-group > select {
-	margin-left: 2px;
+	margin-left: 2px !important;
 }
 
 .invitationContainer, .buttonEmail{
-	margin-bottom:20px;
+	margin-bottom:20px !important;
 }
 
 .form-group select, #datepicker1 , #datepicker2, .panel-heading {
   background-color:#A9E4EB !important;
   border:#A9E4EB !important;
-  cursor: pointer;
-  text-align: center;
+  cursor: pointer !important;
+  text-align: center !important;
   
 }
 
 .input-group-addon{
   color:#FFF !important;
   background-color:#0AB3C6 !important;
-  cursor:default;
+  cursor:default !important;
 }
 
 .form-group select {
-  padding-top: 5px;
-  padding-bottom:5px;
-  display: block;
-  width: 100%;
-  border-radius: 4px;
+  padding-top: 5px !important;
+  padding-bottom:5px !important;
+  display: block !important;
+  width: 100% !important;
+  border-radius: 4px !important;
 }
 
 .form-group select, .form-group option  {
-  margin-left: 4px;
+  margin-left: 4px !important;
   color:#665558 !important;
 }
 
 .pin {
   font-family: DejaVuSansCondensed;
-  font-size: 14px;
-  font-style: normal;
-  text-align: left;
-  line-height: 30px;
-  letter-spacing: 0em;
-  opacity: 1;
-  background-color: #A9E4EB;
+  font-size: 14px !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 30px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
+  background-color: #A9E4EB !important;
 }
 
 .glyph-ok {
-
   background-color: #DFF0D8 !important;
   color: #3C763D !important;
 }
 
 div.glyph-info-sign {
-  display: inline;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  padding-left: 1px;
+  display: inline !important;
+  width: 30px !important;
+  height: 30px !important;
+  cursor: pointer !important;
+  padding-left: 1px !important;
   color: rgb(255, 255, 255) !important; 
-  box-shadow: 1px 1px 0.5px #B3B3B3;
-  border-radius: 20px;
-}
-
-.glyph-question-sign {
-  
+  box-shadow: 1px 1px 0.5px #B3B3B3 !important;
+  border-radius: 20px !important;
 }
 
 .icon p {
   font-family: "AbsolutePro-BoldOblique";
-  color: #000;
-  width: 30px;
-  height: 30px;
-  display: inline;
-  margin:3px;
-  padding:3px;
+  color: #000 !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: inline !important;
+  margin:3px !important;
+  padding:3px !important;
 }
 
 .icon {
-  color: #7F8389;
-  width: 100px;
-  height: 100px;
-  display: inline;
-  padding-left: 4px;
-  margin-left: 4px;
-  font-size: 100%;
-  cursor: pointer;
+  color: #7F8389 !important;
+  width: 100px !important;
+  height: 100px !important;
+  display: inline !important;
+  padding-left: 4px !important;
+  margin-left: 4px !important;
+  font-size: 100% !important;
+  cursor: pointer !important;
 }
 
 .target-A {
   font-family: DejaVuSansCondensed;
-  font-size: 12px;
-  background-color:#0AB3C6;
-  font-style: normal;
-  text-align: left;
-  line-height: 14px;
-  letter-spacing: 0em;
-  opacity: 1;
-  color: #FFF;
+  font-size: 12px !important;
+  background-color:#0AB3C6 !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 14px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
+  color: #FFF !important;
 }
 
 .target-P {
   font-family: DejaVuSansCondensed;
-  font-size: 12px;
-  background-color:#0AB3C6;
-  font-style: normal;
-  text-align: left;
-  line-height: 14px;
-  letter-spacing: 0em;
-  opacity: 1;
-  color: #FFF;
+  font-size: 12px !important;
+  background-color:#0AB3C6 !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 14px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
+  color: #FFF !important;
 }
 
 .target-R {
   font-family: DejaVuSansCondensed;
-  font-size: 12px;
-  background-color:#6B6868;
-  font-style: normal;
-  text-align: left;
-  line-height: 14px;
-  letter-spacing: 0em;
-  opacity: 1;
-  color: #FFF;
+  font-size: 12px !important;
+  background-color:#6B6868 !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 14px !important;
+  letter-spacing: 0em !important;
+  opacity: 1 !important;
+  color: #FFF !important;
 }
 
-.target-P, .pin {
+.target-P p, .pin {
   padding: 2px;
   text-align:center;
 }
@@ -409,6 +439,7 @@ div.glyph-info-sign {
   margin-left: -15px;
   margin-right: 0px;
 }
+
 
 .box-blu {
   border: 2px solid #0AB3C6;
