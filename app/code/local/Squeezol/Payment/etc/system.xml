@@ -42,6 +42,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
+                        <use_sandbox translate="label">
+                            <label>Use Sandbox</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_sandbox>
                         <app_id translate="label,comment">
                             <label>Application ID</label>
                             <comment>Squeezol internal Application id.</comment>
@@ -51,6 +60,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </app_id>
+                        
                         <app_secret translate="label,comment">
                             <label>Application Secret KEY</label>
                             <comment>Squeezol internal Secret KEY</comment>

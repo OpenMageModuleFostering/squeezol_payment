@@ -791,7 +791,7 @@ throw new SyntaxError('JSON.parse');
                    '<div class="row" style="margin-top: -30px;">'+
                      '<div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1" style="padding-top: 10px; padding-left:50px;">'+
                        '<img class="squeezol-btn-header img-responsive" src="' + img_url + 'squeezol.png"></img>'+
-                       '<p class="content-title" style="display:inline; margin-left:20px;">'+title+'</p>'+
+                       '<p class="sq-content-title" style="display:inline; margin-left:20px;">'+title+'</p>'+
                      '</div>'+
 									 '</div>'+
 								   '<div id="squeezol_view">'+
@@ -821,7 +821,7 @@ throw new SyntaxError('JSON.parse');
 			var viewPortDiv = jQuery('#squeezol_view');
 			var separator;
 			separator = '<div class="row row-separata">'+
-	  								'<div class="col-md-4 col-md-offset-1 col-xs-12"><h4 class="content-body">'+text+'</h4></div>'+
+	  								'<div class="col-md-4 col-md-offset-1 col-xs-12"><h4 class="sq-content-body">'+text+'</h4></div>'+
 										'<div class="col-xs-10 col-xs-offset-1 separator"></div>'+
 									'</div>';
       viewPortDiv.append(separator);
@@ -835,7 +835,7 @@ throw new SyntaxError('JSON.parse');
                         '<div class="panel panel-default">'+
                           '<div class="panel-heading alert alert-info">'+
                             '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">'+
-                              '<p class="squeezol-label">'+text+'</p>'+
+                              '<p class="sq-label">'+text+'</p>'+
                             '</a>'+
                           '</div>'+
                           '<div id="collapseOne" class="panel-collapse collapse out">'+
@@ -992,7 +992,7 @@ throw new SyntaxError('JSON.parse');
     that.textWithHelper = function(labelName, helpText){
       var txt = document.createElement('p')
       var $question = jQuery('<div />');
-      txt.className = 'squeezol-label';
+      txt.className = 'sq-label';
       txt.appendChild(document.createTextNode(labelName));
       $question.attr('data-toggle', 'popover');
       $question.attr('data-placement', 'top');
@@ -1749,7 +1749,7 @@ throw new SyntaxError('JSON.parse');
 			var btnText = ['Email', 'f | Facebook', 'Invia E-mail'],
 					btnId = ['squeezolEmail_', 'squeezolFb_', 'squeezolSubmit_' ],
 					btnSize = ['small', 'small', 'big'],
-					btnClass = ['btn btn-lg buttonEmail', 'btn btn-lg buttonFb', 'squeezolButtonSuccess btn btn-lg'];
+					btnClass = ['btn btn-lg sq-buttonEmail', 'btn btn-lg sq-buttonFb', 'squeezolButtonSuccess btn btn-lg'];
 			var fbBtn, emailBtn, submitBtn, emailDiv, fbDiv, selectBox, nextBtn,
 				  invitationBtn, removeBtn, containerDiv, submitDiv, nextDiv;
 			var fbUid, friendList;
@@ -1784,8 +1784,8 @@ throw new SyntaxError('JSON.parse');
 				fbDiv.className = 'fbInvitation';
 				fbDiv.id = 'squeezolFb'
 				invitationBtn = InvitationObj();
-				emailBtn = invitationBtn.createButton('@ Email', btnId[0], btnSize[0], 'btn btn-sm buttonEmail');
-				emailModal = invitationBtn.createButton('@ | Invia Email', 'emailModal_', 'big', 'btn btn-lg buttonEmail');
+				emailBtn = invitationBtn.createButton('@ Email', btnId[0], btnSize[0], 'btn btn-sm sq-buttonEmail');
+				emailModal = invitationBtn.createButton('@ | Invia Email', 'emailModal_', 'big', 'btn btn-lg sq-buttonEmail');
 				
 				// SEND EMAIL handler:
 				submitBtn = invitationBtn.createButton(btnText[2], btnId[2], btnSize[2], btnClass[2]);
@@ -1975,7 +1975,7 @@ throw new SyntaxError('JSON.parse');
       var date2=new Date(group.max_payment_date);
 			var sqDiv = document.getElementById('squeezol_view');
       if (group.isOpen == false){
-        isOpen = '<div class="row pin">'+
+        isOpen = '<div class="row sq-pin">'+
                    '<p><strong>PIN:'+group.pin+'</strong></p>'+
                  '</div>';
       }
@@ -1997,17 +1997,17 @@ throw new SyntaxError('JSON.parse');
       groupDigest2=document.createElement('div');
       groupDigest2.className='row row-separata';
       groupDigest2.innerHTML = '<div class="col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-1 col-left">'+
-                                 '<p class="content-title">'+ group.name +'<p>'+
+                                 '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
                                '<div class="col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-0">'+
-                                 '<p class="content-body">Scadenza invito:</p>'+
-                                 '<p class="content-body">'+
+                                 '<p class="sq-content-body">Scadenza invito:</p>'+
+                                 '<p class="sq-content-body">'+
                                    date1.getDate() + '.' + (parseInt(date1.getMonth())+1).toString() + '.' + date1.getFullYear()+
                                  '</p>'+
                                '</div>'+
                                '<div class=" col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-0">'+
-                                 '<p class="content-body">Scadenza pagamento:</p>'+
-                                 '<p class="content-body">'+
+                                 '<p class="sq-content-body">Scadenza pagamento:</p>'+
+                                 '<p class="sq-content-body">'+
                                    date2.getDate() + '.' + (parseInt(date2.getMonth())+1).toString() + '.' + date2.getFullYear()+
                                  '</p>'+
                                '</div>'+
@@ -2019,7 +2019,7 @@ throw new SyntaxError('JSON.parse');
                                  isOpen+
                                '</div>';
 
-			groupDigest.innerHTML= '<div class="col-xs-10 col-xs-offset-1 withBorder">'+
+			groupDigest.innerHTML= '<div class="col-xs-10 col-xs-offset-1 sq-withBorder">'+
                                 '<div class="row">'+   
                                   '<div class="col-xs-1 col-left">'+
                                     '<div class="box-blu">'+
@@ -2028,7 +2028,7 @@ throw new SyntaxError('JSON.parse');
                                     '</div>'+
                                   '</div>'+
 														      '<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 form-group" style="margin: 10px 0px 0px 20px;">'+
-														       	'<p class="squeezol-label">Tipo quota:'+
+														       	'<p class="sq-label">Tipo quota:'+
                                       '<div data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
                                         'quota che verrÃ  visualizzata dagli invitati. Altrimenti la quota proposta '+
                                         'verrÃ  calcolata in base al numero di invitati"'+
@@ -2040,7 +2040,7 @@ throw new SyntaxError('JSON.parse');
 															      '<input value="'+adminEmail+'"type="hidden" name="email" disabled>'+
 														      '</div>'+
 														      '<div class="squeezol_quota col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="margin: 10px 0px 0px 20px;">'+
-															      '<p class="squeezol-label">Quota singola:'+
+															      '<p class="sq-label">Quota singola:'+
                                       '<div data-toggle="popover" data-placement="top" title="La quota Ã¨ un '+
                                         'suggerimento per gli invitati."'+
                                         'class="icon glyph-info-sign">'+
@@ -2293,7 +2293,7 @@ throw new SyntaxError('JSON.parse');
 						                  '<img id="thumb'+j+'" class="imgAvatar thumbnail img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
 													  '</div>'+
 													  '<div class="col-md-4 col-xs-4 has-success">'+
-														  '<p class="content-body text-center">'+p.name+'</p>'+
+														  '<p class="sq-content-body text-center">'+p.name+'</p>'+
 													  '</div>'+
 													  '<div class="col-md-2 col-xs-10">'+
 														  '<h4 class="text-center">'+contribution_amount+'</h4>'+
@@ -2413,19 +2413,19 @@ throw new SyntaxError('JSON.parse');
           testo = 'Quota pagata';
         }
         else if(participant.status == 'A'){
-          classe='box-blu-digest content-body';
+          classe='box-blu-digest sq-content-body';
         }
         else
           classe='target-R';
         groupDigest.innerHTML= '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 col-left">'+
-                                 '<p class="content-title">'+ group.name +'<p>'+
+                                 '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
                                '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">'+
-                                 '<p class="content-body">Organizzatore:</p>'+  
+                                 '<p class="sq-content-body">Organizzatore:</p>'+  
                                  '<strong>'+admin_name+'</strong>'+
                                '</div>'+
                                '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1">'+
-                                 '<div class="row box-blu-digest content-body" style="padding:5px;">'+
+                                 '<div class="row box-blu-digest sq-content-body" style="padding:5px;">'+
                                    '<p class="text-center"> Scelta:'+this.switchStatus(participant.status)+'</p>'+
                                  '</div>'+
                                '</div>';
@@ -2439,13 +2439,13 @@ throw new SyntaxError('JSON.parse');
                                     '<div class="col-md-4">'+
                                       '<h4>TERMINA FRA</h4>'+
                                       '<div class="col-md-4 no-pad">'+
-                                        '<p class="target-small">'+params.daysLeft+' G</p>'+
+                                        '<p class="sq-target-small">'+params.daysLeft+' G</p>'+
                                       '</div>'+
                                       '<div class="col-md-4 no-pad">'+
-                                        '<p class="target-small">'+params.hoursLeft+' H</p>'+
+                                        '<p class="sq-target-small">'+params.hoursLeft+' H</p>'+
                                       '</div>'+
                                       '<div class="col-md-4 no-pad">'+
-                                        '<p class="target-small">'+params.minutesLeft+' M</p>'+
+                                        '<p class="sq-target-small">'+params.minutesLeft+' M</p>'+
                                       '</div>'+
                                     '</div>'+
                                     '<div class="col-md-4">'+

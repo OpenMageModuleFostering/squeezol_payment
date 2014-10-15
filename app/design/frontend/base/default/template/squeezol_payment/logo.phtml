@@ -1,0 +1,51 @@
+<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/logo_min.png" style="height: 24px; margin-left:10px; margin-right: 10px; display:inline;" />
+<a id="squeezol_btn" target="_blank" style="float: left; margin-top: 7px; display:inline; cursor: pointer;">
+  <div>
+    <h4>Scopri come</h4>
+  </div>
+</a>
+
+<div style="width: 100px; height: 1px; clear:both;"></div>
+
+<script>
+jQuery(document).ready(function () {
+    var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+    var div ='<div class="row wizard">'+
+                    '<div class="col-xs-4">'+
+                                      '<img class="img-responsive" src="' + img_url + 'btn2.jpg" alt="Think">'+
+                      '<h4 class="text-center">1.Crea una colletta</h4>'+
+                    '</div>'+
+                    '<div class="col-xs-4">'+
+                                      '<img class="img-responsive" src="' + img_url + 'busta2.jpg" alt="Find">'+
+                      '<h4 class="text-center">2.Invita i tuoi amici</h4>'+
+                    '</div>'+
+                    '<div class="col-xs-4">'+
+                      '<img class="img-responsive" src="' + img_url + 'salva2.jpg" alt="Fun">'+
+                      '<h4 class="text-center">3. Versa la tua quota</h4>'+
+                                  '</div>'+
+                                '</div>'+
+                  '<div class="row">'+
+                    '<h4 class="text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... &egrave; gratis!</h4>'+
+                  '</div>';
+    jQuery('#squeezol_btn').popover({ title:'Come funziona',
+                                      html:true ,
+                                      content: div,
+                                      delay: { show: 100, hide:100 },
+                                      placement: {top: 100, left: 100},
+                                      trigger: 'manual'
+                                   });
+          
+    jQuery('#squeezol_btn').on('click', function(){
+        jQuery('#squeezol_btn').popover('toggle');
+    });
+    jQuery('#squeezol_btn').on('shown.bs.popover', function(){
+        jQuery('.popover').attr('style','display: block; top: -20px; left: 127px;max-width:500px;');
+    });
+    jQuery('#squeezol_btn').on('hidden.bs.popover', function(){
+        jQuery('.popover').attr('style','');
+      jQuery(this).css("display", "");
+    });
+
+});
+
+</script>

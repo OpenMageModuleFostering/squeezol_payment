@@ -110,7 +110,7 @@ label { font-weight: bold !important; color: #08B3C7 !important; }
 }
 
 
-.buttonEmail {
+.sq-buttonEmail {
 	background-color: #FC8F1A !important;
 	border: #FC8F1A !important;
   border-radius: 1em ;
@@ -124,7 +124,7 @@ label { font-weight: bold !important; color: #08B3C7 !important; }
 	font-family: "DejaVuSansCondensed-BoldOblique";
 }
 
-.buttonFb {
+.sq-buttonFb {
 	background-color: #3B5998 !important;
 	border: #3B5998 !important;
 	color: white !important;
@@ -192,7 +192,7 @@ div.row-separata {
   margin: 5px !important;
 }
 
-.content-title {
+.sq-content-title {
   font-family: AbsolutProCond-Bold;
   font-size: 24.2px !important;
   font-style: normal !important;
@@ -206,7 +206,7 @@ div.row-separata {
   cursor: default !important;
 }
 
-.content-body {
+.sq-content-body {
   font-family: DejaVuSansCondensed;
   font-size: 14px !important;
   font-style: normal !important;
@@ -217,12 +217,12 @@ div.row-separata {
   color: #4f424a !important;
 }
 
-.withBorder {
+.sq-withBorder {
   border: 1px solid #DDD !important;
   border-radius: 4px !important;
 }
 
-.squeezol-label {
+.sq-label {
   font-family: AbsolutProCond;
   font-size: 15px !important;
   font-style: normal !important;
@@ -314,7 +314,7 @@ iframe {
 	margin-left: 2px !important;
 }
 
-.invitationContainer, .buttonEmail{
+.invitationContainer, .sq-buttonEmail{
 	margin-bottom:20px !important;
 }
 
@@ -345,7 +345,7 @@ iframe {
   color:#665558 !important;
 }
 
-.pin {
+.sq-pin {
   font-family: DejaVuSansCondensed;
   font-size: 14px !important;
   font-style: normal !important;
@@ -429,7 +429,7 @@ div.glyph-info-sign {
   color: #FFF !important;
 }
 
-.target-P p, .pin {
+.target-P p, .sq-pin {
   padding: 2px;
   text-align:center;
 }
@@ -491,7 +491,7 @@ div.withPaddedBorder {
   height:5%;
 }
 
-.target-small {
+.sq-target-small {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 12px;
   background-color:#0AB3C6;
