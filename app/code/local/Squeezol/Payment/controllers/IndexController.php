@@ -82,8 +82,13 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
         require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/IGrantType.php';
         require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/AuthorizationCode.php';
 
-        $paramsModel = Mage::getModel('squeezol_payment/params');
         $model       = Mage::getModel('squeezol_payment/paymentMethod');
+        if ($model->getConfigData('use_sandbox') == 1) {
+            $paramsModel = Mage::getModel('squeezol_payment/paramsandbox');
+        } else {
+            $paramsModel = Mage::getModel('squeezol_payment/params');
+        }
+
         $app_id      = $model->getConfigData('app_id');
         $secret      = $model->getConfigData('app_secret');
         $basePath    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
@@ -124,8 +129,13 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
             require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/IGrantType.php';
             require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/AuthorizationCode.php';
 
-            $paramsModel = Mage::getModel('squeezol_payment/params');
             $model       = Mage::getModel('squeezol_payment/paymentMethod');
+            if ($model->getConfigData('use_sandbox') == 1) {
+                $paramsModel = Mage::getModel('squeezol_payment/paramsandbox');
+            } else {
+                $paramsModel = Mage::getModel('squeezol_payment/params');
+            }
+
             $app_id      = $model->getConfigData('app_id');
             $secret      = $model->getConfigData('app_secret');
             $basePath    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
