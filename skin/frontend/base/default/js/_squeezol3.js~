@@ -2499,7 +2499,7 @@ throw new SyntaxError('JSON.parse');
 					participantId = oldBtn.getAttribute('data-participant');
 					parentDiv = oldBtn.parentNode;
 					parentDiv.removeChild(oldBtn);
-					renderBtn.create('Split Concluso', 'ui', 'SqueezolPay_');
+					renderBtn.create('Pagato', 'ui', 'SqueezolPay_');
 					renderBtn.get().disabled=true;
 					payBoxP = payBox.parentNode;
 					payBoxP.removeChild(payBox);

@@ -326,13 +326,13 @@ iframe {
   
 }
 
-#squeezol_view .input-group-addon{
+.input-group-addon{
   color:#FFF !important;
   background-color:#0AB3C6 !important;
   cursor:default !important;
 }
 
-#squeezol_view .form-group select {
+.form-group select {
   padding-top: 5px !important;
   padding-bottom:5px !important;
   display: block !important;
@@ -340,12 +340,12 @@ iframe {
   border-radius: 4px !important;
 }
 
-#squeezol_view .form-group select, #squeezol_view .form-group option  {
+.form-group select, .form-group option  {
   margin-left: 4px !important;
   color:#665558 !important;
 }
 
-#squeezol_view .sq-pin {
+.sq-pin {
   font-family: DejaVuSansCondensed;
   font-size: 14px !important;
   font-style: normal !important;
@@ -356,12 +356,12 @@ iframe {
   background-color: #A9E4EB !important;
 }
 
-#squeezol_view .glyph-ok {
+.glyph-ok {
   background-color: #DFF0D8 !important;
   color: #3C763D !important;
 }
 
-#squeezol_view div.glyph-info-sign {
+div.glyph-info-sign {
   display: inline !important;
   width: 30px !important;
   height: 30px !important;
@@ -372,7 +372,7 @@ iframe {
   border-radius: 20px !important;
 }
 
-#squeezol_view .icon p {
+.icon p {
   font-family: "AbsolutePro-BoldOblique";
   color: #000 !important;
   width: 30px !important;
@@ -382,7 +382,7 @@ iframe {
   padding:3px !important;
 }
 
-#squeezol_view .icon {
+.icon {
   color: #7F8389 !important;
   width: 100px !important;
   height: 100px !important;
@@ -393,7 +393,7 @@ iframe {
   cursor: pointer !important;
 }
 
-#squeezol_view .target-A {
+.target-A {
   font-family: DejaVuSansCondensed;
   font-size: 12px !important;
   background-color:#0AB3C6 !important;
@@ -405,7 +405,7 @@ iframe {
   color: #FFF !important;
 }
 
-#squeezol_view .target-P {
+.target-P {
   font-family: DejaVuSansCondensed;
   font-size: 12px !important;
   background-color:#0AB3C6 !important;
@@ -417,7 +417,7 @@ iframe {
   color: #FFF !important;
 }
 
-#squeezol_view .target-R {
+.target-R {
   font-family: DejaVuSansCondensed;
   font-size: 12px !important;
   background-color:#6B6868 !important;
@@ -429,24 +429,24 @@ iframe {
   color: #FFF !important;
 }
 
-#squeezol_view .target-P p, #squeezol_view .sq-pin {
+.target-P p, .sq-pin {
   padding: 2px;
   text-align:center;
 }
 
-#squeezol_view .box-blu-digest {
+.box-blu-digest {
   border: 2px solid #0AB3C6;
   margin-left: -15px;
   margin-right: 0px;
 }
 
 
-#squeezol_view .box-blu {
+.box-blu {
   border: 2px solid #0AB3C6;
 }
 
 
-#squeezol_view .box-blu p{
+.box-blu p{
   font-family: DejaVuSansCondensed;
   font-size: 14px;
   font-style: normal;
@@ -459,23 +459,23 @@ iframe {
   color: #000;
 }
 
-#squeezol_view .pink-link a {
+.pink-link a {
   cursor: pointer;
   color:#DA396F;
   margin-top:25px;
   font-size: 14px;
 }
 
-#squeezol_view div.withPaddedBorder {
+div.withPaddedBorder {
   border: 1px solid #DDD;
   border-radius: 4px;
   padding:20px;
 }
 
-#squeezol_view .part h4{
+.part h4{
   font-family: 'AbsolutProCond';
 }
-#squeezol_view #closeModal {
+#closeModal {
   background-color: #FFFFFF;
   border-radius: 1em;
   border: 1px solid #dcdcdc;
@@ -491,7 +491,7 @@ iframe {
   height:5%;
 }
 
-#squeezol_view .sq-target-small {
+.sq-target-small {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 12px;
   background-color:#0AB3C6;
@@ -504,14 +504,14 @@ iframe {
   padding: 5px;
 }
 
-#squeezol_view .no-pad {
+.no-pad {
   padding:4px;
 }
 
 /* -------------------------------------
  * Bar container
  * ------------------------------------- */
-#squeezol_view .progress-radial {
+.progress-radial {
   left: 50%;
   margin-left: -50px;
   margin-top: 10px;
@@ -526,7 +526,7 @@ iframe {
 /* -------------------------------------
  * Optional centered circle w/text
  * ------------------------------------- */
-#squeezol_view .progress-radial .overlay {
+.progress-radial .overlay {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 30.2px;
   font-style: normal;
@@ -548,7 +548,7 @@ iframe {
  * ------------------------------------- */
 
 
-#squeezol_view .text-overlay {
+.text-overlay {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 10px;
   font-style: normal;
@@ -563,7 +563,7 @@ iframe {
 /* -------------------------------------
  * Mixin for progress-% class
  * ------------------------------------- */
-#squeezol_view .progress-0 {
+.progress-0 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
