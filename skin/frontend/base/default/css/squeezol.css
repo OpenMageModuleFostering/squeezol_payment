@@ -54,7 +54,7 @@
   font-style:normal;
 }
 
-#squeezol_view h4 {
+h4 {
   font-family: "DejaVuSansCondensed-BoldOblique" !important;
   color: #08b3c7 !important;
   font-weight: 100 !important;
@@ -64,9 +64,9 @@
 	font-weight: 10 !important;
 }
 
-#squeezol_view label { font-weight: bold !important; color: #08B3C7 !important; }
+label { font-weight: bold !important; color: #08B3C7 !important; }
 
-#squeezol_view .popover {
+.popover {
   z-index:1000 !important;
 }
 #squeezol_button, .squeezolButtonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_ { 
@@ -90,13 +90,13 @@
    font-size: 12px !important;
 }
 
-#squeezol_view #SqueezolModifyAmount_ {
+#SqueezolModifyAmount_ {
   margin-top: 15px;
 }
 
-#squeezol_view #emailModal_ {
-  height: 30px !important;
+#emailModal_ {
   background-color: #FC8F1A !important;
+  height: 30px !important;
   display: block !important;
   border-radius: 1em !important;
   font-family: DejaVuSansCondensed-BoldOblique;
@@ -110,7 +110,7 @@
 }
 
 
-#squeezol_view .sq-buttonEmail {
+.sq-buttonEmail {
 	background-color: #FC8F1A !important;
 	border: #FC8F1A !important;
   border-radius: 1em ;
@@ -124,58 +124,66 @@
 	font-family: "DejaVuSansCondensed-BoldOblique";
 }
 
-#squeezol_view .sq-buttonFb {
+.sq-buttonFb {
 	background-color: #3B5998 !important;
-	border: #3B5998 !important;
-	color: white !important;
-	font-family: "DejaVuSansCondensed-BoldOblique";
+	height: 30px !important;
+  display: block !important;
+  border-radius: 1em !important;
+  font-family: DejaVuSansCondensed-BoldOblique;
+  font-size: 12px !important;
+  color: #FFF !important;
+  font-style: normal !important;
+  text-align: center !important;
+  line-height: 10px !important;
+  letter-spacing: 0em !important;
+  cursor: pointer !important; 
 }
 
-#squeezol_view div.row-separata {
+div.row-separata {
   margin-top: 10px !important;
   padding-top: 10px !important;
 }
 
-#squeezol_view .separator {
+.separator {
 	border-bottom: 1px solid #dcdcdc !important;
 	margin-top: 15px !important;
 	margin-bottom: 15px !important;
 }
 
-#squeezol_view .separator-blu {
+.separator-blu {
 	border-bottom: 1px solid #08b3c7 !important;
 	margin-top: 40px !important;
 }
 
-#squeezol_view .separator-active {
+.separator-active {
 	border-bottom: 3px solid #DA396F !important;
 	margin-top: 15px !important;
 	margin-bottom: 15px !important;
 }
 
-#squeezol_view .separator-inactive {
+.separator-inactive {
 	border-bottom: 3px solid #dcdcdc !important;
 	margin-top: 15px !important;
 	margin-bottom: 15px !important;
 }
 
-#squeezol_view .text-step-active {
+.text-step-active {
 	color: #08b3c7 !important;
 }
 
-#squeezol_view .text-step-inactive {
+.text-step-inactive {
 	color: #dcdcdc !important;
 }
 
-#squeezol_view .text-step-refused {
+.text-step-refused {
   color: red !important;
 }
 
-#squeezol_view .text-step-accepted {
+.text-step-accepted {
   color: green !important;
 }
 
-#squeezol_view .squeezol-btn-header {
+.squeezol-btn-header {
  width:25% !important;
  display:inline !important;
  margin-right: -8px !important;
@@ -183,16 +191,16 @@
  padding-bottom: 10px !important;
 }
 
-#squeezol_view .alert-info{
+.alert-info{
   background-color: #A9E4EB !important;
 }
 
-#squeezol_view .pad-it {
+.pad-it {
   padding: 5px !important;
   margin: 5px !important;
 }
 
-#squeezol_view .sq-content-title {
+.sq-content-title {
   font-family: AbsolutProCond-Bold;
   font-size: 24.2px !important;
   font-style: normal !important;
@@ -206,7 +214,7 @@
   cursor: default !important;
 }
 
-#squeezol_view .sq-content-body {
+.sq-content-body {
   font-family: DejaVuSansCondensed;
   font-size: 14px !important;
   font-style: normal !important;
@@ -217,12 +225,12 @@
   color: #4f424a !important;
 }
 
-#squeezol_view .sq-withBorder {
+.sq-withBorder {
   border: 1px solid #DDD !important;
   border-radius: 4px !important;
 }
 
-#squeezol_view .sq-label {
+.sq-label {
   font-family: AbsolutProCond;
   font-size: 15px !important;
   font-style: normal !important;
@@ -236,18 +244,18 @@
 }
 
 /* Invitation */
-#squeezol_view .imgAvatar{
+.imgAvatar{
   width: 100% !important;
   max-height: 40px !important;
   max-width: 40px !important;
 }
 
-#squeezol_view h4.summary strong{
+h4.summary strong{
   font-family: "Arial";
   color: #404040 !important;
   font-weight: 100 !important;
 }
-#squeezol_view .pipa { padding-top: 30px !important;}
+.pipa { padding-top: 30px !important;}
 
 /* WIZARD */
 .wizard img{ 
@@ -289,14 +297,14 @@ p.alert-danger, #squeezolNotifyAmount_ {
 	margin-top: 5px !important;
 }
 
-#squeezol_view .container-body {
+.container-body {
   height: 100% !important;
   margin-top: -75px !important;
   padding-top: 95px !important;
   padding-bottom: 100px !important;
 }
 
-#squeezol_view .container-dashboard {
+.container-dashboard {
   background-color: #FFFFFF !important;
   border-radius: 1em !important;
   border: 1px solid #dcdcdc !important;
@@ -310,11 +318,11 @@ iframe {
 	left:250px !important;
 }
 
-#squeezol_view .form-group > select {
+.form-group > select {
 	margin-left: 2px !important;
 }
 
-#squeezol_view .invitationContainer, .sq-buttonEmail{
+.invitationContainer, .sq-buttonEmail{
 	margin-bottom:20px !important;
 }
 
@@ -326,13 +334,13 @@ iframe {
   
 }
 
-#squeezol_view .input-group-addon{
+.input-group-addon{
   color:#FFF !important;
   background-color:#0AB3C6 !important;
   cursor:default !important;
 }
 
-#squeezol_view .form-group select {
+.form-group select {
   padding-top: 5px !important;
   padding-bottom:5px !important;
   display: block !important;
@@ -340,12 +348,12 @@ iframe {
   border-radius: 4px !important;
 }
 
-#squeezol_view .form-group select, #squeezol_view .form-group option  {
+.form-group select, .form-group option  {
   margin-left: 4px !important;
   color:#665558 !important;
 }
 
-#squeezol_view .sq-pin {
+.sq-pin {
   font-family: DejaVuSansCondensed;
   font-size: 14px !important;
   font-style: normal !important;
@@ -356,12 +364,12 @@ iframe {
   background-color: #A9E4EB !important;
 }
 
-#squeezol_view .glyph-ok {
+.glyph-ok {
   background-color: #DFF0D8 !important;
   color: #3C763D !important;
 }
 
-#squeezol_view div.glyph-info-sign {
+div.glyph-info-sign {
   display: inline !important;
   width: 30px !important;
   height: 30px !important;
@@ -372,7 +380,7 @@ iframe {
   border-radius: 20px !important;
 }
 
-#squeezol_view .icon p {
+.icon p {
   font-family: "AbsolutePro-BoldOblique";
   color: #000 !important;
   width: 30px !important;
@@ -382,7 +390,7 @@ iframe {
   padding:3px !important;
 }
 
-#squeezol_view .icon {
+.icon {
   color: #7F8389 !important;
   width: 100px !important;
   height: 100px !important;
@@ -393,7 +401,7 @@ iframe {
   cursor: pointer !important;
 }
 
-#squeezol_view .target-A {
+.target-A {
   font-family: DejaVuSansCondensed;
   font-size: 12px !important;
   background-color:#0AB3C6 !important;
@@ -405,7 +413,7 @@ iframe {
   color: #FFF !important;
 }
 
-#squeezol_view .target-P {
+.target-P {
   font-family: DejaVuSansCondensed;
   font-size: 12px !important;
   background-color:#0AB3C6 !important;
@@ -417,7 +425,7 @@ iframe {
   color: #FFF !important;
 }
 
-#squeezol_view .target-R {
+.target-R {
   font-family: DejaVuSansCondensed;
   font-size: 12px !important;
   background-color:#6B6868 !important;
@@ -429,24 +437,24 @@ iframe {
   color: #FFF !important;
 }
 
-#squeezol_view .target-P p, #squeezol_view .sq-pin {
+.target-P p, .sq-pin {
   padding: 2px;
   text-align:center;
 }
 
-#squeezol_view .box-blu-digest {
+.box-blu-digest {
   border: 2px solid #0AB3C6;
   margin-left: -15px;
   margin-right: 0px;
 }
 
 
-#squeezol_view .box-blu {
+.box-blu {
   border: 2px solid #0AB3C6;
 }
 
 
-#squeezol_view .box-blu p{
+.box-blu p{
   font-family: DejaVuSansCondensed;
   font-size: 14px;
   font-style: normal;
@@ -459,23 +467,23 @@ iframe {
   color: #000;
 }
 
-#squeezol_view .pink-link a {
+.pink-link a {
   cursor: pointer;
   color:#DA396F;
   margin-top:25px;
   font-size: 14px;
 }
 
-#squeezol_view div.withPaddedBorder {
+div.withPaddedBorder {
   border: 1px solid #DDD;
   border-radius: 4px;
   padding:20px;
 }
 
-#squeezol_view .part h4{
+.part h4{
   font-family: 'AbsolutProCond';
 }
-#squeezol_view #closeModal {
+#closeModal {
   background-color: #FFFFFF;
   border-radius: 1em;
   border: 1px solid #dcdcdc;
@@ -491,7 +499,7 @@ iframe {
   height:5%;
 }
 
-#squeezol_view .sq-target-small {
+.sq-target-small {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 12px;
   background-color:#0AB3C6;
@@ -504,14 +512,14 @@ iframe {
   padding: 5px;
 }
 
-#squeezol_view .no-pad {
+.no-pad {
   padding:4px;
 }
 
 /* -------------------------------------
  * Bar container
  * ------------------------------------- */
-#squeezol_view .progress-radial {
+.progress-radial {
   left: 50%;
   margin-left: -50px;
   margin-top: 10px;
@@ -526,7 +534,7 @@ iframe {
 /* -------------------------------------
  * Optional centered circle w/text
  * ------------------------------------- */
-#squeezol_view .progress-radial .overlay {
+.progress-radial .overlay {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 30.2px;
   font-style: normal;
@@ -548,7 +556,7 @@ iframe {
  * ------------------------------------- */
 
 
-#squeezol_view .text-overlay {
+.text-overlay {
   font-family: DejaVuSansCondensed-Bold;
   font-size: 10px;
   font-style: normal;
@@ -563,7 +571,7 @@ iframe {
 /* -------------------------------------
  * Mixin for progress-% class
  * ------------------------------------- */
-#squeezol_view .progress-0 {
+.progress-0 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 

@@ -853,7 +853,7 @@ throw new SyntaxError('JSON.parse');
       var div='<div class="row wizard">'+
                 '<div class="col-xs-4">'+
 								  '<img class="img-responsive" src="' + img_url + 'btn2.jpg" alt="Think">'+
-                  '<h4 class="text-center">1.Crea una colletta</h4>'+
+                  '<h4 class="text-center">1.Crea uno Split</h4>'+
                 '</div>'+
                 '<div class="col-xs-4">'+
 								  '<img class="img-responsive" src="' + img_url + 'busta2.jpg" alt="Find">'+
@@ -910,7 +910,7 @@ throw new SyntaxError('JSON.parse');
 					tmp.className = 'row fbElement';
 					tmp.innerHTML += '<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 has-success input-group"> <input type="hidden" class="fbEntry form-control" value="'+invObj.fb_id+'"disabled></input>'+
 											 		   '<input value="'+invObj.name+'" class="form-control" type="text" name="email"  disabled>'+
-                             '<span class="input-group-addon glyph-ok">@</span>'+
+                             '<span class="input-group-addon glyph-ok">f</span>'+
 													 '</div>';
 				}
 				else {
@@ -1073,12 +1073,12 @@ throw new SyntaxError('JSON.parse');
       var helpText = { 'name': 'Dai un titolo allo Split. Per esempio: regalo per Marco, week end in Montagna ecc.',
                        'description': 'Il posto giusto dove inserire qualche dettaglio che invogli i tuoi amici a partecipare',
                        'max_acceptance_date': 'Scegli la data entro la quale gli invitati dovranno confermare la propria partecipazione',
-                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita Ã¨ 25 giorni',
+                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita &egrave; 25 giorni',
                        'occurrence': 'Fai sapere ai partecipanti per quale occasione si effettua l\'acquisto',
-                       'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sulla colletta',
+                       'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sulla Split',
                        'alert_email': 'Disattiva le notifiche email sulle azioni degli invitati',
                        'hide_contribution': 'Nasconde ai soli partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
-                       'hide_invitation': 'Nasconde l\' identitÃ  dei partecipanti tra di loro.',
+                       'hide_invitation': 'Nasconde l\' identit&egrave;  dei partecipanti tra di loro.',
                        'isOpen': 'Split aperto a chiunque abbia un invito, senza PIN e a donazione libera' }
 			wrapper_row = { wrapper: 'div', className: 'row'};
       wrapper_row_pad = { wrapper: 'div', className: 'row pad-it'};
@@ -1179,7 +1179,7 @@ throw new SyntaxError('JSON.parse');
 			checkBox = CheckBox();
 		  checkBox.create({name: 'isOpen', value: 'Open funding', checked: 'true'}); 
 			checkBoxes.push(checkBox);
-		  accordion.append(checkBox.labelize('Colletta a donazione libera', helpText['isOpen']).wrap(wrapper_row_pad));
+		  accordion.append(checkBox.labelize('Split a donazione libera', helpText['isOpen']).wrap(wrapper_row_pad));
 			
 			promo = TextInput();
 		  promo.create('promo_code');
@@ -1746,7 +1746,7 @@ throw new SyntaxError('JSON.parse');
 		that.renderGET = function(invitationUrl) {
 			var params, participantAdmin, group, alreadyInvited, socialProviders,
 			grId, grAmount, gData, pAdminId;
-			var btnText = ['Email', 'f | Facebook', 'Invia E-mail'],
+			var btnText = ['Email', 'f | Invito Facebook', 'Invia E-mail'],
 					btnId = ['squeezolEmail_', 'squeezolFb_', 'squeezolSubmit_' ],
 					btnSize = ['small', 'small', 'big'],
 					btnClass = ['btn btn-lg sq-buttonEmail', 'btn btn-lg sq-buttonFb', 'squeezolButtonSuccess btn btn-lg'];
@@ -1858,7 +1858,7 @@ throw new SyntaxError('JSON.parse');
 
 				// FACEBOOK IFRAME handler:
         if (params.fb_url) {
-				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'big', btnClass[1]);
+				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'big', 'btn btn-lg sq-buttonFb');
 					fbBtn.regHandler('click', function(){
 						var iFrameModal;
 						var ui=UserInterface();
@@ -1891,7 +1891,7 @@ throw new SyntaxError('JSON.parse');
         copiaUrl = document.createElement('div')
         copiaUrl.className = 'col-md-3 col-xs-10 col-xs-offset-1 pink-link';
         copiaUrl.setAttribute('data-placement', 'top');
-        copiaUrl.setAttribute('title', 'Copia URL della colletta e incollalo dove preferisci');
+        copiaUrl.setAttribute('title', 'Copia URL dello Split e condividilo dove preferisci');
         a_temp = document.createElement('a');
         a_temp.innerHTML = 'Copia url split';
         a_link=DomElement({'el': a_temp});
@@ -2106,10 +2106,13 @@ throw new SyntaxError('JSON.parse');
 				SqDiv = document.getElementById('squeezol_view');
 				// Group completed with success
 				if(groupStatus == 'CWS') {
-					renderBtn.create('Colletta conclusa', 'big', 'SqueezolPay_');
-					renderBtn.get().setAttribute('data-participant', participantId)
-					renderBtn.get().disabled=true;
-					renderBtn.get().className='squeezolButtonSuccess';
+					alertDes = document.createElement('div');
+					alertDes.className = 'row alert alert-success'
+					alertDes.innerHTML = '<p class="text-center">'+
+																 '<strong> Congratulazioni!</strong>'+
+																 'Lo split si &egrave; conclusa con successo!'+
+															 '</p>';
+					SqDiv.appendChild(alertDes);
 				}
 				// Waiting for accesptance or payments
 				else if (groupStatus == 'WAC' || groupStatus == 'WPA'){
@@ -2148,7 +2151,7 @@ throw new SyntaxError('JSON.parse');
 						}
 						// Se puo' concludere la collette
 						else if(canFinish==true) {
-							renderBtn.create('Concludi la colletta', 'ui', 'SqueezolFinishPay_');
+							renderBtn.create('Concludi Split', 'ui', 'SqueezolFinishPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'CG');
 							renderBtn.get().className='squeezolButtonSuccess btn btn-lg';
@@ -2229,7 +2232,17 @@ throw new SyntaxError('JSON.parse');
 					  }
 					}
 					// Render
-
+          if (openPay == false) {
+						var superTemp = document.createElement('div');
+						superTemp.className = 'col-xs-12 alert alert-info';
+						if (isAdmin == true){
+							superTemp.innerHTML = '<p class="text-center"> Inizia i pagamenti: sarà possibile a tutti versare la propria quota(una notifica verrà inoltrata a tutti i partecipanti!)</p>';
+						}
+						else {
+						superTemp.innerHTML = '<p class="text-center">Potrai versare la tua quota quando l\'organizzatore avrà iniziato i pagamenti(una notifica ti verrà inviata per email)</p>';
+						}
+						renderDiv.append(superTemp);
+					}
 					renderDiv=Div(document.createElement('div'));
 					renderDiv.addClass('row row-separata');
 					renderDiv.get().id='squeezolPayBox';
@@ -2247,7 +2260,7 @@ throw new SyntaxError('JSON.parse');
 				}
 				// Group deserted
 				else if(answer.group.status == 'DES') {
-					renderBtn.create('Colletta Chiusa', 'big', 'SqueezolDeserted_');
+					renderBtn.create('Split Chiusa', 'big', 'SqueezolDeserted_');
 					renderBtn.get().setAttribute('data-participant', participantId)
 					renderBtn.get().disabled=true;
 					renderBtn.get().className='buttonWarning btn btn-lg';
@@ -2255,7 +2268,7 @@ throw new SyntaxError('JSON.parse');
 					alertDes.className = 'alert alert-warning'
 					alertDes.innerHTML = '<p>'+
 																 '<strong>Attenzione!</strong>'+
-																 'La colletta &egrave; stata chiusa dall\'organizzatore o Ã¨ scaduto il termine di 20 giorni entro i quali effetuare il pagamento.'+
+																 'Lo split &egrave; stata chiusa dall\'organizzatore o &egrave; scaduto il termine di 20 giorni entro i quali effetuare il pagamento.'+
 															 '</p>';
 					SqDiv.appendChild(alertDes);
 				}
@@ -2499,7 +2512,7 @@ throw new SyntaxError('JSON.parse');
 					participantId = oldBtn.getAttribute('data-participant');
 					parentDiv = oldBtn.parentNode;
 					parentDiv.removeChild(oldBtn);
-					renderBtn.create('Split Concluso', 'ui', 'SqueezolPay_');
+					renderBtn.create('Pagato', 'ui', 'SqueezolPay_');
 					renderBtn.get().disabled=true;
 					payBoxP = payBox.parentNode;
 					payBoxP.removeChild(payBox);
@@ -2544,7 +2557,7 @@ throw new SyntaxError('JSON.parse');
 						gr_status='In attesa di accettazione';
 						break;
 					case 'CWS':
-						gr_status='Colletta Completata';
+						gr_status='Split Completata';
 						break;
 					case 'DES':
 						gr_status='Abbandonato';
