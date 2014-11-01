@@ -8,7 +8,7 @@ class Squeezol_Payment_Block_Start extends Mage_Core_Block_Template {
         $this->_ses = $_SESSION;
 
         $salesModel = Mage::getModel('sales/order');
-        $order_id   = $this->_ses['checkout']['last_real_order_id'];
+        $order_id   = $this->_ses['curr_order'];
 
         if ($order_id) {
             $order_data = $salesModel->loadByIncrementId($order_id)->getAllItems();
@@ -21,7 +21,7 @@ class Squeezol_Payment_Block_Start extends Mage_Core_Block_Template {
         $this->_ses = $_SESSION;
 
         $salesModel = Mage::getModel('sales/order');
-        $order_id   = $this->_ses['checkout']['last_real_order_id'];
+        $order_id   = $this->_ses['curr_order'];
 
         if ($order_id) {
             $order_data = $salesModel->loadByIncrementId($order_id)->getData();

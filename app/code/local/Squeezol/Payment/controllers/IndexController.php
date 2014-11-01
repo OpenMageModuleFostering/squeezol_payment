@@ -24,6 +24,30 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
     public function gatewayAction () {
 
+        $lastOrderId = isset($_GET['oid'])
+                     ? $_GET['oid']
+                     : null;
+
+        if (!$lastOrderId) {
+            $lastOrderId = Mage::getSingleton('checkout/session')
+                                   ->getLastRealOrderId();
+        }
+
+        if (!$lastOrderId) {
+            die();
+        } else {
+            $_SESSION['curr_order'] = $lastOrderId;
+        }
+
+        $sql   = 'SELECT * FROM squeezol_groups WHERE order_id = ' . addslashes($lastOrderId);
+        $group = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchRow($sql);
+
+        if (!$group) {
+            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+            $sql = 'INSERT INTO squeezol_groups VALUES (' . $customerId . ', ' . $lastOrderId . ', null);';
+            $group = Mage::getSingleton('core/resource') ->getConnection('core_write')->query($sql);
+        }
+
         $this->loadLayout();
         $this->renderLayout();
 
@@ -51,6 +75,12 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
                 if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
                     $res = $endpoint->create_group();
+
+                    if ($res['status'] !== 'error') {
+                        $sql = 'UPDATE squeezol_groups SET group_id = ' . $res['group_id'] . ' WHERE order_id = ' . addslashes($_SESSION['curr_order']);
+                        Mage::getSingleton('core/resource') ->getConnection('core_write')->query($sql);
+                    }
+
                 } else if($_SERVER['REQUEST_METHOD'] == 'GET') {
                     $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
                     $res = $endpoint->get_group();
@@ -254,5 +284,25 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
           $ret = $UNAUTH_ERROR;
         }
         echo json_encode($ret);
+    }
+
+    public function ipnAction () {
+        $payload = file_get_contents('php://input');
+        $data    = json_decode($payload, true);
+
+        $sql   = 'SELECT * FROM squeezol_groups WHERE group_id = ' . addslashes($data['group']);
+        $group = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchRow($sql);
+
+        $order = Mage::getModel('sales/order')->loadByIncrementId($group['order_id']);
+
+        if ($data['status'] == 'S') {
+            $order->setStatus(Mage_Sales_Model_Order::STATE_COMPLETE);
+            $order->save();
+        } else {
+            $order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
+            $order->cancel()->save();
+        }
+
+        echo 'OK';
     }
 }
