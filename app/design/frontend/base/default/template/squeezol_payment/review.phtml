@@ -25,8 +25,8 @@
         <td><?php echo $g['name']; ?></td>
         <td><img style="width: 80px;" src="<?php echo $g['picture']; ?>" /></td>
         <td><?php echo $g['days_left']; ?></td>
-        <td><?php echo money_format('%.2n', $g['amount']); ?></td>
-        <td><?php echo money_format('%.2n', $g['total_paid']); ?></td>
+        <td><?php echo money_format('%.2n', $g['amount']) . ' ' . $g['currency']; ?></td>
+        <td><?php echo money_format('%.2n', $g['total_paid']) . ' ' . $g['currency']; ?></td>
         <td><a href="<?php echo Mage::getBaseUrl(); ?>squeezol/index/digest/?page=<?php echo $g['id']; ?>">Vai alla colletta</a></td>
     </tr>
     <?php endforeach; ?>
