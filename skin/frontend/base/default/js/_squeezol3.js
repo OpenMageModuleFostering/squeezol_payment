@@ -865,7 +865,7 @@ throw new SyntaxError('JSON.parse');
 							  '</div>'+
 							'</div>'+
               '<div class="row">'+
-                '<h4 class="text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... &egrave; gratis!'+
+                '<h4 class="text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... è gratis!'+
               '</div>';
       jQuery('#squeezol_btn').popover({ title:'Come funziona',
 		       		                          html:true ,
@@ -1004,15 +1004,15 @@ throw new SyntaxError('JSON.parse');
     },
     that.iconPopover = function(){
       jQuery('.icon').popover();
-		  jQuery('.icon').on('mouseover', function(){
+		  jQuery('.icon').on('mouseenter', function(){
         jQuery(this).popover('show')
       });
       jQuery('.icon').on('mouseout', function(){
         jQuery(this).popover('hide');
       });
-      jQuery('.icon').on('hidden.bs.popover', function(){
-        jQuery(this).css("display", "");
-			});
+      //jQuery('.icon').on('hidden.bs.popover', function(){
+      //  jQuery(this).css("display", "");
+			//});
 
     };
     return that;
@@ -1073,12 +1073,12 @@ throw new SyntaxError('JSON.parse');
       var helpText = { 'name': 'Dai un titolo allo Split. Per esempio: regalo per Marco, week end in Montagna ecc.',
                        'description': 'Il posto giusto dove inserire qualche dettaglio che invogli i tuoi amici a partecipare',
                        'max_acceptance_date': 'Scegli la data entro la quale gli invitati dovranno confermare la propria partecipazione',
-                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita &egrave; 25 giorni',
+                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita è 25 giorni',
                        'occurrence': 'Fai sapere ai partecipanti per quale occasione si effettua l\'acquisto',
                        'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sulla Split',
                        'alert_email': 'Disattiva le notifiche email sulle azioni degli invitati',
                        'hide_contribution': 'Nasconde ai soli partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
-                       'hide_invitation': 'Nasconde l\' identit&egrave;  dei partecipanti tra di loro.',
+                       'hide_invitation': 'Nasconde l\' identità  dei partecipanti tra di loro.',
                        'isOpen': 'Split aperto a chiunque abbia un invito, senza PIN e a donazione libera' }
 			wrapper_row = { wrapper: 'div', className: 'row'};
       wrapper_row_pad = { wrapper: 'div', className: 'row pad-it'};
@@ -1270,7 +1270,7 @@ throw new SyntaxError('JSON.parse');
 						wrapDiv = inp.getInput(prop).getWrapDiv();
 						error = document.createElement('p');
 						error.className = 'alert alert-danger';
-						error.innerHTML = 'Questo campo &egrave; obbligatorio';
+						error.innerHTML = 'Questo campo è obbligatorio';
 						Div(wrapDiv).addClass('has-error');
 						jQuery(wrapDiv).after(error);
 		      }
@@ -1361,9 +1361,10 @@ throw new SyntaxError('JSON.parse');
 					window.location.replace(answer.redirect_url);
 				}
 				else {
-					invError.appendSuccessInfo();
-					invError.notifyValidEmail();
+					//invError.appendSuccessInfo();
+					//invError.notifyValidEmail();
 					ui.modalClose('emailModal');
+          location.reload(true);
 				}
 			}
 			else {
@@ -1461,10 +1462,10 @@ throw new SyntaxError('JSON.parse');
 			if (tot != targetAmount){
 				rest = parseFloat(targetAmount - tot).toFixed(2);
 				totAdmin= parseFloat(contrib)+parseFloat(rest);
-				adminContrib.value = totAdmin;
+				adminContrib.value = parseFloat(totAdmin).toFixed(2);
 			}
 			else{
-				adminContrib.value = contrib;
+				adminContrib.value = parseFloat(contrib).toFixed(2);
 			}
 			adminContrib.disabled = true;
 			return;
@@ -1875,8 +1876,8 @@ throw new SyntaxError('JSON.parse');
                               'CHIUDI &times;'+
                             '</button>'+
                             '<div class="col-xs-10 col-xs-offset-1">'+
-														  '<iframe width="620px" height="350px" class="squeezol_iframe" src="'+params.fb_url+'" frameborder="0">'+
-						                	  'NON &egrave; possibile invitare con Facebook da questo dispositivo'+
+														  '<iframe width="620px" height="620px" class="squeezol_iframe" src="'+params.fb_url+'" frameborder="0">'+
+						                	  'NON è possibile invitare con Facebook da questo dispositivo'+
 														  '</iframe>'+
 														'</div>';
                             
@@ -1927,11 +1928,11 @@ throw new SyntaxError('JSON.parse');
 				  var invObj = InvitationObj();
 					var event= e || window.event;
 					var target = event.target || event.srcElement || event.originalTarget;
-					if (target.value === 'D'){
+					if (target.value === 'S'){
 						contribution = invObj.computeSingleContribution(group.amount);
 						invitationBtn.updateContribution(contribution, group.amount);
 					}
-					else if(target.value === 'S'){
+					else if(target.value === 'D'){
 					  invObj.setToZero();
 					}
 				});
@@ -1979,15 +1980,15 @@ throw new SyntaxError('JSON.parse');
                    '<p><strong>PIN:'+group.pin+'</strong></p>'+
                  '</div>';
       }
-			if (group.fundraising == 'S'){
-				contrib = parseFloat(group.amount/(alreadyInvited.length+1)).toFixed(2);
-				options = '<option value="D">Equa</option>'+
-								  '<option value="S" selected>Suggerita</option>';
-			}
-			else {
+			if (group.fundraising == 'D'){
 				contrib = participantAdmin.single_amount;
-				options = '<option value="D" selected>Equa</option>'+
-								  '<option value="S">Suggerita</option>';
+				options = '<option value="S">Equa</option>'+
+								  '<option value="D" selected>Suggerita</option>';
+			}
+			else if(group.fundraising == 'S') {
+        contrib = parseFloat(group.amount/(alreadyInvited.length+1)).toFixed(2);
+				options = '<option value="S" selected>Equa</option>'+
+								  '<option value="D">Suggerita</option>';
         disabled = 'disabled';
 			}
      
@@ -2030,8 +2031,8 @@ throw new SyntaxError('JSON.parse');
 														      '<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 form-group" style="margin: 10px 0px 0px 20px;">'+
 														       	'<p class="sq-label">Tipo quota:'+
                                       '<div data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
-                                        'quota che verrÃ  visualizzata dagli invitati. Altrimenti la quota proposta '+
-                                        'verrÃ  calcolata in base al numero di invitati"'+
+                                        'quota che verrà  visualizzata dagli invitati. Altrimenti la quota proposta '+
+                                        'verrà  calcolata in base al numero di invitati"'+
                                         'class="icon glyph-info-sign">'+
                                         '<p>i</p>'+
                                       '</div>'+
@@ -2041,7 +2042,7 @@ throw new SyntaxError('JSON.parse');
 														      '</div>'+
 														      '<div class="squeezol_quota col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="margin: 10px 0px 0px 20px;">'+
 															      '<p class="sq-label">Quota singola:'+
-                                      '<div data-toggle="popover" data-placement="top" title="La quota Ã¨ un '+
+                                      '<div data-toggle="popover" data-placement="top" title="La quota è un '+
                                         'suggerimento per gli invitati."'+
                                         'class="icon glyph-info-sign">'+
                                         '<p>i</p>'+
@@ -2110,7 +2111,7 @@ throw new SyntaxError('JSON.parse');
 					alertDes.className = 'row alert alert-success'
 					alertDes.innerHTML = '<p class="text-center">'+
 																 '<strong> Congratulazioni!</strong>'+
-																 'Lo split si &egrave; conclusa con successo!'+
+																 'Lo split si è conclusa con successo!'+
 															 '</p>';
 					SqDiv.appendChild(alertDes);
 				}
@@ -2119,7 +2120,7 @@ throw new SyntaxError('JSON.parse');
 					// Possibilita' di proporre un importo se si e' in fase di accettazione o il gruppo e' aperto e WPA
 					if (params.p_status == 'A'){
 						saInput.create('single-amount');
-						saInput.get().value=params.p_single_amount;
+						saInput.get().value=parseFloat(params.p_single_amount).toFixed(2);
 						saInput.get().id='squeezol_single_amount';
 						singleAmountBtn.create('Modifica quota', 'ui', 'SqueezolModifyAmount_');
 						singleAmountBtn.get().setAttribute('data-participant', participantId);
@@ -2194,7 +2195,7 @@ throw new SyntaxError('JSON.parse');
 							renderBtn.innerHTML = '<div class="alert alert-warning col-xs-6"'+
 																		  '<p>'+
 																			  '<strong>Attenzione!</strong>'+
-									                      'La fase di accettazione non si &egrave; ancora conclusa, vuoi aprire i pagamenti ai tuoi invitati?'+
+									                      'La fase di accettazione non si è ancora conclusa, vuoi aprire i pagamenti ai tuoi invitati?'+
 																		  '</p>'+
 																		'</div>';
 							SqDiv.appendChild(renderBtn);
@@ -2268,7 +2269,7 @@ throw new SyntaxError('JSON.parse');
 					alertDes.className = 'alert alert-warning'
 					alertDes.innerHTML = '<p>'+
 																 '<strong>Attenzione!</strong>'+
-																 'Lo split &egrave; stata chiusa dall\'organizzatore o &egrave; scaduto il termine di 20 giorni entro i quali effetuare il pagamento.'+
+																 'Lo split è stata chiusa dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effetuare il pagamento.'+
 															 '</p>';
 					SqDiv.appendChild(alertDes);
 				}
