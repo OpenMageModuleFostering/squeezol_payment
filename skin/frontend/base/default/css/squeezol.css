@@ -54,6 +54,10 @@
   font-style:normal;
 }
 
+.text-center {
+  text-align: center;
+}
+
 h4 {
   font-family: "DejaVuSansCondensed-BoldOblique" !important;
   color: #08b3c7 !important;
@@ -66,11 +70,11 @@ h4 {
 
 label { font-weight: bold !important; color: #08B3C7 !important; }
 
-.popover {
+.sq-popover {
   z-index:1000 !important;
 }
 
-.panel-group {
+.sq-panel-group {
   z-index: 999 !important;
 }
 #squeezol_button, .squeezolButtonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_ { 
@@ -195,7 +199,7 @@ div.row-separata {
  padding-bottom: 10px !important;
 }
 
-.alert-info{
+.sq-alert-info{
   background-color: #A9E4EB !important;
 }
 
@@ -290,14 +294,14 @@ h4.wizardOpen{
 	cursor: pointer !important;
 }
 
-h3.popover-title {
+h3.sq-popover-title {
 	font-family: "DejaVuSansCondensed-BoldOblique";
 	color: #808080 !important;
 	padding-left:40px !important;
 }
 
 
-p.alert-danger, #squeezolNotifyAmount_ {
+p.sq-alert-danger, #squeezolNotifyAmount_ {
 	margin-top: 5px !important;
 }
 
@@ -309,12 +313,14 @@ p.alert-danger, #squeezolNotifyAmount_ {
 }
 
 .container-dashboard {
-  background-color: #FFFFFF !important;
+/*  background-color: #FFFFFF !important;
   border-radius: 1em !important;
   border: 1px solid #dcdcdc !important;
+
+  box-shadow: 3px 3px 1px #dcdcdc !important;
+*/
   padding-top:50px !important;
   padding-bottom:50px !important;
-  box-shadow: 3px 3px 1px #dcdcdc !important;
 }
 iframe {
 	position: absolute !important;
@@ -330,7 +336,7 @@ iframe {
 	margin-bottom:20px !important;
 }
 
-.form-group select, #datepicker1 , #datepicker2, .panel-heading {
+.sq-form-group select, #datepicker1 , #datepicker2, .sq-panel-heading {
   background-color:#A9E4EB !important;
   border:#A9E4EB !important;
   cursor: pointer !important;
@@ -338,13 +344,13 @@ iframe {
   
 }
 
-.input-group-addon{
+.sq-input-group-addon{
   color:#FFF !important;
   background-color:#0AB3C6 !important;
   cursor:default !important;
 }
 
-.form-group select {
+.sq-form-group select {
   padding-top: 5px !important;
   padding-bottom:5px !important;
   display: block !important;
@@ -352,7 +358,7 @@ iframe {
   border-radius: 4px !important;
 }
 
-.form-group select, .form-group option  {
+.sq-form-group select, .sq-form-group option  {
   margin-left: 4px !important;
   color:#665558 !important;
 }
@@ -373,14 +379,14 @@ iframe {
   color: #3C763D !important;
 }
 
-div.glyph-info-sign {
+div.sq-glyph-info-sign {
   display: inline !important;
   width: 30px !important;
   height: 30px !important;
   cursor: pointer !important;
   padding-left: 1px !important;
   color: rgb(255, 255, 255) !important; 
-  box-shadow: 1px 1px 0.5px #B3B3B3 !important;
+  box-shadow: 1px 1px 0.5px #0AB3C6 !important;
   border-radius: 20px !important;
 }
 
@@ -454,12 +460,12 @@ div.glyph-info-sign {
 }
 
 
-.box-blu {
+.sq-box-blu {
   border: 2px solid #0AB3C6;
 }
 
 
-.box-blu p{
+.sq-box-blu p{
   font-family: DejaVuSansCondensed;
   font-size: 14px;
   font-style: normal;
