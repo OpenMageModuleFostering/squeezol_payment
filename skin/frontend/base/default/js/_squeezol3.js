@@ -535,7 +535,7 @@ throw new SyntaxError('JSON.parse');
 		  lab = document.createElement('label');
 			div = document.createElement('div');
 			lab.for = obj.el.id;
-			div.className = 'form-group';
+			div.className = 'sq-form-group';
 		  lab.appendChild(ui.textWithHelper(labelName, helpText));
 			div.appendChild(lab)
 		  div.appendChild(obj.el);		 
@@ -548,8 +548,8 @@ throw new SyntaxError('JSON.parse');
 			divInput = document.createElement('div');
 		  lab = document.createElement('label');
 			lab.for = obj.el.id
-			divForm.className = 'form-group'
-			divInput.className = 'input-group'
+			divForm.className = 'sq-form-group'
+			divInput.className = 'sq-input-group'
 			divInput.appendChild(obj.el);
 			divInput.appendChild(span);
 		  lab.appendChild(ui.textWithHelper(labelName, helpText));
@@ -571,7 +571,7 @@ throw new SyntaxError('JSON.parse');
 			input.type = 'text';
 		  input.name = name;
 			input.maxlength = 120;
-			input.className = "form-control";
+			input.className = "sq-form-control";
 		  obj.el = input;  
 		  return this;
 		};
@@ -584,7 +584,7 @@ throw new SyntaxError('JSON.parse');
 		that.create = function(name) {
 			var input = document.createElement('textarea');
 		  input.name = name;
-			input.className = "form-control";
+			input.className = "sq-form-control";
 		  obj.el = input;  
 		  return this;
 		};
@@ -607,7 +607,7 @@ throw new SyntaxError('JSON.parse');
 		  input.type = 'text';
 		  input.name = name;
 			input.value = init.getDate() + '-' + (parseInt(init.getMonth())+1).toString() + '-' + init.getFullYear();
-			input.className = "form-control";
+			input.className = "sq-form-control";
 		  obj.el = input;
 		  return this;
 		};
@@ -787,29 +787,29 @@ throw new SyntaxError('JSON.parse');
 			// Bootstrap 3 Implementation
 			viewPortDiv = jQuery('#squeezol_view');
 			viewPortDiv.addClass("container-fluid");
-      modalDiv = '<div class="col-xs-10 col-xs-offset-1 container-dashboard">'+
-                   '<div class="row" style="margin-top: -30px;">'+
-                     '<div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1" style="padding-top: 10px; padding-left:50px;">'+
-                       '<img class="squeezol-btn-header img-responsive" src="' + img_url + 'squeezol.png"></img>'+
+      modalDiv = '<div class="sq-col-xs-12 container-dashboard">'+
+                   '<div class="sq-row" style="margin-top: -30px;">'+
+                     '<div class="sq-col-sm-4 sq-col-sm-offset-4 sq-col-xs-10 sq-col-xs-offset-1" style="padding-top: 10px; padding-left:50px;">'+
+                       '<img class="squeezol-btn-header sq-img-responsive" src="' + img_url + 'squeezol.png"></img>'+
                        '<p class="sq-content-title" style="display:inline; margin-left:20px;">'+title+'</p>'+
                      '</div>'+
 									 '</div>'+
 								   '<div id="squeezol_view">'+
-										 '<div class="row row-separator row-separata">'+
-                      '<div class="col-md-3 col-md-offset-1">'+
-                        '<p class="text-center"><img class="img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
+										 '<div class="sq-row row-separator row-separata">'+
+                      '<div class="sq-col-md-3 sq-col-md-offset-1">'+
+                        '<p class="text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
                       '</div>'+
-                      '<div class="col-md-4">'+
-                        '<p class="text-center"><img class="img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
+                      '<div class="sq-col-md-4">'+
+                        '<p class="text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
                       '</div>'+
-                      '<div class="col-md-3">'+
-                        '<p class="text-center"><img class="img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
+                      '<div class="sq-col-md-3">'+
+                        '<p class="text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
                       '</div>'+
                      '</div>'+
-										 '<div class="row">'+
-											'<div class="col-xs-3 col-xs-offset-1 separator-'+crea+'"></div>'+
-											'<div class="col-xs-4 separator-'+invita+'"></div>'+
-											'<div class="col-xs-3 separator-'+gestisci+'"></div>'+
+										 '<div class="sq-row">'+
+											'<div class="sq-col-xs-3 sq-col-xs-offset-1 separator-'+crea+'"></div>'+
+											'<div class="sq-col-xs-4 separator-'+invita+'"></div>'+
+											'<div class="sq-col-xs-3 separator-'+gestisci+'"></div>'+
 										 '</div>'+
 									 '</div>'+
 								 '</div>';
@@ -820,26 +820,26 @@ throw new SyntaxError('JSON.parse');
 	  that.drawSeparator = function(text){
 			var viewPortDiv = jQuery('#squeezol_view');
 			var separator;
-			separator = '<div class="row row-separata">'+
-	  								'<div class="col-md-4 col-md-offset-1 col-xs-12"><h4 class="sq-content-body">'+text+'</h4></div>'+
-										'<div class="col-xs-10 col-xs-offset-1 separator"></div>'+
+			separator = '<div class="sq-row row-separata">'+
+	  								'<div class="sq-col-md-4 sq-col-md-offset-1 sq-col-xs-12"><h4 class="sq-content-body">'+text+'</h4></div>'+
+										'<div class="sq-col-xs-10 sq-col-xs-offset-1 separator"></div>'+
 									'</div>';
       viewPortDiv.append(separator);
       return;
 	  },
     that.drawSeparatorCollapse = function(text){
       var viewPortDiv = jQuery('#squeezol_view');
-      var panel = '<div class="row row-separata" id="squeezol-accordion-container">'+
-                    '<div class="col-md-6 col-md-offset-1 col-xs-12">'+
-                      '<div class="panel-group">'+
-                        '<div class="panel panel-default">'+
-                          '<div class="panel-heading alert alert-info">'+
+      var panel = '<div class="sq-row row-separata" id="squeezol-accordion-container">'+
+                    '<div class="sq-col-md-6 sq-col-md-offset-1 sq-col-xs-12">'+
+                      '<div class="sq-panel-group">'+
+                        '<div class="sq-panel sq-panel-default">'+
+                          '<div class="sq-panel-heading sq-alert sq-alert-info">'+
                             '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">'+
                               '<p class="sq-label">'+text+'</p>'+
                             '</a>'+
                           '</div>'+
-                          '<div id="collapseOne" class="panel-collapse collapse out">'+
-                            '<div class="panel-body" id="squeezol-accordion">'+
+                          '<div id="collapseOne" class="sq-panel-collapse sq-collapse sq-out">'+
+                            '<div class="sq-panel-body" id="squeezol-accordion">'+
                             '</div>'+
                           '</div>'+
                         '</div>'+
@@ -850,21 +850,21 @@ throw new SyntaxError('JSON.parse');
       return;
 	  },
     that.drawWizard = function(position, clickElem){
-      var div='<div class="row wizard">'+
-                '<div class="col-xs-4">'+
-								  '<img class="img-responsive" src="' + img_url + 'btn2.jpg" alt="Think">'+
+      var div='<div class="sq-row wizard">'+
+                '<div class="sq-col-xs-4">'+
+								  '<img class="sq-img-responsive" src="' + img_url + 'btn2.jpg" alt="Think">'+
                   '<h4 class="text-center">1.Crea uno Split</h4>'+
                 '</div>'+
-                '<div class="col-xs-4">'+
-								  '<img class="img-responsive" src="' + img_url + 'busta2.jpg" alt="Find">'+
+                '<div class="sq-col-xs-4">'+
+								  '<img class="sq-img-responsive" src="' + img_url + 'busta2.jpg" alt="Find">'+
                   '<h4 class="text-center">2.Invita i tuoi amici</h4>'+
                 '</div>'+
-                '<div class="col-xs-4">'+
-                  '<img class="img-responsive" src="' + img_url + 'salva2.jpg" alt="Fun">'+
+                '<div class="sq-col-xs-4">'+
+                  '<img class="sq-img-responsive" src="' + img_url + 'salva2.jpg" alt="Fun">'+
                   '<h4 class="text-center">3. Versa la tua quota</h4>'+
 							  '</div>'+
 							'</div>'+
-              '<div class="row">'+
+              '<div class="sq-row">'+
                 '<h4 class="text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... è gratis!'+
               '</div>';
       jQuery('#squeezol_btn').popover({ title:'Come funziona',
@@ -878,10 +878,10 @@ throw new SyntaxError('JSON.parse');
 				jQuery('#squeezol_btn').popover('toggle');
 			});
 			jQuery('#squeezol_btn').on('shown.bs.popover', function(){
-				jQuery('.popover').attr('style','display: block; top: -20px; left: 127px;max-width:800px;');
+				jQuery('.sq-popover').attr('style','display: block; top: -20px; left: 127px;max-width:800px;');
 			});
 			jQuery('#squeezol_btn').on('hidden.bs.popover', function(){
-				jQuery('.popover').attr('style','');
+				jQuery('.sq-popover').attr('style','');
         jQuery(this).css("display", "");
 			});
 
@@ -894,31 +894,31 @@ throw new SyntaxError('JSON.parse');
 			this.drawSeparator('Amici Invitati');
 			var container = document.createElement('div');
 			container.id = 'containerCronologia';
-      container.className = 'row';
+      container.className = 'sq-row';
 			for (j=0; j<alreadyInvited.length; j++){
 				var invObj=alreadyInvited[j];
 				var contribution = parseFloat(group.amount/(alreadyInvited.length+1)).toFixed(2);
 				var tmp = document.createElement('div');
 				
 				if(invObj.avatar_url){
-					tmp.innerHTML='<div class="col-md-1 col-md-offset-1 hidden-xs"><img class="thumbnail imgAvatar" src="'+invObj.avatar_url+'" alt="User Avatar"></img></div>';
+					tmp.innerHTML='<div class="sq-col-md-1 sq-col-md-offset-1 sq-hidden-xs"><img class="sq-thumbnail imgAvatar" src="'+invObj.avatar_url+'" alt="User Avatar"></img></div>';
 				}
 				else {
-					tmp.innerHTML='<div class="col-md-1 col-md-offset-1 hidden-xs"><img class="imgAvatar thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img> </div>';
+					tmp.innerHTML='<div class="sq-col-md-1 sq-col-md-offset-1 sq-hidden-xs"><img class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img> </div>';
 				}
 				if(invObj.fb_id) {
-					tmp.className = 'row fbElement';
-					tmp.innerHTML += '<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 has-success input-group"> <input type="hidden" class="fbEntry form-control" value="'+invObj.fb_id+'"disabled></input>'+
-											 		   '<input value="'+invObj.name+'" class="form-control" type="text" name="email"  disabled>'+
-                             '<span class="input-group-addon glyph-ok">f</span>'+
+					tmp.className = 'sq-row fbElement';
+					tmp.innerHTML += '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-has-success sq-input-group"> <input type="hidden" class="fbEntry sq-form-control" value="'+invObj.fb_id+'"disabled></input>'+
+											 		   '<input value="'+invObj.name+'" class="sq-form-control" type="text" name="email"  disabled>'+
+                             '<span class="sq-input-group-addon sq-glyph-ok">f</span>'+
 													 '</div>';
 				}
 				else {
-					tmp.className = 'row emailElement';
-					tmp.innerHTML+= '<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 form-group has-success input-group">'+
+					tmp.className = 'sq-row emailElement';
+					tmp.innerHTML+= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-form-group sq-has-success sq-input-group">'+
                             
-														'<input value="'+invObj.email+'" class="form-control" type="email" name="email" placeholder="email address" disabled>'+
-                            '<span class="input-group-addon glyph-ok">@</span>'+
+														'<input value="'+invObj.email+'" class="sq-form-control" type="email" name="email" placeholder="email address" disabled>'+
+                            '<span class="sq-input-group-addon sq-glyph-ok">@</span>'+
 													'</div>';
 				}
 				jQuery(container).append(tmp);
@@ -934,10 +934,10 @@ throw new SyntaxError('JSON.parse');
 		that.progressBar = function(totalPaid, totAmount){
 			var perc = parseInt(totalPaid*100/totAmount);
 			var bar;
-			bar = '<div class="col-md-6 col-xs-6 col-xs-offset-1">'+
+			bar = '<div class="sq-col-md-6 sq-col-xs-6 sq-col-xs-offset-1">'+
 							'<h4> Quote raccolte </h4>'+
-							'<div class="progress">'+
-								'<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+perc+'" aria-valuemin="0" aria-valuemax="100" style="width: '+perc+'%;">'+perc+'%</div>'+
+							'<div class="sq-progress">'+
+								'<div class="sq-progress-bar sq-progress-bar-success" role="progressbar" aria-valuenow="'+perc+'" aria-valuemin="0" aria-valuemax="100" style="width: '+perc+'%;">'+perc+'%</div>'+
 							'</div>'+
 						'</div>';
 			jQuery('#squeezolPayBox').append(bar);
@@ -951,7 +951,7 @@ throw new SyntaxError('JSON.parse');
       }
       if (modal==false){
 			  modalContent = jQuery('<div />');
-			  modalContent.addClass('modal fade bs-example-modal-lg');
+			  modalContent.addClass('sq-modal sq-fade sq-bs-example-modal-lg');
 			  modalContent.attr('id',id);
 			  modalContent.attr('tabindex', '-1');
 			  modalContent.attr('role', 'dialog');
@@ -961,14 +961,14 @@ throw new SyntaxError('JSON.parse');
 			if (id == 'emailModal') {
         if (modal == false){
 				  modalBody = jQuery('<div />');
-				  modalBody.addClass('modal-body');
+				  modalBody.addClass('sq-modal-body');
 				  modalBody.append(content);
-				  modalContent.append(jQuery('<div />').addClass('modal-dialog')
-														  .append(jQuery('<div />').addClass('modal-content')
-																.append('<div class="modal-header">'+
-																					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-																					'<h4 class="modal-title">Invita</h4>'+
-																				'</div>', content, jQuery('<div />').addClass('modal-footer').append(btn))));
+				  modalContent.append(jQuery('<div />').addClass('sq-modal-dialog')
+														  .append(jQuery('<div />').addClass('sq-modal-content')
+																.append('<div class="sq-modal-header">'+
+																					'<button type="button" class="sq-close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+																					'<h4 class="sq-modal-title">Invita</h4>'+
+																				'</div>', content, jQuery('<div />').addClass('sq-modal-footer').append(btn))));
         }
         modalContent.on('show.bs.modal', function(){
           btn = jQuery("#squeezolEmail_");          
@@ -997,22 +997,22 @@ throw new SyntaxError('JSON.parse');
       $question.attr('data-toggle', 'popover');
       $question.attr('data-placement', 'top');
       $question.attr('title', helpText);
-      $question.addClass('icon glyph-info-sign');
+      $question.addClass('icon sq-glyph-info-sign');
       $question.append('<p>i</p>');
       jQuery(txt).append($question);
       return txt;
     },
     that.iconPopover = function(){
       jQuery('.icon').popover();
-		  jQuery('.icon').on('mouseenter', function(){
+		  /*jQuery('.icon').on('mouseenter', function(){
         jQuery(this).popover('show')
       });
       jQuery('.icon').on('mouseout', function(){
         jQuery(this).popover('hide');
       });
-      //jQuery('.icon').on('hidden.bs.popover', function(){
-      //  jQuery(this).css("display", "");
-			//});
+      jQuery('.icon').on('hidden.bs.popover', function(){
+        jQuery(this).css("display", "");
+			});*/
 
     };
     return that;
@@ -1080,13 +1080,13 @@ throw new SyntaxError('JSON.parse');
                        'hide_contribution': 'Nasconde ai soli partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
                        'hide_invitation': 'Nasconde l\' identità  dei partecipanti tra di loro.',
                        'isOpen': 'Split aperto a chiunque abbia un invito, senza PIN e a donazione libera' }
-			wrapper_row = { wrapper: 'div', className: 'row'};
-      wrapper_row_pad = { wrapper: 'div', className: 'row pad-it'};
-			wrapper_left = { wrapper: 'div', className : 'col-md-6 col-md-offset-1 col-xs-12' }
-			wrapper_left_small = { wrapper: 'div', className : 'col-md-4 col-md-offset-1 col-xs-12' }
-      wrapper_right = { wrapper: 'div', className: 'col-md-4 col-xs-12'};
-      wrapper_btn = { wrapper: 'div', className: 'col-md-4 col-xs-10 col-xs-offset-1'}
-			wrapper_push_right = { wrapper: 'div', className: 'col-md-3 col-md-offset-9 col-xs-12'};
+			wrapper_row = { wrapper: 'div', className: 'sq-row'};
+      wrapper_row_pad = { wrapper: 'div', className: 'sq-row pad-it'};
+			wrapper_left = { wrapper: 'div', className : 'sq-col-md-6 sq-col-md-offset-1 sq-col-xs-12' }
+			wrapper_left_small = { wrapper: 'div', className : 'sq-col-md-4 sq-col-md-offset-1 sq-col-xs-12' }
+      wrapper_right = { wrapper: 'div', className: 'sq-col-md-4 sq-col-xs-12'};
+      wrapper_btn = { wrapper: 'div', className: 'sq-col-md-4 sq-col-xs-10 sq-col-xs-offset-1'}
+			wrapper_push_right = { wrapper: 'div', className: 'sq-col-md-3 sq-col-md-offset-9 sq-col-xs-12'};
 			//UI
       ui.drawHeader('create', 'modal');
 			viewPortDiv = Div();
@@ -1094,7 +1094,7 @@ throw new SyntaxError('JSON.parse');
 			// Temp Div
 		  tmp=document.createElement('div');
 			tempRowDiv = Div(tmp);
-			tempRowDiv.addClass('row');
+			tempRowDiv.addClass('sq-row');
 			// Nome Colletta
 			input = TextInput();
 		  input.create('name');
@@ -1111,7 +1111,7 @@ throw new SyntaxError('JSON.parse');
 			date1.addPicker(dp1);
 			inputs.push(date1);
       spanCurr = document.createElement('span');
-			spanCurr.className = 'input-group-addon';
+			spanCurr.className = 'sq-input-group-addon';
 			spanCurr.innerHTML = '#';
 			tempRowDiv.append(date1.labelizeWithSpan('Scadenza Invito', spanCurr, helpText['max_acceptance_date']).wrap(wrapper_right));
 			// Append first row
@@ -1119,7 +1119,7 @@ throw new SyntaxError('JSON.parse');
 			// Temp Div
 			tmp=document.createElement('div');
 			tempRowDiv = Div(tmp);
-			tempRowDiv.addClass('row');
+			tempRowDiv.addClass('sq-row');
 			// Descrizione Colletta
 		  input = TextArea();
 		  input.create('description');
@@ -1136,7 +1136,7 @@ throw new SyntaxError('JSON.parse');
       
 		  inputs.push(date2);
 	    spanCurr = document.createElement('span');
-			spanCurr.className = 'input-group-addon';
+			spanCurr.className = 'sq-input-group-addon';
 			spanCurr.innerHTML = '#';
 			tempRowDiv.append(date2.labelizeWithSpan('Scadenza Pagamenti', spanCurr, helpText['max_payment_date']).wrap(wrapper_right));
 		  this.initDatePickers(d1, d2);
@@ -1152,7 +1152,7 @@ throw new SyntaxError('JSON.parse');
 
       tmp=document.createElement('div');
 			tempRowDiv = Div(tmp);
-			tempRowDiv.addClass('row');
+			tempRowDiv.addClass('sq-row');
 		  tempRowDiv.append(combo.labelize('Occorrenza', helpText['occurrence']).wrap(wrapper_left));
 			viewPortDiv.append(tempRowDiv.get())
 			ui.drawSeparator('');
@@ -1228,6 +1228,7 @@ throw new SyntaxError('JSON.parse');
 			var answer, ajaxAnswer;
 			var ui = UserInterface();
 			ui.loadStop(document.getElementById('squeezol_button'));
+      console.log(answer)
 			answer = JSON.parse(ajaxRequest.get().responseText);
 			ajaxAnswer = AjaxAnswer(answer, inputs);
 		  ajaxAnswer.check();
@@ -1257,8 +1258,8 @@ throw new SyntaxError('JSON.parse');
 				this.redirect(answer.url);
 		  }
 		  else if(answer.status='error'){
-		    inp.deleteDivClass('has-error');
-				errors = [].slice.call(document.getElementsByClassName('alert-danger'));
+		    inp.deleteDivClass('sq-has-error');
+				errors = [].slice.call(document.getElementsByClassName('sq-alert-danger'));
 				for(i=0; i<errors.length;i++){
 					div = errors[i];
 					pNode = div.parentNode;
@@ -1269,18 +1270,18 @@ throw new SyntaxError('JSON.parse');
 		    	for(prop in answer.genericerror) {
 						wrapDiv = inp.getInput(prop).getWrapDiv();
 						error = document.createElement('p');
-						error.className = 'alert alert-danger';
+						error.className = 'sq-alert sq-alert-danger';
 						error.innerHTML = 'Questo campo è obbligatorio';
-						Div(wrapDiv).addClass('has-error');
+						Div(wrapDiv).addClass('sq-has-error');
 						jQuery(wrapDiv).after(error);
 		      }
 		    }
         else if('non_field_errors' in answer) {
           wrapDiv = inp.getInput('max_payment_date').getWrapDiv();
           error = document.createElement('p');
-				  error.className = 'alert alert-danger';
+				  error.className = 'sq-alert sq-alert-danger';
 					error.innerHTML = answer.non_field_errors;
-					Div(wrapDiv).addClass('has-error');
+					Div(wrapDiv).addClass('sq-has-error');
 					jQuery(wrapDiv).after(error);
         }
         else {
@@ -1288,9 +1289,9 @@ throw new SyntaxError('JSON.parse');
             if (prop != "status"){
               wrapDiv = inp.getInput(prop).getWrapDiv();
 						  error = document.createElement('p');
-						  error.className = 'alert alert-danger';
+						  error.className = 'sq-alert sq-alert-danger';
 						  error.innerHTML = answer[prop];
-						  Div(wrapDiv).addClass('has-error'); 
+						  Div(wrapDiv).addClass('sq-has-error'); 
 						  jQuery(wrapDiv).after(error);
             }
           }
@@ -1537,11 +1538,11 @@ throw new SyntaxError('JSON.parse');
 		  var errorType = answer.status;
 			if(errorType === 'badMail') {
 				this.setWrongEmails(answer.emailArray);
-				this.appendErrorInfo("Una o piÃ¹ email inserite sono errate, correggi per proseguire.", document.getElementById('squeezolEmail'));
+				this.appendErrorInfo("Una o più email inserite sono errate, correggi per proseguire.", document.getElementById('squeezolEmail'));
 			}
 			else if (errorType === 'duplicates') {
 				this.setWrongEmails(answer.emailArray);
-				this.appendErrorInfo('Una o piÃ¹ email inserite sono ripetute, correggi per proseguire.', document.getElementById('squeezolEmail'));
+				this.appendErrorInfo('Una o più email inserite sono ripetute, correggi per proseguire.', document.getElementById('squeezolEmail'));
 			}
 			else if (errorType === 'Contribution') {
 				this.appendErrorInfo('Inserisci un importo valido', document.getElementById('squeezolEmail'));
@@ -1561,13 +1562,13 @@ throw new SyntaxError('JSON.parse');
 				for (i=0; i<email_list.length; i++ ) {
 					if (emailInputList[j].value == email_list[i] ) {
 						tempObj = DomElement({'el': emailInputList[j].parentNode})
-						tempObj.addClass('has-error');
+						tempObj.addClass('sq-has-error');
 						//tmpSpan = document.createElement('span');
 						//tmpSpan.className = 'input-group-addon glyphicon glyphicon-remove';
 					}
 					else {
 						tempObj = DomElement({'el': emailInputList[j].parentNode})
-						tempObj.addClass('has-success');
+						tempObj.addClass('sq-has-success');
 						//tmpSpan = document.createElement('span');
 						//tmpSpan.className = 'input-group-addon glyphicon glyphicon-ok form-control-feedback';
 					}
@@ -1585,7 +1586,7 @@ throw new SyntaxError('JSON.parse');
 				for (i=0; i<email_list.length; i++ ) {
 					if (emailInputList[j].value == email_list[i].email ) {
 						tempObj = DomElement({'el': emailInputList[j].parentNode})
-						tempObj.addClass('has-error');
+						tempObj.addClass('sq-has-error');
 					}
 				}
 			}
@@ -1593,7 +1594,7 @@ throw new SyntaxError('JSON.parse');
 				for (i=0; i<fb_list.length; i++ ) {
 					if (fbInputList.value == fb_list[i].fb_id ) {
 						tempObj = DomElement({'el': fbInputList[j].parentNode})
-						tempObj.addClass('has-error');
+						tempObj.addClass('sq-has-error');
 					}
 				}
 			}
@@ -1646,12 +1647,12 @@ throw new SyntaxError('JSON.parse');
 			if (error.repetitions.length > 0) {
 				item_list=error.repetitions;
 				this.addErrorClass(item_list)
-				this.appendErrorInfo('Una o piÃ¹ email inserite sono ripetute, correggi per proseguire.', document.getElementById('squeezolEmail'));
+				this.appendErrorInfo('Una o più email inserite sono ripetute, correggi per proseguire.', document.getElementById('squeezolEmail'));
 			}
 			if (error.invalid.length > 0){
 				item_list=error.invalid;
 				this.addErrorClass(item_list)
-				this.appendErrorInfo("Una o piÃ¹ email inserite sono errate, correggi per proseguire.", document.getElementById('squeezolEmail'));
+				this.appendErrorInfo("Una o più email inserite sono errate, correggi per proseguire.", document.getElementById('squeezolEmail'));
 			}
 		},
 		that.addErrorClass = function(emailList){
@@ -1660,14 +1661,14 @@ throw new SyntaxError('JSON.parse');
 				for (i=0; i<emailList.length; i++ ) {
 					if (emailInputList[j].value == emailList[i] ) {
 						tempObj = DomElement({'el': emailInputList[j].parentNode})
-						tempObj.addClass('has-error');
+						tempObj.addClass('sq-has-error');
 					}
 				}
 			}
 		},
 		that.removeErrorInfo = function () {
 			var tempObj, alertDiv, tmpDiv;
-			var errorClassList = document.getElementsByClassName('has-error');
+			var errorClassList = document.getElementsByClassName('sq-has-error');
 			alertDiv = document.getElementById('alertErrorDiv');
 			if (alertDiv){
 				tempDiv = DomElement({'el': alertDiv});
@@ -1675,15 +1676,15 @@ throw new SyntaxError('JSON.parse');
 			}
 			for (var i=0; i<errorClassList.length;i++){
 				tempObj = DomElement({'el': errorClassList[i]});
-				tempObj.deleteClass('has-error');
+				tempObj.deleteClass('sq-has-error');
 			}
 			return;
 		},
 		that.appendErrorInfo = function(text, domItem){
 			var div = document.createElement('div');
-			div.className = 'row';
+			div.className = 'sq-row';
 			div.id = 'alertErrorDiv';
-			div.innerHTML = '<div class="alert alert-danger col-xs-7 col-xs-offset-1">'+
+			div.innerHTML = '<div class="sq-alert sq-alert-danger sq-col-xs-7 sq-col-xs-offset-1">'+
 											  '<p>'+
 													'<strong>OOPS!</strong>'+
 													text+
@@ -1695,9 +1696,9 @@ throw new SyntaxError('JSON.parse');
 		that.appendSuccessInfo = function(){
 			var div = document.createElement('div');
 			var domItem = document.getElementById('squeezolEmail')
-			div.className = 'row';
+			div.className = 'sq-row';
 			div.id = 'alertErrorDiv';
-			div.innerHTML = '<div class="alert alert-success col-xs-7 col-xs-offset-1">'+
+			div.innerHTML = '<div class="sq-alert sq-alert-success sq-col-xs-7 sq-col-xs-offset-1">'+
 											  '<p>'+
 													'<strong>OK! </strong>'+
 													'Email inviate con successo'+
@@ -1714,7 +1715,7 @@ throw new SyntaxError('JSON.parse');
       var found = false;
 			for (var i=0; i<sentEmail.length; i++){
         div = document.createElement('div');
-			  div.className = 'row emailElement';
+			  div.className = 'sq-row emailElement';
 				currSent = sentEmail[i];
 				for (var j=0; j<alreadyInvited.length; j++) {
 					inv = alreadyInvited[j].getElementsByTagName('input')[0];
@@ -1723,12 +1724,12 @@ throw new SyntaxError('JSON.parse');
           }
         }  
 		  	if (found==false) {
-					div.innerHTML = '<div class="col-md-1 col-md-offset-1 hidden-xs">'+
-                            '<img class="imgAvatar thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
+					div.innerHTML = '<div class="sq-col-md-1 sq-col-md-offset-1 sq-hidden-xs">'+
+                            '<img class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
                           '</div>'+
-													'<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 form-group has-success input-group">'+
-													  '<input value="'+currSent.value+'" class="form-control" type="email" name="email" placeholder="email address" disabled>'+
-														'<span class="input-group-addon glyph-ok">'+
+													'<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-form-group sq-has-success sq-input-group">'+
+													  '<input value="'+currSent.value+'" class="sq-form-control" type="email" name="email" placeholder="email address" disabled>'+
+														'<span class="sq-input-group-addon sq-glyph-ok">'+
                             '@<span/>'+
                             '</div>'+
 													'</div>';
@@ -1750,18 +1751,18 @@ throw new SyntaxError('JSON.parse');
 			var btnText = ['Email', 'f | Invito Facebook', 'Invia E-mail'],
 					btnId = ['squeezolEmail_', 'squeezolFb_', 'squeezolSubmit_' ],
 					btnSize = ['small', 'small', 'big'],
-					btnClass = ['btn btn-lg sq-buttonEmail', 'btn btn-lg sq-buttonFb', 'squeezolButtonSuccess btn btn-lg'];
+					btnClass = ['sq-btn sq-btn-lg sq-buttonEmail', 'sq-btn sq-btn-lg sq-buttonFb', 'squeezolButtonSuccess sq-btn sq-btn-lg'];
 			var fbBtn, emailBtn, submitBtn, emailDiv, fbDiv, selectBox, nextBtn,
 				  invitationBtn, removeBtn, containerDiv, submitDiv, nextDiv;
 			var fbUid, friendList;
 			var sqDiv, tmpObj, tmpDiv, emailModal;
       var copiaUrl, a_temp, a_link;
 			var i, j, currBtn, ui;
-			var wrapper_left = { wrapper: 'div', className : 'col-xs-2' };
-			var wrapper_center = { wrapper: 'div', className : 'col-md-3 col-xs-10 col-xs-offset-1' };
-			var wrapper_btn = { wrapper: 'div', className : 'col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1' };
-			var wrapper_row = { wrapper: 'div', className : 'row' };
-      var wrapper_remove = { wrapper: 'div', className: 'col-sm-5 col-sm-offset-0 col-xs-10 col-xs-offset-1'}
+			var wrapper_left = { wrapper: 'div', className : 'sq-col-xs-2' };
+			var wrapper_center = { wrapper: 'div', className : 'sq-col-md-3 sq-col-xs-10 sq-col-xs-offset-1' };
+			var wrapper_btn = { wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1' };
+			var wrapper_row = { wrapper: 'div', className : 'sq-row' };
+      var wrapper_remove = { wrapper: 'div', className: 'sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1'}
 			if(answer.status === 'ok') {
 				// Parsing Parametri
 				params=JSON.parse(answer.params);
@@ -1780,13 +1781,13 @@ throw new SyntaxError('JSON.parse');
 				SqDiv = document.getElementById('squeezol_view')
 				emailDiv=document.createElement('div');
 				fbDiv=document.createElement('div');
-				emailDiv.className = 'mailInvitation modal-body';
+				emailDiv.className = 'mailInvitation sq-modal-body';
 				emailDiv.id = 'squeezolEmail'
 				fbDiv.className = 'fbInvitation';
 				fbDiv.id = 'squeezolFb'
 				invitationBtn = InvitationObj();
-				emailBtn = invitationBtn.createButton('@ Email', btnId[0], btnSize[0], 'btn btn-sm sq-buttonEmail');
-				emailModal = invitationBtn.createButton('@ | Invia Email', 'emailModal_', 'big', 'btn btn-lg sq-buttonEmail');
+				emailBtn = invitationBtn.createButton('@ Email', btnId[0], btnSize[0], 'sq-btn sq-btn-sm sq-buttonEmail');
+				emailModal = invitationBtn.createButton('@ | Invia Email', 'emailModal_', 'big', 'sq-btn sq-btn-lg sq-buttonEmail');
 				
 				// SEND EMAIL handler:
 				submitBtn = invitationBtn.createButton(btnText[2], btnId[2], btnSize[2], btnClass[2]);
@@ -1808,8 +1809,8 @@ throw new SyntaxError('JSON.parse');
 				
 				// Append Submit Button to 
 				submitDiv = document.createElement('div');
-				submitDiv.className = 'row';
-				submitDiv.appendChild(submitBtn.wrap({ wrapper: 'div', className : 'col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-8'}));
+				submitDiv.className = 'sq-row';
+				submitDiv.appendChild(submitBtn.wrap({ wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-8'}));
 				
 				// ADD EMAIL handler:
 				emailBtn.regHandler('click', function() {
@@ -1821,7 +1822,7 @@ throw new SyntaxError('JSON.parse');
 
 					removeBtn = Button()
 					removeBtn.create('- Elimina', 'small', 'btnRemove');
-					removeBtn.addClass('btn btn-xs btn-danger')
+					removeBtn.addClass('sq-btn sq-btn-xs sq-btn-danger')
 					removeBtn.regHandler('click', function(e){
 				  	var event= e || window.event;
 				  	var target = event.target || event.srcElement || event.originalTarget;
@@ -1833,12 +1834,12 @@ throw new SyntaxError('JSON.parse');
 						}
 					});
 					newEmail = document.createElement('div');
-					newEmail.className = 'row emailElement';
-					jQuery(newEmail).append('<div class="hidden-xs col-sm-2 col-md-2">'+
-															      '<img style="display:inline;" class="imgAvatar thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
+					newEmail.className = 'sq-row emailElement';
+					jQuery(newEmail).append('<div class="sq-hidden-xs sq-col-sm-2 sq-col-md-2">'+
+															      '<img style="display:inline;" class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
 		  											      '</div>'+
-														      '<div class="col-sm-5 col-sm-offset-0 col-xs-10 col-xs-offset-1">'+
-													          '<input class="form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
+														      '<div class="sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+													          '<input class="sq-form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
 														      '</div>');
 					newEmail.appendChild(removeBtn.wrap(wrapper_remove));
 					emailDiv.appendChild(newEmail);
@@ -1854,12 +1855,12 @@ throw new SyntaxError('JSON.parse');
 				});
 
 				tmpObj = document.createElement('div');
-				tmpObj.className = 'row row-separata';
+				tmpObj.className = 'sq-row row-separata';
 				tmpObj.appendChild(emailModal.wrap(wrapper_btn));
 
 				// FACEBOOK IFRAME handler:
         if (params.fb_url) {
-				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'big', 'btn btn-lg sq-buttonFb');
+				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'big', 'sq-btn sq-btn-lg sq-buttonFb');
 					fbBtn.regHandler('click', function(){
 						var iFrameModal;
 						var ui=UserInterface();
@@ -1867,15 +1868,15 @@ throw new SyntaxError('JSON.parse');
 						if(!iFrameModal){
 							iFrameModal = document.createElement('div');
 							iFrameModal.id = 'squeezolIframe';
-							iFrameModal.className = 'row';
+							iFrameModal.className = 'sq-row';
 						}
 						else {
 							iFrameModal.innerHTML = '';
 						}
- 						var socIframe = '<button id="closeModal" type="button" class="close text-step-active" data-dismiss="modal" aria-hidden="true">'+
+ 						var socIframe = '<button id="closeModal" type="button" class="sq-close text-step-active" data-dismiss="modal" aria-hidden="true">'+
                               'CHIUDI &times;'+
                             '</button>'+
-                            '<div class="col-xs-10 col-xs-offset-1">'+
+                            '<div class="sq-col-xs-10 sq-col-xs-offset-1">'+
 														  '<iframe width="620px" height="620px" class="squeezol_iframe" src="'+params.fb_url+'" frameborder="0">'+
 						                	  'NON è possibile invitare con Facebook da questo dispositivo'+
 														  '</iframe>'+
@@ -1890,7 +1891,7 @@ throw new SyntaxError('JSON.parse');
         }
 				
         copiaUrl = document.createElement('div')
-        copiaUrl.className = 'col-md-3 col-xs-10 col-xs-offset-1 pink-link';
+        copiaUrl.className = 'sq-col-md-3 sq-col-xs-10 sq-col-xs-offset-1 pink-link';
         copiaUrl.setAttribute('data-placement', 'top');
         copiaUrl.setAttribute('title', 'Copia URL dello Split e condividilo dove preferisci');
         a_temp = document.createElement('a');
@@ -1950,8 +1951,8 @@ throw new SyntaxError('JSON.parse');
 					
 				// Append Next Div to .invitationContainer
 				nextDiv = document.createElement('div');
-				nextDiv.className = 'row';
-				nextDiv.appendChild(nextBtn.wrap({ wrapper: 'div', className : 'col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-8' }));
+				nextDiv.className = 'sq-row';
+				nextDiv.appendChild(nextBtn.wrap({ wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-8' }));
 				SqDiv.appendChild(nextDiv);
 			}
 			else if(answer.status === 'anauth'){
@@ -1976,7 +1977,7 @@ throw new SyntaxError('JSON.parse');
       var date2=new Date(group.max_payment_date);
 			var sqDiv = document.getElementById('squeezol_view');
       if (group.isOpen == false){
-        isOpen = '<div class="row sq-pin">'+
+        isOpen = '<div class="sq-row sq-pin">'+
                    '<p><strong>PIN:'+group.pin+'</strong></p>'+
                  '</div>';
       }
@@ -1994,63 +1995,63 @@ throw new SyntaxError('JSON.parse');
      
 			groupDigest=document.createElement('div');
 			groupDigest.id = "squeezol_btn_container";
-			groupDigest.className = "row row-separata";
+			groupDigest.className = "sq-row row-separata";
       groupDigest2=document.createElement('div');
-      groupDigest2.className='row row-separata';
-      groupDigest2.innerHTML = '<div class="col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-1 col-left">'+
+      groupDigest2.className='sq-row row-separata';
+      groupDigest2.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-1 sq-col-left">'+
                                  '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
-                               '<div class="col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-0">'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
                                  '<p class="sq-content-body">Scadenza invito:</p>'+
                                  '<p class="sq-content-body">'+
                                    date1.getDate() + '.' + (parseInt(date1.getMonth())+1).toString() + '.' + date1.getFullYear()+
                                  '</p>'+
                                '</div>'+
-                               '<div class=" col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-0">'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
                                  '<p class="sq-content-body">Scadenza pagamento:</p>'+
                                  '<p class="sq-content-body">'+
                                    date2.getDate() + '.' + (parseInt(date2.getMonth())+1).toString() + '.' + date2.getFullYear()+
                                  '</p>'+
                                '</div>'+
-                               '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">'+
-                                 '<div class="row target-P">'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
+                                 '<div class="sq-row target-P">'+
                                    '<p> Obiettivo:</p>'+
                                    '<p><strong>'+group.amount + group.currency +'</p>'+
                                  '</div>'+
                                  isOpen+
                                '</div>';
 
-			groupDigest.innerHTML= '<div class="col-xs-10 col-xs-offset-1 sq-withBorder">'+
-                                '<div class="row">'+   
-                                  '<div class="col-xs-1 col-left">'+
-                                    '<div class="box-blu">'+
+			groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-withBorder">'+
+                                '<div class="sq-row">'+   
+                                  '<div class="sq-col-xs-10 sq-col-md-3 sq-col-left">'+
+                                    '<div class="sq-box-blu">'+
                                       '<p><strong>'+alreadyInvited.length+'</strong></p>'+
                                       '<p>invitati</p>'+
                                     '</div>'+
                                   '</div>'+
-														      '<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 form-group" style="margin: 10px 0px 0px 20px;">'+
+														      '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-form-group" style="margin: 10px 0px 0px 20px;">'+
 														       	'<p class="sq-label">Tipo quota:'+
                                       '<div data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
                                         'quota che verrà  visualizzata dagli invitati. Altrimenti la quota proposta '+
                                         'verrà  calcolata in base al numero di invitati"'+
-                                        'class="icon glyph-info-sign">'+
+                                        'class="icon sq-glyph-info-sign">'+
                                         '<p>i</p>'+
                                       '</div>'+
                                     '</p>'+
 															      '<select class="selectContrib" id="contributionType">'+options+'</select>'+
 															      '<input value="'+adminEmail+'"type="hidden" name="email" disabled>'+
 														      '</div>'+
-														      '<div class="squeezol_quota col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="margin: 10px 0px 0px 20px;">'+
+														      '<div class="squeezol_quota sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0" style="margin: 10px 0px 0px 20px;">'+
 															      '<p class="sq-label">Quota singola:'+
                                       '<div data-toggle="popover" data-placement="top" title="La quota è un '+
                                         'suggerimento per gli invitati."'+
-                                        'class="icon glyph-info-sign">'+
+                                        'class="icon sq-glyph-info-sign">'+
                                         '<p>i</p>'+
                                       '</div>'+
                                     '</p>'+
-															      '<div class="input-group">'+
+															      '<div class="sq-input-group">'+
 															        '<input id="squeezol_admin_contrib" value="'+contrib+'" name="email_contribution"'+
-																	      'type="text" class="squeezolPrice form-control" '+disabled+'><span class="input-group-addon">'+group.currency+'</span>'
+																	      'type="text" class="squeezolPrice sq-form-control" '+disabled+'><span class="sq-input-group-addon">'+group.currency+'</span>'
         														'</div>'+
                                   '</div>'+
                                 '</div>'+
@@ -2076,8 +2077,8 @@ throw new SyntaxError('JSON.parse');
 			var sqBtnContainer;
 			var i, j, k, p, spanCurr, quotaDiv, labelQuota;
 			var status, ui, state, ghianda, avatar_url, alertDes, contribution_amount;
-			var wrapper = {wrapper: 'div', className: 'col-md-4 col-md-offset-1 col-xs-10 col-xs-offset-1'};
-			var wrapBtn = {wrapper: 'div', className: 'col-md-2 col-xs-10 col-xs-offset-1'};
+			var wrapper = {wrapper: 'div', className: 'sq-col-md-4 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1'};
+			var wrapBtn = {wrapper: 'div', className: 'sq-col-md-2 sq-col-xs-10 sq-col-xs-offset-1'};
       var helpText = { 'p_quota': 'Inserisci la quota che intendi versare' };
 
 			if(answer.status === 'ok') {
@@ -2099,7 +2100,7 @@ throw new SyntaxError('JSON.parse');
 				this.renderGroupData(answer.group, params, SqDiv, participants);
 				ui.drawSeparator('Pagamenti');
 				renderDiv=Div(document.createElement('div'));
-				renderDiv.addClass('row');
+				renderDiv.addClass('sq-row');
 
 				renderBtn = Button();
 				singleAmountBtn = Button();
@@ -2108,7 +2109,7 @@ throw new SyntaxError('JSON.parse');
 				// Group completed with success
 				if(groupStatus == 'CWS') {
 					alertDes = document.createElement('div');
-					alertDes.className = 'row alert alert-success'
+					alertDes.className = 'sq-row sq-alert sq-alert-success'
 					alertDes.innerHTML = '<p class="text-center">'+
 																 '<strong> Congratulazioni!</strong>'+
 																 'Lo split si è conclusa con successo!'+
@@ -2125,12 +2126,12 @@ throw new SyntaxError('JSON.parse');
 						singleAmountBtn.create('Modifica quota', 'ui', 'SqueezolModifyAmount_');
 						singleAmountBtn.get().setAttribute('data-participant', participantId);
 						singleAmountBtn.get().setAttribute('data-action', 'SA');
-						singleAmountBtn.get().className='btn btn-lg';
+						singleAmountBtn.get().className='sq-btn sq-btn-lg';
 						singleAmountBtn.regHandler('click', buttonHandler);
 						quotaDiv = Div(document.createElement('div'));
-						quotaDiv.addClass('input-group');
+						quotaDiv.addClass('sq-input-group');
 						spanCurr = document.createElement('span');
-						spanCurr.className = 'input-group-addon';
+						spanCurr.className = 'sq-input-group-addon';
 						spanCurr.innerHTML = answer.group.currency;
 						quotaDiv.append(saInput.labelizeWithSpan('Quota personale', spanCurr, helpText['p_quota']).get());
 						renderDiv.append(quotaDiv.wrap(wrapper));
@@ -2155,7 +2156,7 @@ throw new SyntaxError('JSON.parse');
 							renderBtn.create('Concludi Split', 'ui', 'SqueezolFinishPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'CG');
-							renderBtn.get().className='squeezolButtonSuccess btn btn-lg';
+							renderBtn.get().className='squeezolButtonSuccess sq-btn sq-btn-lg';
 							renderBtn.regHandler('click', buttonHandler);
 							renderDiv.append(renderBtn.wrap(wrapper));
 							SqDiv.appendChild(renderDiv.get());
@@ -2177,13 +2178,13 @@ throw new SyntaxError('JSON.parse');
 										renderBtn.create('Pagato', 'ui', 'SqueezolPay_');
 										renderBtn.get().setAttribute('data-participant', participantId)
 										renderBtn.get().disabled=true;
-										renderBtn.get().className='btn btn-success btn-lg';
+										renderBtn.get().className='sq-btn sq-btn-success sq-btn-lg';
 									}
 									else{
 										renderBtn.create('Paga ora', 'big', 'SqueezolPay_');
 										renderBtn.get().setAttribute('data-participant', participantId);
 										renderBtn.get().setAttribute('data-action', 'P');
-										renderBtn.get().className='btn btn-lg';
+										renderBtn.get().className='sq-btn sq-btn-lg';
 										renderBtn.regHandler('click', buttonHandler);
 									}
 								}
@@ -2192,7 +2193,7 @@ throw new SyntaxError('JSON.parse');
 						else {
 							//Attualmente non e' un Button
 							renderBtn = document.createElement('div');
-							renderBtn.innerHTML = '<div class="alert alert-warning col-xs-6"'+
+							renderBtn.innerHTML = '<div class="sq-alert sq-alert-warning sq-col-xs-6"'+
 																		  '<p>'+
 																			  '<strong>Attenzione!</strong>'+
 									                      'La fase di accettazione non si è ancora conclusa, vuoi aprire i pagamenti ai tuoi invitati?'+
@@ -2203,7 +2204,7 @@ throw new SyntaxError('JSON.parse');
 							renderBtn.create('Inizia i pagamenti!', 'big', 'SqueezolStartPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'OP');
-							renderBtn.get().className='squeezolButtonSuccess btn';
+							renderBtn.get().className='squeezolButtonSuccess sq-btn';
 							renderBtn.regHandler('click', buttonHandler);
 						}
 					}
@@ -2216,13 +2217,13 @@ throw new SyntaxError('JSON.parse');
 										renderBtn.create('Pagato', 'ui', 'SqueezolPay_');
 										renderBtn.get().setAttribute('data-participant', participantId)
 										renderBtn.get().disabled=true;
-										renderBtn.get().className='btn btn-lg';
+										renderBtn.get().className='sq-btn sq-btn-lg';
 									}
 									else{
 										renderBtn.create('Paga ora', 'ui', 'SqueezolPay_');
 										renderBtn.get().setAttribute('data-participant', participantId);
 										renderBtn.get().setAttribute('data-action', 'P');
-										renderBtn.get().className='btn btn-lg';
+										renderBtn.get().className='sq-btn sq-btn-lg';
 										renderBtn.regHandler('click', buttonHandler);
 										if(openPay==false){
 											renderBtn.get().disabled=true;
@@ -2235,7 +2236,7 @@ throw new SyntaxError('JSON.parse');
 					// Render
           if (openPay == false) {
 						var superTemp = document.createElement('div');
-						superTemp.className = 'col-xs-12 alert alert-info';
+						superTemp.className = 'sq-col-xs-12 sq-alert sq-alert-info';
 						if (isAdmin == true){
 							superTemp.innerHTML = '<p class="text-center"> Inizia i pagamenti: sarà possibile a tutti versare la propria quota(una notifica verrà inoltrata a tutti i partecipanti!)</p>';
 						}
@@ -2245,13 +2246,13 @@ throw new SyntaxError('JSON.parse');
 						renderDiv.append(superTemp);
 					}
 					renderDiv=Div(document.createElement('div'));
-					renderDiv.addClass('row row-separata');
+					renderDiv.addClass('sq-row row-separata');
 					renderDiv.get().id='squeezolPayBox';
 					renderDiv.append(renderBtn.wrap(wrapper));
           if (params.invitation_url && isAdmin && (answer.group.status == 'WPA' || answer.group.status == 'WAC')){
             inviteBtn = Button();
             inviteBtn.create('Invita', 'ui', 'SqueezolInvitation_');
-            inviteBtn.get().className='btn btn-lg squeezolButtonSuccess';
+            inviteBtn.get().className='sq-btn sq-btn-lg squeezolButtonSuccess';
             inviteBtn.regHandler('click', function(){
               window.location.replace(params.invitation_url);
             });
@@ -2264,9 +2265,9 @@ throw new SyntaxError('JSON.parse');
 					renderBtn.create('Split Chiusa', 'big', 'SqueezolDeserted_');
 					renderBtn.get().setAttribute('data-participant', participantId)
 					renderBtn.get().disabled=true;
-					renderBtn.get().className='buttonWarning btn btn-lg';
+					renderBtn.get().className='buttonWarning sq-btn sq-btn-lg';
 					alertDes = document.createElement('div');
-					alertDes.className = 'alert alert-warning'
+					alertDes.className = 'sq-alert sq-alert-warning'
 					alertDes.innerHTML = '<p>'+
 																 '<strong>Attenzione!</strong>'+
 																 'Lo split è stata chiusa dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effetuare il pagamento.'+
@@ -2279,7 +2280,7 @@ throw new SyntaxError('JSON.parse');
 				  ui.drawSeparator('Partecipanti');
 				  for (j=0; j<participants.length; j++){
 				    part=document.createElement('div');
-					  part.className = 'row part';
+					  part.className = 'sq-row part';
 					  p=participants[j];
 					  status=this.switchStatus(p.status);
             var img = new Image();
@@ -2303,20 +2304,20 @@ throw new SyntaxError('JSON.parse');
               contribution_amount = '-';
             else
               contribution_amount = p.single_amount + ' ' + answer.group.currency;
-					  part.innerHTML= '<div class="col-md-1 col-md-offset-1 col-xs-4">'+
-						                  '<img id="thumb'+j+'" class="imgAvatar thumbnail img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
+					  part.innerHTML= '<div class="sq-col-md-1 sq-col-md-offset-1 sq-col-xs-4">'+
+						                  '<img id="thumb'+j+'" class="imgAvatar sq-thumbnail sq-img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
 													  '</div>'+
-													  '<div class="col-md-4 col-xs-4 has-success">'+
+													  '<div class="sq-col-md-4 sq-col-xs-4 sq-has-success">'+
 														  '<p class="sq-content-body text-center">'+p.name+'</p>'+
 													  '</div>'+
-													  '<div class="col-md-2 col-xs-10">'+
+													  '<div class="sq-col-md-2 sq-col-xs-10">'+
 														  '<h4 class="text-center">'+contribution_amount+'</h4>'+
 													  '</div>'+
-													  '<div class="col-md-2 col-xs-10">'+
+													  '<div class="sq-col-md-2 sq-col-xs-10">'+
 														  '<h4 class="text-center text-step-'+state+'">'+status+'</h4>'+
 													  '</div>'+
-													  '<div class="col-md-1 hidden-xs">'+
-														  '<img class="img-responsive" src="' + img_url + 'ghianda_step_'+ghianda+'.png">'+
+													  '<div class="sq-col-md-1 sq-hidden-xs">'+
+														  '<img class="sq-img-responsive" src="' + img_url + 'ghianda_step_'+ghianda+'.png">'+
 													  '</div>';
 						  SqDiv.appendChild(part);
             }
@@ -2367,10 +2368,10 @@ throw new SyntaxError('JSON.parse');
 				  p.innerHTML=''
 					p.appendChild(document.createTextNode(message));
 					if (answer.status == 'error'){
-					  p.className = 'alert alert-danger';
+					  p.className = 'sq-alert sq-alert-danger';
 				  }
 					else {
-					  p.className = 'alert alert-success';
+					  p.className = 'sq-alert sq-alert-success';
 				  }
 				}
 				else{
@@ -2379,10 +2380,10 @@ throw new SyntaxError('JSON.parse');
 					p.appendChild(document.createTextNode(message));
 					inputDiv.parentNode.parentNode.appendChild(p);
 					if (answer.status == 'error'){
-						p.className = 'alert alert-danger';
+						p.className = 'sq-alert sq-alert-danger';
 					}
 					else {
-						p.className = 'alert alert-success';
+						p.className = 'sq-alert sq-alert-success';
 					}
 				}
       },
@@ -2394,7 +2395,7 @@ throw new SyntaxError('JSON.parse');
         sqDiv = document.getElementById('squeezol_view');
         groupDigest=document.createElement('div');
 				groupDigest.id = "squeezol_btn_container";
-				groupDigest.className = "squeezol_group_box row";
+				groupDigest.className = "squeezol_group_box sq-row";
 				status = this.switchGroupStatus(group.status);
 
         for (var i=0; i<participants.length; i++){
@@ -2431,15 +2432,15 @@ throw new SyntaxError('JSON.parse');
         }
         else
           classe='target-R';
-        groupDigest.innerHTML= '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 col-left">'+
+        groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1 sq-col-left">'+
                                  '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
-                               '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
                                  '<p class="sq-content-body">Organizzatore:</p>'+  
                                  '<strong>'+admin_name+'</strong>'+
                                '</div>'+
-                               '<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1">'+
-                                 '<div class="row box-blu-digest sq-content-body" style="padding:5px;">'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1">'+
+                                 '<div class="sq-row sq-box-blu-digest sq-content-body" style="padding:5px;">'+
                                    '<p class="text-center"> Scelta:'+this.switchStatus(participant.status)+'</p>'+
                                  '</div>'+
                                '</div>';
@@ -2447,22 +2448,22 @@ throw new SyntaxError('JSON.parse');
 				sqDiv.appendChild(groupDigest.get());
 
         groupDigest=document.createElement('div');
-				groupDigest.className = "row row-separata";
-        groupDigest.innerHTML = '<div class="col-md-10 col-md-offset-1">'+
-                                  '<div class="row withPaddedBorder">'+
-                                    '<div class="col-md-4">'+
+				groupDigest.className = "sq-row row-separata";
+        groupDigest.innerHTML = '<div class="sq-col-md-10 sq-col-md-offset-1">'+
+                                  '<div class="sq-row withPaddedBorder">'+
+                                    '<div class="sq-col-md-4">'+
                                       '<h4>TERMINA FRA</h4>'+
-                                      '<div class="col-md-4 no-pad">'+
+                                      '<div class="sq-col-md-4 no-pad">'+
                                         '<p class="sq-target-small">'+params.daysLeft+' G</p>'+
                                       '</div>'+
-                                      '<div class="col-md-4 no-pad">'+
+                                      '<div class="sq-col-md-4 no-pad">'+
                                         '<p class="sq-target-small">'+params.hoursLeft+' H</p>'+
                                       '</div>'+
-                                      '<div class="col-md-4 no-pad">'+
+                                      '<div class="sq-col-md-4 no-pad">'+
                                         '<p class="sq-target-small">'+params.minutesLeft+' M</p>'+
                                       '</div>'+
                                     '</div>'+
-                                    '<div class="col-md-4">'+
+                                    '<div class="sq-col-md-4">'+
                                       '<div class="progress-radial-container">'+
                                         '<div class="progress-radial progress-'+params.totalPerc+'">'+
                                           '<div class="overlay">'+totalPaid+' '+group.currency+
@@ -2475,7 +2476,7 @@ throw new SyntaxError('JSON.parse');
                                         '</div>'+
                                       '</div>'+
                                     '</div>'+
-                                    '<div class="col-md-4 '+classe+'">'+
+                                    '<div class="sq-col-md-4 '+classe+'">'+
                                       '<p class="text-center" style="font-family: DejavuSansCondensed-Bold;">'+
                                           participant.single_amount+' '+group.currency+
                                       '</p>'+
@@ -2533,7 +2534,7 @@ throw new SyntaxError('JSON.parse');
           return;
         }
 				renderBtn.get().setAttribute('data-participant', participantId);
-				renderBtn.get().className='btn btn-lg';
+				renderBtn.get().className='sq-btn sq-btn-lg';
 				parentDiv.appendChild(renderBtn.get());
 			},
 			that.switchStatus = function(status){

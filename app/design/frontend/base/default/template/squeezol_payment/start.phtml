@@ -4,8 +4,18 @@ var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)
 
 <h3>Paga con Squeezol</h3>
 
-<h4>Stai per pagare i seguenti oggetti con Squeezol</h4>
-<table class="shipping-data table table-bordered">
+<h4>
+Squeezol ti permette di dividire il costo del carrello con amici, colleghi e parenti.
+</h4>
+
+<h3> Come procedere: </h3>
+  <p> <p class="sq-text">Clicca su Pay With Squeezol</p> e autorizza l'utilizzo del servizio. </p>
+  <p> Dai un nome e una descrizione alla colletta e dillo ai tuoi invitati con email e Facebook.</p>
+  <p> <p class="sq-text">Paga la tua quota</p> e...non aver fretta, i partecipanti avranno <p class="sq-text">25 giorni</p> di tempo per completare l'acquisto!</p>
+
+<div id="squeezol_btn"></div>
+
+<table class="shipping-data sq-table sq-table-bordered">
     <tr>
         <th>Oggetto</th>
         <th>Quantit&agrave;</th>
@@ -36,7 +46,5 @@ var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)
         <td><?php echo money_format('%.2n', $order['base_grand_total']); ?></td>
     </tr>
 </table>
-
-<div id="squeezol_btn"></div>
 
 <script> SqueezolApi.createSqButton('<?php echo Mage::getBaseUrl(); ?>/squeezol/index/oauth', 'big'); </script>

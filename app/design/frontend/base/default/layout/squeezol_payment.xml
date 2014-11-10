@@ -15,8 +15,11 @@
     <squeezol_payment_index_gateway>
         <reference name="head">
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
+            <!--action method="addItem">
+              <type>skin_js</type>
+              <name>js/jquery.min.js</name>
+            </action-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -26,7 +29,6 @@
                 <name>js/_squeezol3.js</name>
             </action>
         </reference>
-
         <reference name="content">
             <block name="squeezol_payment.start" as="squeezol_payment_start" type="squeezol_payment/start" template="squeezol_payment/start.phtml" />
         </reference>
@@ -36,7 +38,11 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <action method="addItem">
+              <type>skin_js</type>
+              <name>js/jquery.min.js</name>
+            </action-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -56,7 +62,11 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <action method="addItem">
+              <type>skin_js</type>
+              <name>js/jquery.min.js</name>
+            </action-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -76,7 +86,11 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <action method="addItem">
+              <type>skin_js</type>
+              <name>js/jquery.min.js</name>
+            </action-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -96,7 +110,11 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <action method="addItem">
+              <type>skin_js</type>
+              <name>js/jquery.min.js</name>
+            </action-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -114,7 +132,11 @@
     <checkout_onepage_index>
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/jquery.min.js</name>
+            </action-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
