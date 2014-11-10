@@ -7,13 +7,11 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     public function preDispatch () {
         parent::preDispatch();
 
-        /*if (!Mage::getSingleton('customer/session')->authenticate($this)) {
-            $this->getResponse()->setRedirect(Mage::helper('customer')->getLoginUrl());
+        $this->_ses = Mage::getSingleton('squeezol_payment/session');
+    }
 
-            $this->setFlag('', self::FLAG_NO_DISPATCH, true);
-        }*/
-
-        $this->_ses = $_SESSION;
+    public function getSession () {
+        return $this->_ses;
     }
 
     public function indexAction () {
@@ -24,9 +22,7 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
     public function gatewayAction () {
 
-        $lastOrderId = isset($_GET['oid'])
-                     ? $_GET['oid']
-                     : null;
+        $lastOrderId = isset($_GET['oid']) ? $_GET['oid'] : null;
 
         if (!$lastOrderId) {
             $lastOrderId = Mage::getSingleton('checkout/session')
@@ -35,17 +31,13 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
         if (!$lastOrderId) {
             die();
-        } else {
-            $_SESSION['curr_order'] = $lastOrderId;
         }
 
-        $sql   = 'SELECT * FROM squeezol_groups WHERE order_id = ' . addslashes($lastOrderId);
-        $group = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchRow($sql);
+        $this->getSession()->setCurrOrder($lastOrderId);
+        $group = Mage::helper('squeezol_payment')->getGroupByOrder($lastOrderId);
 
         if (!$group) {
-            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
-            $sql = 'INSERT INTO squeezol_groups VALUES (' . $customerId . ', ' . $lastOrderId . ', null);';
-            $group = Mage::getSingleton('core/resource') ->getConnection('core_write')->query($sql);
+            Mage::helper('squeezol_payment')->insertOrder($lastOrderId);
         }
 
         $this->loadLayout();
@@ -65,20 +57,19 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
         if (empty($_POST)) {
             $helper    = Mage::helper('squeezol_payment');
             $prod_data = $helper->getJsonProductsData();
-            $endpoint  = new SqueezolProductsEndpoint($_SESSION['squeezolToken'] , $prod_data);
+            $endpoint  = new SqueezolProductsEndpoint($this->getSession()->getSqueezolToken() , $prod_data);
 
             $data = $endpoint->create_product();
         } else {
-            if(!empty($_SESSION['squeezolToken'])) {
-                $token = $_SESSION['squeezolToken'];
+            if(!empty($this->getSession()->getSqueezolToken())) {
+                $token = $this->getSession()->getSqueezolToken();
 
                 if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
                     $res = $endpoint->create_group();
 
                     if ($res['status'] !== 'error') {
-                        $sql = 'UPDATE squeezol_groups SET group_id = ' . $res['group_id'] . ' WHERE order_id = ' . addslashes($_SESSION['curr_order']);
-                        Mage::getSingleton('core/resource') ->getConnection('core_write')->query($sql);
+                        Mage::helper('squeezol_payment')->updateGroup($res['group_id'], $this->getSession()->getCurrOrder());
                     }
 
                 } else if($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -139,21 +130,21 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
             $client->setAccessToken($info['access_token']);
 
-            $_SESSION['squeezolToken'] = $info['access_token'];
-            if ($_SESSION['fromReview']) {
+            $this->getSession()->setSqueezolToken($info['access_token']);
+
+            if ($this->getSession()->getFromReview()) {
                 header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
-                unset($_SESSION['fromReview']);
+                $this->getSession()->unsFromReview();
             } else {
                 header('Location: ' . $basePath . $paramsModel::PAY_PAGE);
             }
-            error_log('Access token' . "{$_SESSION['squeezolToken']}");
             die();
         }
     }
 
     public function reviewAction () {
 
-        if (!isset($_SESSION['squeezolToken'])) {
+        if (empty($this->getSession()->getSqueezolToken())) {
 
             require_once Mage::getBaseDir('lib') . '/oauth2/Client.php';
             require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/IGrantType.php';
@@ -171,7 +162,7 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
             $basePath    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
 
             $callbackUrl = $basePath . $paramsModel::CALLBACK_URL;
-            $_SESSION['fromReview'] = true;
+            $this->getSession()->setFromReview(true);
 
             $client = new OAuth2\Client($app_id, $secret);
 
@@ -187,9 +178,8 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
                 $client->setAccessToken($info['access_token']);
 
-                $_SESSION['squeezolToken'] = $info['access_token'];
+                $this->getSession()->setSqueezolToken($info['access_token']);
                 header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
-                error_log('Access token' . "{$_SESSION['squeezolToken']}");
                 die();
             }
         }
@@ -219,9 +209,9 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     public function getinvitationAction () {
         require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
 
-        if(!empty($_SESSION['squeezolToken']))
+        if(!empty($this->getSession()->getSqueezolToken()))
         {
-          $token = $_SESSION['squeezolToken'];
+          $token = $this->getSession()->getSqueezolToken();
 
           if (!empty($_POST))
           {
@@ -253,11 +243,12 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     }
 
     public function getdigestAction () {
-    require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
+        require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
 
-        if(!empty($_SESSION['squeezolToken']))
+        if(!empty($this->getSession()->getSqueezolToken()))
         {
-          $token = $_SESSION['squeezolToken'];
+          $token = $this->getSession()->getSqueezolToken();
+
           if($_SERVER['REQUEST_METHOD'] == 'POST')
           {
             $endpoint = new SqueezolDigestEndpoint($token, $_POST);
@@ -290,8 +281,7 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
         $payload = file_get_contents('php://input');
         $data    = json_decode($payload, true);
 
-        $sql   = 'SELECT * FROM squeezol_groups WHERE group_id = ' . addslashes($data['group']);
-        $group = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchRow($sql);
+        $group = Mage::helper('squeezol_payment')->getGroupByOrder($data['group']);
 
         $order = Mage::getModel('sales/order')->loadByIncrementId($group['order_id']);
 

@@ -5,10 +5,10 @@ class Squeezol_Payment_Block_Start extends Mage_Core_Block_Template {
     protected $_ses;
 
     public function getOrderItems () {
-        $this->_ses = $_SESSION;
+        $this->_ses = Mage::getSingleton('squeezol_payment/session');
 
         $salesModel = Mage::getModel('sales/order');
-        $order_id   = $this->_ses['curr_order'];
+        $order_id   = $this->_ses->getCurrOrder();
 
         if ($order_id) {
             $order_data = $salesModel->loadByIncrementId($order_id)->getAllItems();
@@ -18,10 +18,10 @@ class Squeezol_Payment_Block_Start extends Mage_Core_Block_Template {
     }
 
     public function getOrderData () {
-        $this->_ses = $_SESSION;
+        $this->_ses = Mage::getSingleton('squeezol_payment/session');
 
         $salesModel = Mage::getModel('sales/order');
-        $order_id   = $this->_ses['curr_order'];
+        $order_id   = $this->_ses->getCurrOrder();
 
         if ($order_id) {
             $order_data = $salesModel->loadByIncrementId($order_id)->getData();

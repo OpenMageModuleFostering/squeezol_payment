@@ -40,6 +40,10 @@ class SqueezolEndpoint
   {
     $this->build_headers($user_token);
     $this->prepare_data($data);
+
+    Mage::log('Richiesta a squeezol, url: ' . $this->url, null, 'squeezol.log');
+    Mage::log('Token: ' . $user_token, null, 'squeezol.log');
+    Mage::log('Dump richiesta: ' . json_encode($data), null, 'squeezol.log');
   }
 
   private function build_headers($user_token)
@@ -55,9 +59,7 @@ class SqueezolEndpoint
 
   protected function prepare_data($data)
   {
-    /*foreach ($data as $i => $value) {
-      $this->data[$i] = $value;
-    }*/
+
     return;
   }
 
@@ -65,14 +67,9 @@ class SqueezolEndpoint
   {
     $u = new UrlRequest;
     $this->raw_response = $u->run($this->url, $this->data, $this->headers, $method);
-    /*echo 'Url:'      . $this->url . '<br>';
-    echo 'Headers:'  . json_encode($this->headers) . '<br>';
-    echo 'Request:'  . json_encode($this->data) . '<br>';
-    echo 'Response:' . $this->raw_response;*/
-    error_log('url is' . $this->url);
-    error_log('headers are: ' . json_encode($this->headers));
-    error_log('request is: ' . json_encode($this->data));
-    error_log('response is: ' . $this->raw_response);
+
+    Mage::log('Risposta di squeezol: ' . $this->raw_response, null, 'squeezol.log');
+
     $this->response = json_decode($this->raw_response, true);
   }
 }

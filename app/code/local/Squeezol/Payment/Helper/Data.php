@@ -2,11 +2,15 @@
 class Squeezol_Payment_Helper_Data extends Mage_Core_Helper_Abstract {
     protected $_ses;
 
+    public function getGTableName () {
+        return Mage::getSingleton('core/resource')->getTableName('squeezol_groups');
+    }
+
     public function getOrderItems () {
-        $this->_ses = $_SESSION;
+        $this->_ses = Mage::getSingleton('squeezol_payment/session');
 
         $salesModel = Mage::getModel('sales/order');
-        $order_id   = $this->_ses['curr_order'];
+        $order_id   = $this->_ses->getCurrOrder();
 
         if ($order_id) {
             $order_data = $salesModel->loadByIncrementId($order_id)->getAllItems();
@@ -16,10 +20,10 @@ class Squeezol_Payment_Helper_Data extends Mage_Core_Helper_Abstract {
     }
 
     public function getOrderData () {
-        $this->_ses = $_SESSION;
+        $this->_ses = Mage::getSingleton('squeezol_payment/session');
 
         $salesModel = Mage::getModel('sales/order');
-        $order_id   = $this->_ses['curr_order'];
+        $order_id   = $this->_ses->getCurrOrder();
 
         if ($order_id) {
             $order_data = $salesModel->loadByIncrementId($order_id)->getData();
@@ -76,10 +80,48 @@ class Squeezol_Payment_Helper_Data extends Mage_Core_Helper_Abstract {
 
     public function getGroupsData () {
         require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
+        $this->_ses = Mage::getSingleton('squeezol_payment/session');
 
-        $endpoint  = new SqueezolGetGroupsEndpoint($_SESSION['squeezolToken'] , array());
+        $endpoint  = new SqueezolGetGroupsEndpoint($this->_ses->getSqueezolToken(), array());
         $data = $endpoint->get_groups();
 
         return json_decode($data['groups'], true);
+    }
+
+    public function getGroupByOrder($lastOrderId) {
+        $sql  = 'SELECT * FROM ' . $this->getGTableName() . ' WHERE order_id = :order';
+        $bind = array(
+            'order' => $lastOrderId
+        );
+
+        $group = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchRow($sql, $bind);
+
+        return $group;
+    }
+
+    public function insertOrder ($lastOrderId) {
+        $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+
+        if ($customerId) {
+            $sql = 'INSERT INTO ' . $this->getGTableName() . ' VALUES (:customer, :order, null);';
+
+            $bind = array(
+                'customer' => $customerId,
+                'order'    => $lastOrderId
+            );
+
+            $group = Mage::getSingleton('core/resource') ->getConnection('core_write')->query($sql, $bind);
+        }
+    }
+
+    public function updateGroup ($group, $order) {
+        $sql  = 'UPDATE ' . $this->getGTableName() . ' SET group_id = :group WHERE order_id = :order';
+
+        $bind = array(
+            'group' => $group,
+            'order' => $order
+        );
+
+        Mage::getSingleton('core/resource') ->getConnection('core_write')->query($sql, $bind);
     }
 }
