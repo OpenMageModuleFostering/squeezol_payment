@@ -797,13 +797,13 @@ throw new SyntaxError('JSON.parse');
 								   '<div id="squeezol_view">'+
 										 '<div class="sq-row row-separator row-separata">'+
                       '<div class="sq-col-md-3 sq-col-md-offset-1">'+
-                        '<p class="text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
+                        '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
                       '</div>'+
                       '<div class="sq-col-md-4">'+
-                        '<p class="text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
+                        '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
                       '</div>'+
                       '<div class="sq-col-md-3">'+
-                        '<p class="text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
+                        '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
                       '</div>'+
                      '</div>'+
 										 '<div class="sq-row">'+
@@ -821,7 +821,7 @@ throw new SyntaxError('JSON.parse');
 			var viewPortDiv = jQuery('#squeezol_view');
 			var separator;
 			separator = '<div class="sq-row row-separata">'+
-	  								'<div class="sq-col-md-4 sq-col-md-offset-1 sq-col-xs-12"><h4 class="sq-content-body">'+text+'</h4></div>'+
+	  								'<div class="sq-col-md-4 sq-col-md-offset-1 sq-col-xs-12"><h4 class="sq-content-body sq-pink-text">'+text+'</h4></div>'+
 										'<div class="sq-col-xs-10 sq-col-xs-offset-1 separator"></div>'+
 									'</div>';
       viewPortDiv.append(separator);
@@ -853,19 +853,19 @@ throw new SyntaxError('JSON.parse');
       var div='<div class="sq-row wizard">'+
                 '<div class="sq-col-xs-4">'+
 								  '<img class="sq-img-responsive" src="' + img_url + 'btn2.jpg" alt="Think">'+
-                  '<h4 class="text-center">1.Crea uno Split</h4>'+
+                  '<h4 class="sq-text-center">1.Crea uno Split</h4>'+
                 '</div>'+
                 '<div class="sq-col-xs-4">'+
 								  '<img class="sq-img-responsive" src="' + img_url + 'busta2.jpg" alt="Find">'+
-                  '<h4 class="text-center">2.Invita i tuoi amici</h4>'+
+                  '<h4 class="sq-text-center">2.Invita i tuoi amici</h4>'+
                 '</div>'+
                 '<div class="sq-col-xs-4">'+
                   '<img class="sq-img-responsive" src="' + img_url + 'salva2.jpg" alt="Fun">'+
-                  '<h4 class="text-center">3. Versa la tua quota</h4>'+
+                  '<h4 class="sq-text-center">3. Versa la tua quota</h4>'+
 							  '</div>'+
 							'</div>'+
               '<div class="sq-row">'+
-                '<h4 class="text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... è gratis!'+
+                '<h4 class="sq-text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... è gratis!'+
               '</div>';
       jQuery('#squeezol_btn').popover({ title:'Come funziona',
 		       		                          html:true ,
@@ -973,6 +973,7 @@ throw new SyntaxError('JSON.parse');
         modalContent.on('show.bs.modal', function(){
           btn = jQuery("#squeezolEmail_");          
           jQuery("#squeezolEmail").empty();
+          
           jQuery("#squeezolEmail").append(btn);
         });
 			}
@@ -1034,7 +1035,7 @@ throw new SyntaxError('JSON.parse');
 			var i18n_ita = { previousMonth : 'Mese precedente',
                        nextMonth     : 'Mese successivo',
                        months        : ['Gennaio','February','March','April','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
-                       weekdays      : ['Domenica','LunedÃ¬','MartedÃ¬','MercoledÃ¬','GiovedÃ¬','VenerdÃ¬','Sabato'],
+                       weekdays      : ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'],
                        weekdaysShort : ['Dom','Lun','Mar','Merc','Gio','Ven','Sab']
                      }
 
@@ -1062,7 +1063,7 @@ throw new SyntaxError('JSON.parse');
 		};
 		that.draw = function(id) {
 			var viewPortDiv, headDiv, icoDiv, tmpDiv, date1, date2, input, checkBox,
-          wrapper, accordion, tempAcc;
+          wrapper, accordion, tempAcc, dateIcon;
       var opt = [];
 			var tempRowDiv, spanCurr;
 			var tmp, startDate, d1, d2;
@@ -1087,6 +1088,9 @@ throw new SyntaxError('JSON.parse');
       wrapper_right = { wrapper: 'div', className: 'sq-col-md-4 sq-col-xs-12'};
       wrapper_btn = { wrapper: 'div', className: 'sq-col-md-4 sq-col-xs-10 sq-col-xs-offset-1'}
 			wrapper_push_right = { wrapper: 'div', className: 'sq-col-md-3 sq-col-md-offset-9 sq-col-xs-12'};
+      dateIcon = document.createElement('img');
+      dateIcon.setAttribute('src', img_url+'squeezol_icon-aziende.png')
+      dateIcon.className = 'sq-img-responsive sq-date-icon';
 			//UI
       ui.drawHeader('create', 'modal');
 			viewPortDiv = Div();
@@ -1112,7 +1116,7 @@ throw new SyntaxError('JSON.parse');
 			inputs.push(date1);
       spanCurr = document.createElement('span');
 			spanCurr.className = 'sq-input-group-addon';
-			spanCurr.innerHTML = '#';
+			spanCurr.appendChild(dateIcon);
 			tempRowDiv.append(date1.labelizeWithSpan('Scadenza Invito', spanCurr, helpText['max_acceptance_date']).wrap(wrapper_right));
 			// Append first row
 			viewPortDiv.append(tempRowDiv.get());
@@ -1137,7 +1141,7 @@ throw new SyntaxError('JSON.parse');
 		  inputs.push(date2);
 	    spanCurr = document.createElement('span');
 			spanCurr.className = 'sq-input-group-addon';
-			spanCurr.innerHTML = '#';
+			spanCurr.appendChild(dateIcon.cloneNode())
 			tempRowDiv.append(date2.labelizeWithSpan('Scadenza Pagamenti', spanCurr, helpText['max_payment_date']).wrap(wrapper_right));
 		  this.initDatePickers(d1, d2);
 		  opt.push({value: 'R', text: 'Acquisto regalo'});
@@ -1187,7 +1191,7 @@ throw new SyntaxError('JSON.parse');
 						
 			
 		  button.create('Prosegui', 'big', 'squeezol_button');
-			button.addClass('btn')
+			button.addClass('sq-btn')
 		  button.regHandler('click', buttonHandler);
 			button = Div(button.wrap(wrapper_btn));
 			tmp = document.getElementById('squeezol-accordion-container');
@@ -1751,7 +1755,7 @@ throw new SyntaxError('JSON.parse');
 			var btnText = ['Email', 'f | Invito Facebook', 'Invia E-mail'],
 					btnId = ['squeezolEmail_', 'squeezolFb_', 'squeezolSubmit_' ],
 					btnSize = ['small', 'small', 'big'],
-					btnClass = ['sq-btn sq-btn-lg sq-buttonEmail', 'sq-btn sq-btn-lg sq-buttonFb', 'squeezolButtonSuccess sq-btn sq-btn-lg'];
+					btnClass = ['sq-btn sq-btn-lg sq-buttonEmail', 'sq-btn sq-btn-lg sq-buttonFb', 'sq-btn'];
 			var fbBtn, emailBtn, submitBtn, emailDiv, fbDiv, selectBox, nextBtn,
 				  invitationBtn, removeBtn, containerDiv, submitDiv, nextDiv;
 			var fbUid, friendList;
@@ -1977,10 +1981,16 @@ throw new SyntaxError('JSON.parse');
       var date2=new Date(group.max_payment_date);
 			var sqDiv = document.getElementById('squeezol_view');
       if (group.isOpen == false){
-        isOpen = '<div class="sq-row sq-pin">'+
-                   '<p><strong>PIN:'+group.pin+'</strong></p>'+
+        isOpen = '<div class="sq-row target-P">'+
+                   '<p class="sq-content-body"> Obiettivo:</p>'+
+                   '<p class="sq-content-body"><strong>'+group.amount + group.currency +'</strong></p>'
+                   '<p class="sq-content-body"><strong>PIN:'+group.pin+'</strong></p>'+
                  '</div>';
       }
+      else {
+        isOpen = '<p class="sq-content-body"> Obiettivo:</p>'+
+                 '<p class="sq-content-body"><strong>'+group.amount + group.currency +'</strong></p>';
+      } 
 			if (group.fundraising == 'D'){
 				contrib = participantAdmin.single_amount;
 				options = '<option value="S">Equa</option>'+
@@ -1998,26 +2008,22 @@ throw new SyntaxError('JSON.parse');
 			groupDigest.className = "sq-row row-separata";
       groupDigest2=document.createElement('div');
       groupDigest2.className='sq-row row-separata';
-      groupDigest2.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-1 sq-col-left">'+
+      groupDigest2.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1 sq-col-left">'+
                                  '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
                                '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
                                  '<p class="sq-content-body">Scadenza invito:</p>'+
-                                 '<p class="sq-content-body">'+
+                                 '<p class="sq-content-body"><strong>'+
                                    date1.getDate() + '.' + (parseInt(date1.getMonth())+1).toString() + '.' + date1.getFullYear()+
-                                 '</p>'+
-                               '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
-                                 '<p class="sq-content-body">Scadenza pagamento:</p>'+
-                                 '<p class="sq-content-body">'+
-                                   date2.getDate() + '.' + (parseInt(date2.getMonth())+1).toString() + '.' + date2.getFullYear()+
-                                 '</p>'+
+                                 '</strong></p>'+
                                '</div>'+
                                '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
-                                 '<div class="sq-row target-P">'+
-                                   '<p> Obiettivo:</p>'+
-                                   '<p><strong>'+group.amount + group.currency +'</p>'+
-                                 '</div>'+
+                                 '<p class="sq-content-body">Scadenza pagamento:</p>'+
+                                 '<p class="sq-content-body"><strong>'+
+                                   date2.getDate() + '.' + (parseInt(date2.getMonth())+1).toString() + '.' + date2.getFullYear()+
+                                 '</strong></p>'+
+                               '</div>'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
                                  isOpen+
                                '</div>';
 
@@ -2110,7 +2116,7 @@ throw new SyntaxError('JSON.parse');
 				if(groupStatus == 'CWS') {
 					alertDes = document.createElement('div');
 					alertDes.className = 'sq-row sq-alert sq-alert-success'
-					alertDes.innerHTML = '<p class="text-center">'+
+					alertDes.innerHTML = '<p class="sq-text-center">'+
 																 '<strong> Congratulazioni!</strong>'+
 																 'Lo split si è conclusa con successo!'+
 															 '</p>';
@@ -2148,7 +2154,7 @@ throw new SyntaxError('JSON.parse');
 							renderBtn.create('Inizia i pagamenti!', 'ui', 'SqueezolStartPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'OP');
-							renderBtn.get().className='btn btn-lg';
+							renderBtn.get().className='sq-btn sq-btn-lg';
 							renderBtn.regHandler('click', buttonHandler);
 						}
 						// Se puo' concludere la collette
@@ -2236,12 +2242,12 @@ throw new SyntaxError('JSON.parse');
 					// Render
           if (openPay == false) {
 						var superTemp = document.createElement('div');
-						superTemp.className = 'sq-col-xs-12 sq-alert sq-alert-info';
+						superTemp.className = 'sq-col-xs-10 sq-col-xs-offset-1  sq-alert sq-alert-info';
 						if (isAdmin == true){
-							superTemp.innerHTML = '<p class="text-center"> Inizia i pagamenti: sarà possibile a tutti versare la propria quota(una notifica verrà inoltrata a tutti i partecipanti!)</p>';
+							superTemp.innerHTML = '<p class="sq-text-center"> Inizia i pagamenti: sarà possibile a tutti versare la propria quota (una notifica verrà inoltrata a tutti i partecipanti!)</p>';
 						}
 						else {
-						superTemp.innerHTML = '<p class="text-center">Potrai versare la tua quota quando l\'organizzatore avrà iniziato i pagamenti(una notifica ti verrà inviata per email)</p>';
+						superTemp.innerHTML = '<p class="sq-text-center">Potrai versare la tua quota quando l\'organizzatore avrà iniziato i pagamenti(una notifica ti verrà inviata per email)</p>';
 						}
 						renderDiv.append(superTemp);
 					}
@@ -2308,13 +2314,13 @@ throw new SyntaxError('JSON.parse');
 						                  '<img id="thumb'+j+'" class="imgAvatar sq-thumbnail sq-img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
 													  '</div>'+
 													  '<div class="sq-col-md-4 sq-col-xs-4 sq-has-success">'+
-														  '<p class="sq-content-body text-center">'+p.name+'</p>'+
+														  '<p class="sq-content-body sq-text-center">'+p.name+'</p>'+
 													  '</div>'+
 													  '<div class="sq-col-md-2 sq-col-xs-10">'+
-														  '<h4 class="text-center">'+contribution_amount+'</h4>'+
+														  '<h4 class="sq-text-center">'+contribution_amount+'</h4>'+
 													  '</div>'+
 													  '<div class="sq-col-md-2 sq-col-xs-10">'+
-														  '<h4 class="text-center text-step-'+state+'">'+status+'</h4>'+
+														  '<h4 class="sq-text-center text-step-'+state+'">'+status+'</h4>'+
 													  '</div>'+
 													  '<div class="sq-col-md-1 sq-hidden-xs">'+
 														  '<img class="sq-img-responsive" src="' + img_url + 'ghianda_step_'+ghianda+'.png">'+
@@ -2432,16 +2438,16 @@ throw new SyntaxError('JSON.parse');
         }
         else
           classe='target-R';
-        groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1 sq-col-left">'+
+        groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-1 sq-col-left">'+
                                  '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
                                '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
                                  '<p class="sq-content-body">Organizzatore:</p>'+  
                                  '<strong>'+admin_name+'</strong>'+
                                '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1">'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
                                  '<div class="sq-row sq-box-blu-digest sq-content-body" style="padding:5px;">'+
-                                   '<p class="text-center"> Scelta:'+this.switchStatus(participant.status)+'</p>'+
+                                   '<p class="sq-text-center"> Scelta:'+this.switchStatus(participant.status)+'</p>'+
                                  '</div>'+
                                '</div>';
 				groupDigest=Div(groupDigest);
@@ -2477,12 +2483,12 @@ throw new SyntaxError('JSON.parse');
                                       '</div>'+
                                     '</div>'+
                                     '<div class="sq-col-md-4 '+classe+'">'+
-                                      '<p class="text-center" style="font-family: DejavuSansCondensed-Bold;">'+
+                                      '<p class="sq-text-center">'+
+                                        testo+
+                                      '</p>'+
+                                      '<p class="sq-text-center" style="font-family: DejavuSansCondensed-Bold;">'+
                                           participant.single_amount+' '+group.currency+
                                       '</p>'+
-                                      '<p class="text-center">'+
-                                        testo+
-                                      '</p>'
                                     '</div>'+
                                   '</div>'+
                                 '</div>';

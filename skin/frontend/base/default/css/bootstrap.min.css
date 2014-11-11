@@ -137,7 +137,8 @@ input[type="submit"] {
 }
 button[disabled],
 html input[disabled] {
-  cursor: default;
+  cursor: not-allowed;
+  background-color:#dddddd;;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -1239,8 +1240,8 @@ label {
 .sq-form-control::-webkit-input-placeholder {
   color: #999999;
 }
-.sq-form-control[disabled],
-.sq-form-control[readonly],
+/*.sq-form-control[disabled],
+.sq-form-control[readonly],*/
 
 textarea.sq-form-control {
   height: auto;
@@ -2214,6 +2215,11 @@ a.sq-label:focus {
 .sq-label-danger[href]:focus {
   background-color: #c9302c;
 }
+
+.sq-text-center {
+  text-align: center;
+}
+
 .sq-thumbnail {
   display: block;
   padding: 4px;
