@@ -2085,6 +2085,7 @@ throw new SyntaxError('JSON.parse');
 			var status, ui, state, ghianda, avatar_url, alertDes, contribution_amount;
 			var wrapper = {wrapper: 'div', className: 'sq-col-md-4 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1'};
 			var wrapBtn = {wrapper: 'div', className: 'sq-col-md-2 sq-col-xs-10 sq-col-xs-offset-1'};
+      var wrapper_right = {wrapper: 'div', className: 'sq-col-md-3 sq-col-md-offset-3 sq-col-xs-10 sq-col-xs-offset-1'};
       var helpText = { 'p_quota': 'Inserisci la quota che intendi versare' };
 
 			if(answer.status === 'ok') {
@@ -2257,12 +2258,12 @@ throw new SyntaxError('JSON.parse');
 					renderDiv.append(renderBtn.wrap(wrapper));
           if (params.invitation_url && isAdmin && (answer.group.status == 'WPA' || answer.group.status == 'WAC')){
             inviteBtn = Button();
-            inviteBtn.create('Invita', 'ui', 'SqueezolInvitation_');
-            inviteBtn.get().className='sq-btn sq-btn-lg squeezolButtonSuccess';
+            inviteBtn.create('Invita ancora', 'ui', 'SqueezolInvitation_');
+            inviteBtn.get().className='sq-btn sq-btn-lg sq-invita-ancora';
             inviteBtn.regHandler('click', function(){
               window.location.replace(params.invitation_url);
             });
-            renderDiv.append(inviteBtn.wrap(wrapBtn));
+            renderDiv.append(inviteBtn.wrap(wrapper_right));
           }
           SqDiv.appendChild(renderDiv.get());
 				}

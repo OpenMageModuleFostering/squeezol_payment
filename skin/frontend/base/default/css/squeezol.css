@@ -73,12 +73,17 @@ label { font-weight: bold !important; color: #08B3C7 !important; }
 .sq-panel-group {
   z-index: 999 !important;
 }
-#squeezol_button, .squeezolButtonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_, #squeezol_next, #squeezolSubmit_ { 
+
+#squeezol_button, .squeezolButtonSuccess, .sq-invita-ancora, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_, #squeezol_next, #squeezolSubmit_ { 
 	cursor: pointer !important;
 	background-color: #08B3C7 !important;
 	border: #08B3C7 !important;
 	color: white !important;
 	font-family: "DejaVuSansCondensed-BoldOblique";
+}
+
+.sq-invita-ancora {
+  float:right;
 }
 
 #squeezol_next, #SqueezolInvitation_ {
