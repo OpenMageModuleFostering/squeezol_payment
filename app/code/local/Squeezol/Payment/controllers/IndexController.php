@@ -57,12 +57,13 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
         if (empty($_POST)) {
             $helper    = Mage::helper('squeezol_payment');
             $prod_data = $helper->getJsonProductsData();
-            $endpoint  = new SqueezolProductsEndpoint($this->getSession()->getSqueezolToken() , $prod_data);
+            $token     = $this->getSession()->getSqueezolToken();
+            $endpoint  = new SqueezolProductsEndpoint($token, $prod_data);
 
             $data = $endpoint->create_product();
         } else {
-            if(!empty($this->getSession()->getSqueezolToken())) {
-                $token = $this->getSession()->getSqueezolToken();
+            $token = $this->getSession()->getSqueezolToken();
+            if(!empty($token)) {
 
                 if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
@@ -144,7 +145,8 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
     public function reviewAction () {
 
-        if (empty($this->getSession()->getSqueezolToken())) {
+        $token = $this->getSession()->getSqueezolToken();
+        if (empty($token)) {
 
             require_once Mage::getBaseDir('lib') . '/oauth2/Client.php';
             require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/IGrantType.php';
@@ -209,9 +211,9 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     public function getinvitationAction () {
         require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
 
-        if(!empty($this->getSession()->getSqueezolToken()))
+        $token = $this->getSession()->getSqueezolToken();
+        if(!empty($token))
         {
-          $token = $this->getSession()->getSqueezolToken();
 
           if (!empty($_POST))
           {
@@ -245,9 +247,9 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     public function getdigestAction () {
         require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
 
-        if(!empty($this->getSession()->getSqueezolToken()))
+        $token = $this->getSession()->getSqueezolToken();
+        if(!empty($token))
         {
-          $token = $this->getSession()->getSqueezolToken();
 
           if($_SERVER['REQUEST_METHOD'] == 'POST')
           {
