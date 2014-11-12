@@ -54,10 +54,6 @@
   font-style:normal;
 }
 
-.text-center {
-  text-align: center;
-}
-
 h4 {
   font-family: "DejaVuSansCondensed-BoldOblique" !important;
   color: #08b3c7 !important;
@@ -77,7 +73,7 @@ label { font-weight: bold !important; color: #08B3C7 !important; }
 .sq-panel-group {
   z-index: 999 !important;
 }
-#squeezol_button, .squeezolButtonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_ { 
+#squeezol_button, .squeezolButtonSuccess, #SqueezolFinishPay_, #SqueezolPay_, #SqueezolStartPay_, #SqueezolDeserted_, #SqueezolModifyAmount_, #squeezol_next, #squeezolSubmit_ { 
 	cursor: pointer !important;
 	background-color: #08B3C7 !important;
 	border: #08B3C7 !important;
@@ -148,7 +144,7 @@ label { font-weight: bold !important; color: #08B3C7 !important; }
 }
 
 div.row-separata {
-  margin-top: 10px !important;
+  margin-top: 15px !important;
   padding-top: 10px !important;
 }
 
@@ -191,6 +187,12 @@ div.row-separata {
   color: green !important;
 }
 
+.sq-text {
+  display: inline;
+  font-family: DejaVuSansCondensed;
+  color: #0AB3C6;
+}
+
 .squeezol-btn-header {
  width:25% !important;
  display:inline !important;
@@ -222,7 +224,7 @@ div.row-separata {
   cursor: default !important;
 }
 
-.sq-content-body {
+.sq-content-body, .sq-content-body strong {
   font-family: DejaVuSansCondensed;
   font-size: 14px !important;
   font-style: normal !important;
@@ -236,6 +238,7 @@ div.row-separata {
 .sq-withBorder {
   border: 1px solid #DDD !important;
   border-radius: 4px !important;
+  padding: 5px;
 }
 
 .sq-label {
@@ -244,11 +247,12 @@ div.row-separata {
   font-style: normal !important;
   font-weight: 100 !important;
   text-align: left !important;
-  line-height: 16.8px !important;
+  line-height: 22.8px !important;
   letter-spacing: 0em !important;
   opacity: 1 !important;
   color: #4f424a !important;
   display:inline !important;
+  margin-bottom: 10px;
 }
 
 /* Invitation */
@@ -280,6 +284,10 @@ div.wizardOpen{
 h4.wizardOpen{
 	cursor: pointer !important;
 	display: block !important;
+}
+
+.sq-date-icon {
+  max-width: 12px;
 }
 
 .squeezol_button_big{
@@ -322,10 +330,15 @@ p.sq-alert-danger, #squeezolNotifyAmount_ {
   padding-top:50px !important;
   padding-bottom:50px !important;
 }
+
 iframe {
 	position: absolute !important;
 	top: 250px !important;
 	left:250px !important;
+}
+
+input.sq-form-control {
+  width:100% !important;
 }
 
 .form-group > select {
@@ -426,14 +439,15 @@ div.sq-glyph-info-sign {
 
 .target-P {
   font-family: DejaVuSansCondensed;
-  font-size: 12px !important;
+  font-size: 14px !important;
   background-color:#0AB3C6 !important;
   font-style: normal !important;
   text-align: left !important;
-  line-height: 14px !important;
+  line-height: 16px !important;
   letter-spacing: 0em !important;
   opacity: 1 !important;
   color: #FFF !important;
+  padding: 5px;
 }
 
 .target-R {
@@ -457,6 +471,8 @@ div.sq-glyph-info-sign {
   border: 2px solid #0AB3C6;
   margin-left: -15px;
   margin-right: 0px;
+  text-align: center;
+  padding: 10px;
 }
 
 
@@ -483,6 +499,10 @@ div.sq-glyph-info-sign {
   color:#DA396F;
   margin-top:25px;
   font-size: 14px;
+}
+
+.sq-pink-text {
+  color:#DA396F !important;
 }
 
 div.withPaddedBorder {
