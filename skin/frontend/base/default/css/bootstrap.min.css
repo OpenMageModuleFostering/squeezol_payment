@@ -138,7 +138,8 @@ input[type="submit"] {
 button[disabled],
 html input[disabled] {
   cursor: not-allowed;
-  background-color:#dddddd;;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
