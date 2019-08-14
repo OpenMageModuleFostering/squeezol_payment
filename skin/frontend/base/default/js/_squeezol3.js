@@ -2567,6 +2567,7 @@ throw new SyntaxError('JSON.parse');
           parentDiv.innerHTML='';
 					renderButton.create('Paga ora', 'big', 'SqueezolPay_');
 					renderButton.get().setAttribute('data-action', 'P');
+          renderButton.get().setAttribute('data-participant', participantId);
 					renderButton.regHandler('click', function(e){
 			      var event= e || window.event;
 			      var target = event.target || event.srcElement || event.originalTarget;
