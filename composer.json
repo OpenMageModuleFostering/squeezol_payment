@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Squeezol_Payment",
+    "type": "magento-module",
+    "license": "OSL",
+    "homepage": "",
+    "description": "It enables group payment, a split of cart amount.",
+    "authors": [
+    {
+        "name": "Davide Costa",
+        "email": "info@squeezol.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
