@@ -1,53 +1,72 @@
-<?php 
+<?php
+  $squeezolToken = Mage::getSingleton("squeezol_payment/session")->getSqueezolToken();
+  if (!empty($squeezolToken)): ?>
+  <?php 
     $groups = Mage::helper('squeezol_payment')->getGroupsData(); 
 
     $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
 
     $sql    = 'SELECT * FROM squeezol_groups WHERE group_id IS NULL AND user_id = ' . $customerId;
     $orders = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchAll($sql);
-?>
+  ?>
 
-<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/fenicottero.png" style="height: 100px;float: left;" />
-<h2 style="float: left;margin-left: 20px; margin-top: 62px;">Collette attive</h2>
-
-<table class="sq-table sq-table-bordered">
+  <h1 style="display:inline;"><img style="display:inline; max-width: 50px;" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/fenicottero.png" style="max-width: 50px; float: left;" />
+  Lista Split<p style="display:inline; font-size: 16px;">: questo è l'elenco dei tuoi acquisti di gruppo che hai creato o concluso</p></h1>
+  <table class="sq-table sq-table-striped">
     <tr>
-        <th>Nome colletta</th>
-        <th>Immagine</th>
-        <th>Giorni mancanti</th>
-        <th>Totale da pagare</th>
-        <th>Totale pagato</th>
-        <th></th>
+      <th>Nome colletta</th>
+      <th>Immagine</th>
+      <th>Giorni mancanti</th>
+      <th>Totale da pagare</th>
+      <th>Totale pagato</th>
+      <th></th>
     </tr>
 
     <?php foreach ($groups as $g): ?>
     <tr>
-        <td><?php echo $g['name']; ?></td>
-        <td><img style="width: 80px;" src="<?php echo $g['picture']; ?>" /></td>
-        <td><?php echo $g['days_left']; ?></td>
-        <td><?php echo money_format('%.2n', $g['amount']) . ' ' . $g['currency']; ?></td>
-        <td><?php echo money_format('%.2n', $g['total_paid']) . ' ' . $g['currency']; ?></td>
-        <td><a href="<?php echo Mage::getBaseUrl(); ?>squeezol/index/digest/?page=<?php echo $g['id']; ?>">Vai alla colletta</a></td>
+      <td><?php echo $g['name']; ?></td>
+      <td><img style="max-width: 50px;" src="<?php echo $g['picture']; ?>" /></td>
+      <td><?php echo $g['days_left']; ?></td>
+      <td><?php echo money_format('%.2n', $g['amount']) . ' ' . $g['currency']; ?></td>
+      <td><?php echo money_format('%.2n', $g['total_paid']) . ' ' . $g['currency']; ?></td>
+      <td><a href="<?php echo Mage::getBaseUrl(); ?>squeezol/index/digest/?page=<?php echo $g['id']; ?>">Vai allo split</a></td>
     </tr>
     <?php endforeach; ?>
-</table>
+  </table>
 
-<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/fenicottero.png" style="height: 100px;float: left;" />
-<h2 style="float: left;margin-left: 20px; margin-top: 62px;">Ordini da completare</h2>
+  <h1 style="float: left; display: inline;"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/fenicottero.png" style="max-width: 50px; float: left; display: inline;" />
+  Ordini da completare<p style="display: inline; font-size:16px;">: questo è l'elenco degli ordini in cui hai scelto Squeezol come metodo di pagamento. Crea il gruppo di acquisto o annulla l'ordine.</p></h1>
 
-<table class="sq-table sq-table-bordered">
+  <table class="sq-table sq-table-striped">
     <tr>
-        <th>Ordine</th>
-        <th>Visualizza</th>
-        <th>Crea colletta</th>
+      <th>Ordine</th>
+      <th>Immagine</th>
+      <th>Visualizza</th>
+      <th>Crea colletta</th>
     </tr>
 
     <?php foreach ($orders as $o): ?>
-<?php $ord = Mage::getModel('sales/order')->loadByIncrementId($o['order_id'])->getId(); ?>
-    <tr>
+      <?php $ord = Mage::getModel('sales/order')->loadByIncrementId($o['order_id'])->getId(); ?>
+      <tr>
         <td>#<?php echo $o['order_id']; ?></td>
+        <td>
         <td><a href="<?php echo Mage::getBaseUrl(); ?>sales/order/view/order_id/<?php echo $ord; ?>/">Visualizza</a></td>
-        <td><a href="<?php echo Mage::getBaseUrl(); ?>squeezol/index/gateway/?oid=<?php echo $o['order_id']; ?>">Crea</a></td>
-    </tr>
+        <td><a href="<?php echo Mage::getBaseUrl(); ?>squeezol/index/gateway/?oid=<?php echo $o['order_id']; ?>">Crea Split</a></td>
+      </tr>
     <?php endforeach; ?>
-</table>
+  </table>'
+<?php else: ?>
+<div id="squeezol_btn">
+  <div class="sq-col-xs-4 sq-col-xs-offset-4">
+    <div id="sq-loading">
+      <img class="sq-img-responsive" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/squeezol.png">
+      <img class="sq-img-responsive" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/ajax-loader.gif">
+  </div>
+</div>
+
+<script>
+  var auth_url = '<?php echo Mage::getBaseUrl(); ?>squeezol/index/oauth';
+  var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/';
+  SqueezolApi.createSqButton(auth_url, 'big', '<?php $squeezolToken; ?>');
+</script>
+<?php endif; ?>

@@ -136,7 +136,20 @@ class Client
      * @var array
      */
     protected $curl_options = array();
+  
+    /**
+     * Expires in parameter
+     * @var string
+     */
+    protected $expires_in = null;
 
+    /**
+     * Refresh Token parameter
+     * @var string
+     */
+    protected $refresh_token = null;
+
+    
     /**
      * Construct
      *
@@ -148,17 +161,17 @@ class Client
      */
     public function __construct($client_id, $client_secret, $client_auth = self::AUTH_TYPE_URI, $certificate_file = null)
     {
-        if (!extension_loaded('curl')) {
-            throw new Exception('The PHP exention curl must be installed to use this library.', Exception::CURL_NOT_FOUND);
-        }
+      if (!extension_loaded('curl')) {
+        throw new Exception('The PHP exention curl must be installed to use this library.', Exception::CURL_NOT_FOUND);
+      }
 
-        $this->client_id     = $client_id;
-        $this->client_secret = $client_secret;
-        $this->client_auth   = $client_auth;
-        $this->certificate_file = $certificate_file;
-        if (!empty($this->certificate_file)  && !is_file($this->certificate_file)) {
-            throw new InvalidArgumentException('The certificate file was not found', InvalidArgumentException::CERTIFICATE_NOT_FOUND);
-        }
+      $this->client_id     = $client_id;
+      $this->client_secret = $client_secret;
+      $this->client_auth   = $client_auth;
+      $this->certificate_file = $certificate_file;
+      if (!empty($this->certificate_file)  && !is_file($this->certificate_file)) {
+        throw new InvalidArgumentException('The certificate file was not found', InvalidArgumentException::CERTIFICATE_NOT_FOUND);
+      }
     }
 
     /**
@@ -168,7 +181,7 @@ class Client
      */
     public function getClientId()
     {
-        return $this->client_id;
+      return $this->client_id;
     }
 
     /**
@@ -178,7 +191,7 @@ class Client
      */
     public function getClientSecret()
     {
-        return $this->client_secret;
+      return $this->client_secret;
     }
 
     /**
@@ -191,12 +204,11 @@ class Client
      */
     public function getAuthenticationUrl($auth_endpoint, $redirect_uri, array $extra_parameters = array())
     {
-        $parameters = array_merge(array(
-            'response_type' => 'code',
-            'client_id'     => $this->client_id,
-            'redirect_uri'  => $redirect_uri
-        ), $extra_parameters);
-        return $auth_endpoint . '?' . http_build_query($parameters, null, '&');
+      $parameters = array_merge(array('response_type' => 'code',
+                                      'client_id'     => $this->client_id,
+                                      'redirect_uri'  => $redirect_uri),
+                                $extra_parameters);
+      return $auth_endpoint . '?' . http_build_query($parameters, null, '&');
     }
 
     /**
@@ -209,37 +221,36 @@ class Client
      */
     public function getAccessToken($token_endpoint, $grant_type, array $parameters)
     {
-        if (!$grant_type) {
-            throw new InvalidArgumentException('The grant_type is mandatory.', InvalidArgumentException::INVALID_GRANT_TYPE);
-        }
-        $grantTypeClassName = $this->convertToCamelCase($grant_type);
-        $grantTypeClass =  __NAMESPACE__ . '\\GrantType\\' . $grantTypeClassName;
-        if (!class_exists($grantTypeClass)) {
-            throw new InvalidArgumentException('Unknown grant type \'' . $grant_type . '\'', InvalidArgumentException::INVALID_GRANT_TYPE);
-        }
-        $grantTypeObject = new $grantTypeClass();
-        $grantTypeObject->validateParameters($parameters);
-        if (!defined($grantTypeClass . '::GRANT_TYPE')) {
-            throw new Exception('Unknown constant GRANT_TYPE for class ' . $grantTypeClassName, Exception::GRANT_TYPE_ERROR);
-        }
-        $parameters['grant_type'] = $grantTypeClass::GRANT_TYPE;
-        $http_headers = array();
-        switch ($this->client_auth) {
-            case self::AUTH_TYPE_URI:
-            case self::AUTH_TYPE_FORM:
-                $parameters['client_id'] = $this->client_id;
-                $parameters['client_secret'] = $this->client_secret;
-                break;
-            case self::AUTH_TYPE_AUTHORIZATION_BASIC:
-                $parameters['client_id'] = $this->client_id;
-                $http_headers['Authorization'] = 'Basic ' . base64_encode($this->client_id .  ':' . $this->client_secret);
-                break;
-            default:
-                throw new Exception('Unknown client auth type.', Exception::INVALID_CLIENT_AUTHENTICATION_TYPE);
-                break;
-        }
-
-        return $this->executeRequest($token_endpoint, $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
+      if (!$grant_type) {
+        throw new InvalidArgumentException('The grant_type is mandatory.', InvalidArgumentException::INVALID_GRANT_TYPE);
+      }
+      $grantTypeClassName = $this->convertToCamelCase($grant_type);
+      $grantTypeClass =  __NAMESPACE__ . '\\GrantType\\' . $grantTypeClassName;
+      if (!class_exists($grantTypeClass)) {
+        throw new InvalidArgumentException('Unknown grant type \'' . $grant_type . '\'', InvalidArgumentException::INVALID_GRANT_TYPE);
+      }
+      $grantTypeObject = new $grantTypeClass();
+      $grantTypeObject->validateParameters($parameters);
+      if (!defined($grantTypeClass . '::GRANT_TYPE')) {
+          throw new Exception('Unknown constant GRANT_TYPE for class ' . $grantTypeClassName, Exception::GRANT_TYPE_ERROR);
+      }
+      $parameters['grant_type'] = $grantTypeClass::GRANT_TYPE;
+      $http_headers = array();
+      switch ($this->client_auth) {
+        case self::AUTH_TYPE_URI:
+        case self::AUTH_TYPE_FORM:
+          $parameters['client_id'] = $this->client_id;
+          $parameters['client_secret'] = $this->client_secret;
+          break;
+        case self::AUTH_TYPE_AUTHORIZATION_BASIC:
+          $parameters['client_id'] = $this->client_id;
+          $http_headers['Authorization'] = 'Basic ' . base64_encode($this->client_id .  ':' . $this->client_secret);
+          break;
+        default:
+          throw new Exception('Unknown client auth type.', Exception::INVALID_CLIENT_AUTHENTICATION_TYPE);
+          break;
+      }
+      return $this->executeRequest($token_endpoint, $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
     }
 
     /**
@@ -250,7 +261,7 @@ class Client
      */
     public function setAccessToken($token)
     {
-        $this->access_token = $token;
+      $this->access_token = $token;
     }
 
     /**
@@ -261,7 +272,7 @@ class Client
      */
     public function setClientAuthType($client_auth)
     {
-        $this->client_auth = $client_auth;
+      $this->client_auth = $client_auth;
     }
 
     /**
@@ -273,7 +284,7 @@ class Client
      */
     public function setCurlOption($option, $value)
     {
-        $this->curl_options[$option] = $value;
+      $this->curl_options[$option] = $value;
     }
 
     /**
@@ -284,7 +295,7 @@ class Client
      */
     public function setCurlOptions($options) 
     {
-        $this->curl_options = array_merge($this->curl_options, $options);
+      $this->curl_options = array_merge($this->curl_options, $options);
     }
 
     /**
@@ -297,9 +308,9 @@ class Client
      */
     public function setAccessTokenType($type, $secret = null, $algorithm = null)
     {
-        $this->access_token_type = $type;
-        $this->access_token_secret = $secret;
-        $this->access_token_algorithm = $algorithm;
+      $this->access_token_type = $type;
+      $this->access_token_secret = $secret;
+      $this->access_token_algorithm = $algorithm;
     }
 
     /**
@@ -312,35 +323,33 @@ class Client
      * @param int    $form_content_type HTTP form content type to use
      * @return array
      */
-    public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
+    public function fetch($protected_resource_url, $parameters = array(),$http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
-        if ($this->access_token) {
-            switch ($this->access_token_type) {
-                case self::ACCESS_TOKEN_URI:
-                    if (is_array($parameters)) {
-                        $parameters[$this->access_token_param_name] = $this->access_token;
-                    } else {
-                        throw new InvalidArgumentException(
-                            'You need to give parameters as array if you want to give the token within the URI.',
-                            InvalidArgumentException::REQUIRE_PARAMS_AS_ARRAY
-                        );
-                    }
-                    break;
-                case self::ACCESS_TOKEN_BEARER:
-                    $http_headers['Authorization'] = 'Bearer ' . $this->access_token;
-                    break;
-                case self::ACCESS_TOKEN_OAUTH:
-                    $http_headers['Authorization'] = 'OAuth ' . $this->access_token;
-                    break;
-                case self::ACCESS_TOKEN_MAC:
-                    $http_headers['Authorization'] = 'MAC ' . $this->generateMACSignature($protected_resource_url, $parameters, $http_method);
-                    break;
-                default:
-                    throw new Exception('Unknown access token type.', Exception::INVALID_ACCESS_TOKEN_TYPE);
-                    break;
+      if ($this->access_token) {
+        switch ($this->access_token_type) {
+          case self::ACCESS_TOKEN_URI:
+            if (is_array($parameters)) {
+              $parameters[$this->access_token_param_name] = $this->access_token;
+            } else {
+              throw new InvalidArgumentException('You need to give parameters as array if you want to give the token within the URI.',
+                                                  InvalidArgumentException::REQUIRE_PARAMS_AS_ARRAY);
             }
+            break;
+          case self::ACCESS_TOKEN_BEARER:
+            $http_headers['Authorization'] = 'Bearer ' . $this->access_token;
+            break;
+          case self::ACCESS_TOKEN_OAUTH:
+            $http_headers['Authorization'] = 'OAuth ' . $this->access_token;
+            break;
+          case self::ACCESS_TOKEN_MAC:
+            $http_headers['Authorization'] = 'MAC ' . $this->generateMACSignature($protected_resource_url, $parameters, $http_method);
+            break;
+          default:
+            throw new Exception('Unknown access token type.', Exception::INVALID_ACCESS_TOKEN_TYPE);
+            break;
         }
-        return $this->executeRequest($protected_resource_url, $parameters, $http_method, $http_headers, $form_content_type);
+      }
+      return $this->executeRequest($protected_resource_url, $parameters, $http_method, $http_headers, $form_content_type);
     }
 
     /**
@@ -353,31 +362,30 @@ class Client
      */
     private function generateMACSignature($url, $parameters, $http_method)
     {
-        $timestamp = time();
-        $nonce = uniqid();
-        $parsed_url = parse_url($url);
-        if (!isset($parsed_url['port']))
-        {
-            $parsed_url['port'] = ($parsed_url['scheme'] == 'https') ? 443 : 80;
+      $timestamp = time();
+      $nonce = uniqid();
+      $parsed_url = parse_url($url);
+      if (!isset($parsed_url['port']))
+      {
+        $parsed_url['port'] = ($parsed_url['scheme'] == 'https') ? 443 : 80;
+      }
+      if ($http_method == self::HTTP_METHOD_GET) {
+        if (is_array($parameters)) {
+          $parsed_url['path'] .= '?' . http_build_query($parameters, null, '&');
+        } elseif ($parameters) {
+          $parsed_url['path'] .= '?' . $parameters;
         }
-        if ($http_method == self::HTTP_METHOD_GET) {
-            if (is_array($parameters)) {
-                $parsed_url['path'] .= '?' . http_build_query($parameters, null, '&');
-            } elseif ($parameters) {
-                $parsed_url['path'] .= '?' . $parameters;
-            }
-        }
+      }
+      $signature = base64_encode(hash_hmac($this->access_token_algorithm,
+                                           $timestamp . "\n"
+                                           . $nonce . "\n"
+                                           . $http_method . "\n"
+                                           . $parsed_url['path'] . "\n"
+                                           . $parsed_url['host'] . "\n"
+                                           . $parsed_url['port'] . "\n\n"
+                                           , $this->access_token_secret, true));
 
-        $signature = base64_encode(hash_hmac($this->access_token_algorithm,
-                    $timestamp . "\n"
-                    . $nonce . "\n"
-                    . $http_method . "\n"
-                    . $parsed_url['path'] . "\n"
-                    . $parsed_url['host'] . "\n"
-                    . $parsed_url['port'] . "\n\n"
-                    , $this->access_token_secret, true));
-
-        return 'id="' . $this->access_token . '", ts="' . $timestamp . '", nonce="' . $nonce . '", mac="' . $signature . '"';
+      return 'id="' . $this->access_token . '", ts="' . $timestamp . '", nonce="' . $nonce . '", mac="' . $signature . '"';
     }
 
     /**
@@ -392,84 +400,76 @@ class Client
      */
     private function executeRequest($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = null, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
-        $curl_options = array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_CUSTOMREQUEST  => $http_method
-        );
-
-        switch($http_method) {
-            case self::HTTP_METHOD_POST:
-                $curl_options[CURLOPT_POST] = true;
-                /* No break */
-            case self::HTTP_METHOD_PUT:
-			case self::HTTP_METHOD_PATCH:
-
-                /**
-                 * Passing an array to CURLOPT_POSTFIELDS will encode the data as multipart/form-data,
-                 * while passing a URL-encoded string will encode the data as application/x-www-form-urlencoded.
-                 * http://php.net/manual/en/function.curl-setopt.php
-                 */
-                if(is_array($parameters) && self::HTTP_FORM_CONTENT_TYPE_APPLICATION === $form_content_type) {
-                    $parameters = http_build_query($parameters, null, '&');
-                }
-                $curl_options[CURLOPT_POSTFIELDS] = $parameters;
-                break;
-            case self::HTTP_METHOD_HEAD:
-                $curl_options[CURLOPT_NOBODY] = true;
-                /* No break */
-            case self::HTTP_METHOD_DELETE:
-            case self::HTTP_METHOD_GET:
-                if (is_array($parameters)) {
-                    $url .= '?' . http_build_query($parameters, null, '&');
-                } elseif ($parameters) {
-                    $url .= '?' . $parameters;
-                }
-                break;
-            default:
-                break;
+      $curl_options = array(CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_SSL_VERIFYPEER => true,
+                            CURLOPT_CUSTOMREQUEST  => $http_method);
+      switch($http_method) {
+        case self::HTTP_METHOD_POST:
+          $curl_options[CURLOPT_POST] = true;
+          /* No break */
+        case self::HTTP_METHOD_PUT:
+	  		case self::HTTP_METHOD_PATCH:
+          /**
+           * Passing an array to CURLOPT_POSTFIELDS will encode the data as multipart/form-data,
+           * while passing a URL-encoded string will encode the data as application/x-www-form-urlencoded.
+           * http://php.net/manual/en/function.curl-setopt.php
+           */
+          if(is_array($parameters) && self::HTTP_FORM_CONTENT_TYPE_APPLICATION === $form_content_type) {
+            $parameters = http_build_query($parameters, null, '&');
+          }
+          $curl_options[CURLOPT_POSTFIELDS] = $parameters;
+          break;
+        case self::HTTP_METHOD_HEAD:
+          $curl_options[CURLOPT_NOBODY] = true;
+          /* No break */
+        case self::HTTP_METHOD_DELETE:
+        case self::HTTP_METHOD_GET:
+          if (is_array($parameters)) {
+            $url .= '?' . http_build_query($parameters, null, '&');
+          } elseif ($parameters) {
+            $url .= '?' . $parameters;
+          }
+          break;
+        default:
+          break;
+      }
+      $curl_options[CURLOPT_URL] = $url;
+      if (is_array($http_headers)) {
+        $header = array();
+        foreach($http_headers as $key => $parsed_urlvalue) {
+          $header[] = "$key: $parsed_urlvalue";
         }
+        $curl_options[CURLOPT_HTTPHEADER] = $header;
+      }
 
-        $curl_options[CURLOPT_URL] = $url;
+      $ch = curl_init();
+      curl_setopt_array($ch, $curl_options);
+      // https handling
+      if (!empty($this->certificate_file)) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_CAINFO, $this->certificate_file);
+      } else {
+        // bypass ssl verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+      }
+      if (!empty($this->curl_options)) {
+        curl_setopt_array($ch, $this->curl_options);
+      }
+      $result = curl_exec($ch);
+      $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+      $content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+      if ($curl_error = curl_error($ch)) {
+        throw new Exception($curl_error, Exception::CURL_ERROR);
+      } else {
+        $json_decode = json_decode($result, true);
+      }
+      curl_close($ch);
 
-        if (is_array($http_headers)) {
-            $header = array();
-            foreach($http_headers as $key => $parsed_urlvalue) {
-                $header[] = "$key: $parsed_urlvalue";
-            }
-            $curl_options[CURLOPT_HTTPHEADER] = $header;
-        }
-
-        $ch = curl_init();
-        curl_setopt_array($ch, $curl_options);
-        // https handling
-        if (!empty($this->certificate_file)) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($ch, CURLOPT_CAINFO, $this->certificate_file);
-        } else {
-            // bypass ssl verification
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        }
-        if (!empty($this->curl_options)) {
-            curl_setopt_array($ch, $this->curl_options);
-        }
-        $result = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        if ($curl_error = curl_error($ch)) {
-            throw new Exception($curl_error, Exception::CURL_ERROR);
-        } else {
-            $json_decode = json_decode($result, true);
-        }
-        curl_close($ch);
-
-        return array(
-            'result' => (null === $json_decode) ? $result : $json_decode,
-            'code' => $http_code,
-            'content_type' => $content_type
-        );
+      return array('result' => (null === $json_decode) ? $result : $json_decode,
+                  'code' => $http_code,
+                  'content_type' => $content_type);
     }
 
     /**
@@ -495,7 +495,8 @@ class Client
         array_walk($parts, function(&$item) { $item = ucfirst($item);});
         return implode('', $parts);
     }
-}
+  
+  }
 
 class Exception extends \Exception
 {

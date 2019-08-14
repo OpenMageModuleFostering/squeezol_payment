@@ -1,13 +1,13 @@
 <script>
-var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
-var css_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/css/';
-var js_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/js/';
+var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/';
+var css_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/css/';
+var js_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/js/';
 </script>
 
 <div id="squeezol_view"></div>
 
 <script>
-  SqueezolApi.getInvitationData( '<?php echo $_GET['page']; ?>', '<?php echo Mage::getBaseUrl(); ?>/squeezol/index/getinvitation');
+  SqueezolApi.getInvitationData( '<?php echo $_GET['page']; ?>', '<?php echo Mage::getBaseUrl(); ?>squeezol/index/getinvitation');
 </script>
 
 <style>

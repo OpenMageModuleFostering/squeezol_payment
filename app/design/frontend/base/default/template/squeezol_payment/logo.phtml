@@ -60,7 +60,7 @@
 }
 
 .sq-popover {
-  width: 250px;
+  width: 400px;
 }
 
 .sq-img-responsive {
@@ -87,7 +87,7 @@
 h4.sq-text-center {
   display: block;
   float: left;
-  line-height: 50px;
+  line-height: 80px;
   margin-left: 1px;
   width: 65% !important;
   font-size: 14px !important;
@@ -115,11 +115,11 @@ h3.sq-text-center {
 <script>
 (function() {
   'use strict';
-  var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+  var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/';
   var wizard, sqBox, sqImg, sqh, sqNode, sqImg, i, sqPopover,
       sqView, eView, colXs, sqWrite, sqImgLogo, sqHow;
   var imgSuffix = ['btn2.jpg', 'busta2.jpg', 'salva2.jpg'];
-  var sqText = ['1.Crea uno split', '2.Invita i tuoi amici', '3.Versa la tua quota'];
+  var sqText = ['1.Crea un pagamento di gruppo', '2.Invita chi vuoi a dividere l\'acquisto', '3.Versa solo la tua quota'];
   var locale = '<?php echo Mage::app()->getLocale()->getLocaleCode(); ?>';
   var inp=document.getElementById('p_method_squeezol_payment');
 
@@ -136,7 +136,7 @@ h3.sq-text-center {
     sqWrite.setAttribute('style', 'cursor:pointer; position: relative; left: 5px;');
     
     sqImgLogo = document.createElement('img');
-    sqImgLogo.setAttribute('src', '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/logo_min.png');
+    sqImgLogo.setAttribute('src', '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/logo_min.png');
     sqImgLogo.setAttribute('style', 'height: 24px; margin-left:10px; margin-right: 10px; display:inline;');
     sqWrite.appendChild(sqImgLogo);
     //sqWrite.appendChild(sqHow);

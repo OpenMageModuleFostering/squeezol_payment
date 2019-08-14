@@ -1,50 +1,62 @@
 <script>
-var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/';
+var auth_url = '<?php echo Mage::getBaseUrl(); ?>squeezol/index/oauth';
 </script>
+<div id="squeezol_view" class="sq-container-fluid">
+  <div class="sq-row row-separata">
+    <h3> Paga con Squeezol </h3>
+    <h4> Dividi il costo del carrello con amici, colleghi e parenti. </h4>
+    <br />
+    <h3> Come funziona: </h3>
+    <ol>
+      <li> Clicca sul Bottone PAY WITH e autorizza l'utilizzo del servizio. È necessaria la registrazione, in un click con Facebook!</li>
+      <li> Dai un nome e una descrizione allo Split e invita con email e Facebook.</li>
+      <li> Paga la tua quota e non aver fretta, i partecipanti avranno 20 giorni di tempo per completare l'acquisto!</li>
+    </ol>
+    <br />
+    <p> Attiva le finestre popup del tuo browser per poter proseguire con il pagamento</p> 
+    <div id="squeezol_btn">
+      <div class="sq-col-xs-4 sq-col-xs-offset-4">
+        <div id="sq-loading">
+          <img class="sq-img-responsive" style="margin:auto; max-width:100px;" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/squeezol.png">
+          <img class="sq-img-responsive" style="margin:auto;" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/squeezol_payment/ajax-loader.gif">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!--table class="shipping-data sq-table sq-table-bordered">
+      <tr>
+          <th>Oggetto</th>
+          <th>Quantit&agrave;</th>
+          <th>Prezzo</th>
+      </tr>
 
-<h3>Paga con Squeezol</h3>
+      <?php foreach ($this->getOrderItems() as $item): ?>
+      <?php
+          $data  = $item->getData(); 
+      ?>
 
-<h4 class="sq-text">
-Squeezol ti permette di dividire il costo del carrello con amici, colleghi e parenti.
-</h4>
+          <tr>
+              <td><?php echo $data['name']; ?></td>
+              <td><?php echo round($data['qty_ordered']); ?></td>
+              <td><?php echo money_format('%.2n', $data['price_incl_tax']); ?></td>
+          </tr>
+      <?php endforeach; ?>
 
-<h3> Come procedere: </h3>
-  <p> <p class="sq-text">Clicca su Pay With Squeezol</p> e autorizza l'utilizzo del servizio. </p>
-  <p> Dai un nome e una descrizione alla colletta e dillo ai tuoi invitati con email e Facebook.</p>
-  <p> <p class="sq-text">Paga la tua quota</p> e...non aver fretta, i partecipanti avranno <p class="sq-text">20 giorni</p> di tempo per completare l'acquisto!</p>
+      <?php $order = $this->getOrderData(); ?>
+      <tr>
+          <td></td>
+          <td class="bld">Spedizione</td>
+          <td><?php echo money_format('%.2n', $order['base_shipping_amount']); ?></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td class="bld">Totale</td>
+          <td><?php echo money_format('%.2n', $order['base_grand_total']); ?></td>
+      </tr>
+  </table-->
 
-<div id="squeezol_btn"></div>
+<script>setTimeout(function(){ SqueezolApi.createSqButton(auth_url, 'big', '<?php echo Mage::getSingleton("squeezol_payment/session")->getSqueezolToken(); ?>'); }, 3000);
 
-<table class="shipping-data sq-table sq-table-bordered">
-    <tr>
-        <th>Oggetto</th>
-        <th>Quantit&agrave;</th>
-        <th>Prezzo</th>
-    </tr>
-
-    <?php foreach ($this->getOrderItems() as $item): ?>
-    <?php
-        $data  = $item->getData(); 
-    ?>
-
-        <tr>
-            <td><?php echo $data['name']; ?></td>
-            <td><?php echo round($data['qty_ordered']); ?></td>
-            <td><?php echo money_format('%.2n', $data['price_incl_tax']); ?></td>
-        </tr>
-    <?php endforeach; ?>
-
-    <?php $order = $this->getOrderData(); ?>
-    <tr>
-        <td></td>
-        <td class="bld">Spedizione</td>
-        <td><?php echo money_format('%.2n', $order['base_shipping_amount']); ?></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td class="bld">Totale</td>
-        <td><?php echo money_format('%.2n', $order['base_grand_total']); ?></td>
-    </tr>
-</table>
-
-<script> SqueezolApi.createSqButton('<?php echo Mage::getBaseUrl(); ?>/squeezol/index/oauth', 'big'); </script>
+</script>

@@ -21,130 +21,133 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     }
 
     public function gatewayAction () {
+      $lastOrderId = isset($_GET['oid']) ? $_GET['oid'] : null;
 
-        $lastOrderId = isset($_GET['oid']) ? $_GET['oid'] : null;
+      if (!$lastOrderId) {
+        $lastOrderId = Mage::getSingleton('checkout/session')
+                               ->getLastRealOrderId();
+      }
 
-        if (!$lastOrderId) {
-            $lastOrderId = Mage::getSingleton('checkout/session')
-                                   ->getLastRealOrderId();
-        }
+      if (!$lastOrderId) {
+        die();
+      }
 
-        if (!$lastOrderId) {
-            die();
-        }
+      $this->getSession()->setCurrOrder($lastOrderId);
+      $group = Mage::helper('squeezol_payment')->getGroupByOrder($lastOrderId);
+      if (!$group) {
+        Mage::helper('squeezol_payment')->insertOrder($lastOrderId);
+      }
 
-        $this->getSession()->setCurrOrder($lastOrderId);
-        $group = Mage::helper('squeezol_payment')->getGroupByOrder($lastOrderId);
-
-        if (!$group) {
-            Mage::helper('squeezol_payment')->insertOrder($lastOrderId);
-        }
-
-        $this->loadLayout();
-        $this->renderLayout();
-
-        return $this;
+      $this->loadLayout();
+      $this->renderLayout();
+      return $this;
     }
 
     public function payAction () {
-        require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
+      require_once Mage::getBaseDir('lib') . '/Squeezol/endpoints.php';
 
-        $UNAUTH_ERROR       = array("status" => "error", "error" => "unauth_request");
-        $FORM_OK            = array("status" => "ok");
-        $INVALID_FORM_ERROR = array("status" => "error", "error" => "form_error" );
-        $BAD_REQUEST        = array("status" => "error", "error" => "bad_request");
+      $UNAUTH_ERROR       = array("status" => "error", "error" => "unauth_request");
+      $FORM_OK            = array("status" => "ok");
+      $INVALID_FORM_ERROR = array("status" => "error", "error" => "form_error" );
+      $BAD_REQUEST        = array("status" => "error", "error" => "bad_request");
+      $token = $this->getSession()->getSqueezolToken();
+      if (empty($_POST)) {
+        $helper    = Mage::helper('squeezol_payment');
+        $prod_data = $helper->getJsonProductsData();
+        $token     = $this->getSession()->getSqueezolToken();
+        $endpoint  = new SqueezolProductsEndpoint($token, $prod_data);
+        $data = $endpoint->create_product();
+      } else {
+          $token = $this->getSession()->getSqueezolToken();
+          if(!empty($token)) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+              $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
+              $res = $endpoint->create_group();
+              if ($res['status'] !== 'error') {
+                Mage::helper('squeezol_payment')->updateGroup($res['group_id'], $this->getSession()->getCurrOrder());
+              }
 
-        if (empty($_POST)) {
-            $helper    = Mage::helper('squeezol_payment');
-            $prod_data = $helper->getJsonProductsData();
-            $token     = $this->getSession()->getSqueezolToken();
-            $endpoint  = new SqueezolProductsEndpoint($token, $prod_data);
-
-            $data = $endpoint->create_product();
-        } else {
-            $token = $this->getSession()->getSqueezolToken();
-            if(!empty($token)) {
-
-                if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
-                    $res = $endpoint->create_group();
-
-                    if ($res['status'] !== 'error') {
-                        Mage::helper('squeezol_payment')->updateGroup($res['group_id'], $this->getSession()->getCurrOrder());
-                    }
-
-                } else if($_SERVER['REQUEST_METHOD'] == 'GET') {
-                    $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
-                    $res = $endpoint->get_group();
-                } else {
-                    $ret = $BAD_REQUEST;
-                }
-
-                if($endpoint->isValid()) {
-                    $ret = $res;
-                } else {
-                    $ret = $res;
-                }
+            } else if($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $endpoint = new SqueezolGroupsEndpoint($token, $_POST);
+                $res = $endpoint->get_group();
             } else {
-                $ret = $UNAUTH_ERROR;
+                $ret = $BAD_REQUEST;
             }
 
-            echo json_encode($ret);
-            die();
-        }
-
-        $this->loadLayout();
-        $this->renderLayout();
-
-        return $this;
+            if($endpoint->isValid()) {
+              $ret = $res;
+            } else {
+              $ret = $res;
+            }
+          } else {
+              $ret = $UNAUTH_ERROR;
+          }
+          echo json_encode($ret);
+          die();
+      }
+      $this->loadLayout();
+      $this->renderLayout();
+      return $this;
     }
 
     public function oauthAction () {
-        require_once Mage::getBaseDir('lib') . '/oauth2/Client.php';
-        require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/IGrantType.php';
-        require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/AuthorizationCode.php';
+      require_once Mage::getBaseDir('lib') . '/oauth2/Client.php';
+      require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/IGrantType.php';
+      require_once Mage::getBaseDir('lib') . '/oauth2/GrantType/AuthorizationCode.php';
+      $token = $this->getSession()->getSqueezolToken();
 
-        $model       = Mage::getModel('squeezol_payment/paymentMethod');
-        if ($model->getConfigData('use_sandbox') == 1) {
-            $paramsModel = Mage::getModel('squeezol_payment/paramsandbox');
-        } else {
-            $paramsModel = Mage::getModel('squeezol_payment/params');
-        }
+      $model       = Mage::getModel('squeezol_payment/paymentMethod');
+      if ($model->getConfigData('use_sandbox') == 1) {
+        $paramsModel = Mage::getModel('squeezol_payment/paramsandbox');
+      } else {
+        $paramsModel = Mage::getModel('squeezol_payment/params');
+      }
 
-        $app_id      = $model->getConfigData('app_id');
-        $secret      = $model->getConfigData('app_secret');
-        $basePath    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
+      $app_id      = $model->getConfigData('app_id');
+      $secret      = $model->getConfigData('app_secret');
+      $basePath    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
 
-        $callbackUrl = $basePath . $paramsModel::CALLBACK_URL;
-
+      $callbackUrl = $basePath . $paramsModel::CALLBACK_URL;
+      if (empty($token)) {
         $client = new OAuth2\Client($app_id, $secret);
-
+        
         if (!isset($_GET['code'])) {
-            $extra_parameters = array('scope' => 'create+pay');
-            $auth_url = $client->getAuthenticationUrl($paramsModel::AUTHORIZATION_URL, $callbackUrl, $extra_parameters);
-            header('Location: ' . $auth_url);
-            die('Redirect');
+          $extra_parameters = array('scope' => 'create+pay');
+          $auth_url = $client->getAuthenticationUrl($paramsModel::AUTHORIZATION_URL, $callbackUrl, $extra_parameters);
+          header('Location: ' . $auth_url);
+          die('Redirect');
         } else {
-            $params   = array('code' => $_GET['code'], 'redirect_uri' => $callbackUrl);
-            $response = $client->getAccessToken($paramsModel::ACCESS_TOKEN_URL, 'authorization_code', $params);
-            $info     = $response['result'];
+          $params   = array('code' => $_GET['code'], 'redirect_uri' => $callbackUrl);
+          $response = $client->getAccessToken($paramsModel::ACCESS_TOKEN_URL, 'authorization_code', $params);
+          $info     = $response['result'];
 
-            $client->setAccessToken($info['access_token']);
-
-            $this->getSession()->setSqueezolToken($info['access_token']);
-
-            if ($this->getSession()->getFromReview()) {
-                header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
-                $this->getSession()->unsFromReview();
-            } else {
-                header('Location: ' . $basePath . $paramsModel::PAY_PAGE);
-            }
-            die();
+          $client->setAccessToken($info['access_token']);
+      
+          $this->getSession()->setSqueezolToken($info['access_token']);
+          $this->getSession()->setExpirationTime($_SERVER['REQUEST_TIME'] + $info['expires_in']);
+          $this->getSession()->setRefreshToken($info['refresh_token']);
+          if ($this->getSession()->getFromReview()) {
+            header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
+            $this->getSession()->unsFromReview();
+          } else {
+            header('Location: ' . $basePath . $paramsModel::PAY_PAGE);
+          }
+          die();
         }
+      }
+      else{
+        if ($this->getSession()->getFromReview()) {
+          header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
+          $this->getSession()->unsFromReview();
+        } else {
+          header('Location: ' . $basePath . $paramsModel::PAY_PAGE);
+        }
+        die();
+      }
+        
     }
 
     public function reviewAction () {
-
         $token = $this->getSession()->getSqueezolToken();
         if (empty($token)) {
 
@@ -165,25 +168,27 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
             $callbackUrl = $basePath . $paramsModel::CALLBACK_URL;
             $this->getSession()->setFromReview(true);
-
+            /* TODO: SEMBRA ANDARE
             $client = new OAuth2\Client($app_id, $secret);
-
             if (!isset($_GET['code'])) {
-                $extra_parameters = array('scope' => 'create+pay');
-                $auth_url = $client->getAuthenticationUrl($paramsModel::AUTHORIZATION_URL, $callbackUrl, $extra_parameters);
-                header('Location: ' . $auth_url);
-                die('Redirect');
+              $extra_parameters = array('scope' => 'create+pay');
+              $auth_url = $client->getAuthenticationUrl($paramsModel::AUTHORIZATION_URL, $callbackUrl, $extra_parameters);
+              header('Location: ' . $auth_url);
+              die('Redirect');
             } else {
-                $params   = array('code' => $_GET['code'], 'redirect_uri' => $callbackUrl);
-                $response = $client->getAccessToken($paramsModel::ACCESS_TOKEN_URL, 'authorization_code', $params);
-                $info     = $response['result'];
+              $params   = array('code' => $_GET['code'], 'redirect_uri' => $callbackUrl);
+              $response = $client->getAccessToken($paramsModel::ACCESS_TOKEN_URL, 'authorization_code', $params);
+              $info     = $response['result'];
 
-                $client->setAccessToken($info['access_token']);
+              $client->setAccessToken($info['access_token']);
 
-                $this->getSession()->setSqueezolToken($info['access_token']);
-                header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
-                die();
+              $this->getSession()->setSqueezolToken($info['access_token']);
+              header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
+              die();
             }
+            header('Location: ' . $basePath . $paramsModel::REVIEW_PAGE);
+            die();
+            */
         }
 
         $this->loadLayout();
@@ -276,31 +281,29 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
     }
 
     public function ipnAction () {
-        $payload = file_get_contents('php://input');
-        $data    = json_decode($payload, true);
-
-        $group = Mage::helper('squeezol_payment')->getOrderByGroup($data['group']);
-        $order = Mage::getModel('sales/order')->loadByIncrementId($group['order_id']);
-
-        if ($order && $order->getId()) {
-            if ($data['status'] == 'S') {
-                $order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
-                $order->save();
-                $order->sendNewOrderEmail();
-                $historyItem = Mage::getResourceModel('sales/order_status_history_collection')->getUnnotifiedForInstance($order, Mage_Sales_Model_Order::HISTORY_ENTITY_NAME);
-                //track history
-                if ($historyItem) {
-                    $historyItem->setIsCustomerNotified(1);
-                    $historyItem->save();
-                }
-                $ret = array('status'=>'S', 'order_id' => $order->getId(), 'group' => $data['group']);
-            } else {
-                //$order->setStatus($model->getConfigData('order_canceled'));
-                $order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
-                $order->cancel()->save();
-                $ret = array('status'=>'I', 'order_id' => $order->getId(), 'group' => $data['group']);
-            }
+      $payload = file_get_contents('php://input');
+      $data    = json_decode($payload, true);
+      $group = Mage::helper('squeezol_payment')->getOrderByGroup($data['group']);
+      $order = Mage::getModel('sales/order')->loadByIncrementId($group['order_id']);
+      if ($order && $order->getId()) {
+        if ($data['status'] == 'S') {
+          $order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
+          $order->save();
+          $order->sendNewOrderEmail();
+          $historyItem = Mage::getResourceModel('sales/order_status_history_collection')->getUnnotifiedForInstance($order, Mage_Sales_Model_Order::HISTORY_ENTITY_NAME);
+          //track history
+          if ($historyItem) {
+              $historyItem->setIsCustomerNotified(1);
+              $historyItem->save();
+          }
+          $ret = array('status'=>'S', 'order_id' => $order->getId(), 'group' => $group['group_id']);
+        } else {
+          //$order->setStatus($model->getConfigData('order_canceled'));
+          $order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
+          $order->cancel()->save();
+          $ret = array('status'=>'I', 'order_id' => $order->getId(), 'group' => $group['group_id']);
         }
-        echo json_encode($ret);
+      }
+      echo json_encode($ret);
     }
 }

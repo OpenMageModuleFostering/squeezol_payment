@@ -3,199 +3,6 @@
  * Copyright 2013-2015 Squeezol SRL.
  * Licensed under OSL 
  */
-
-if (typeof JSON !== 'object') {
-    JSON = {};
-}
-
-if (typeof jQuery === 'undefined') {
-  throw new Error('Squeezol\'s Library requires jQuery')
-}
-
-(function () {
-	'use strict';
-	function f(n) {
-  	return n < 10 ? '0' + n : n;
-  }
-	if (typeof Date.prototype.toJSON !== 'function') {
-		Date.prototype.toJSON = function () {
-			return isFinite(this.valueOf())
-      						? this.getUTCFullYear()     + '-' +
-                    f(this.getUTCMonth() + 1) + '-' +
-                    f(this.getUTCDate())      + 'T' +
-                    f(this.getUTCHours())     + ':' +
-                    f(this.getUTCMinutes())   + ':' +
-                    f(this.getUTCSeconds())   + 'Z'
-                  : null;
-     };
-		 String.prototype.toJSON      =
-     Number.prototype.toJSON  =
-     Boolean.prototype.toJSON = function () {
-     	return this.valueOf();
-     };
-  }
-  var cx,
-  		escapable,
-      gap,
-      indent,
-      meta,
-      rep;
-	function quote(string) {
-		escapable.lastIndex = 0;
-    return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-    	var c = meta[a];
-      return typeof c === 'string'
-      						? c
-                : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-    }) + '"' : '"' + string + '"';
-  }
-	function str(key, holder) {
-		// Produce a string from holder[key].
-		var i,          // The loop counter.
-    		k,          // The member key.
-        v,          // The member value.
-        length,
-        mind = gap,
-        partial,
-        value = holder[key];
-		if (value && typeof value === 'object' &&
-    	typeof value.toJSON === 'function') {
-      value = value.toJSON(key);
-    }
-		if (typeof rep === 'function') {
-    	value = rep.call(holder, key, value);
-    }
-		switch (typeof value) {
-    	case 'string':
-      	return quote(value);
-			case 'number':
-				return isFinite(value) ? String(value) : 'null';
-			case 'boolean':
-      case 'null':
-				return String(value);
-			case 'object':
-				if (!value) {
-        	return 'null';
-        }
-				gap += indent;
-        partial = [];
-				if (Object.prototype.toString.apply(value) === '[object Array]') {
-					length = value.length;
-          for (i = 0; i < length; i += 1) {
-          	partial[i] = str(i, value) || 'null';
-          }
-					v = partial.length === 0
-        										 ? '[]'
-														 : gap
-														 ? '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']'
-														 : '[' + partial.join(',') + ']';
-					gap = mind;
-        	return v;
-				}
-				if (rep && typeof rep === 'object') {
-        	length = rep.length;
-          for (i = 0; i < length; i += 1) {
-          	if (typeof rep[i] === 'string') {
-            	k = rep[i];
-              v = str(k, value);
-            	if (v) {
-              	partial.push(quote(k) + (gap ? ': ' : ':') + v);
-              }
-            }
-          }
-        } else {
-        for (k in value) {
-        	if (Object.prototype.hasOwnProperty.call(value, k)) {
-          	v = str(k, value);
-            if (v) {
-            	partial.push(quote(k) + (gap ? ': ' : ':') + v);
-            }
-          }
-        }
-      }
-			v = partial.length === 0
-      									 ? '{}'
-												 : gap
-												 ? '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}'
-												 : '{' + partial.join(',') + '}';
-												 gap = mind;
-			return v;
-    }
-  }
-	if (typeof JSON.stringify !== 'function') {
-  	escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-    meta = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-    };
-  JSON.stringify = function (value, replacer, space) {
-  	var i;
-    		gap = '';
-        indent = '';
-    if (typeof space === 'number') {
-    	for (i = 0; i < space; i += 1) {
-      	indent += ' ';
-      }
-		} else if (typeof space === 'string') {
-    	indent = space;
-    }
-		rep = replacer;
-    if (replacer && typeof replacer !== 'function' &&
-    	(typeof replacer !== 'object' ||
-       typeof replacer.length !== 'number')) {
-         throw new Error('JSON.stringify');
-    }
-		return str('', {'': value});
-  };
-}
-if (typeof JSON.parse !== 'function') {
-	cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-  JSON.parse = function (text, reviver) {
-	var j;
-	function walk(holder, key) {
-	var k, v, value = holder[key];
-  if (value && typeof value === 'object') {
-  	for (k in value) {
-    	if (Object.prototype.hasOwnProperty.call(value, k)) {
-      	v = walk(value, k);
-        if (v !== undefined) {
-        	value[k] = v;
-        } else {
-        	delete value[k];
-        }
-      }
-    }
-  }
-  return reviver.call(holder, key, value);
-}
-text = String(text);
-cx.lastIndex = 0;
-if (cx.test(text)) {
-	text = text.replace(cx, function (a) {
-  return '\\u' +
-  ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-	});
-}
-	if (/^[\],:{}\s]*$/
-	.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-  .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-  .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-	j = eval('(' + text + ')');
-	return typeof reviver === 'function'
-  	? walk({'': j}, '')
-    : j;
-	}
-
-  throw new SyntaxError('JSON.parse');
-  };
- }
-}());
-
 +function($sqjQuery) {
 	// DOM ELEMENTS
 	var SqStr = function(str) {
@@ -466,21 +273,28 @@ if (cx.test(text)) {
 		that.getName = function() { return obj.el.name; };
 		that.getValue = function() { return SqStr(obj.el.value).entityify(); };
 		that.getRawValue = function() { return obj.el.value };
-		that.labelize = function(labelName, helpText) {
+		that.labelize = function(labelName, helpText, expl) {
 			var lab, div;
       var ui = UserInterface();
+      var p = document.createElement('p');
 		  lab = document.createElement('label');
 			div = document.createElement('div');
 			lab.for = obj.el.id;
 			div.className = 'sq-form-group';
 		  lab.appendChild(ui.textWithHelper(labelName, helpText));
-			div.appendChild(lab)
-		  div.appendChild(obj.el);		 
+			div.appendChild(lab);
+      if (expl != ''){
+        p.innerHTML=expl;
+        p.className='sq-exp';
+        div.appendChild(p);
+      }
+		  div.appendChild(obj.el);
 			return DomElement({el: div});
 		},
-		that.labelizeWithSpan = function(labelName, span, helpText){
+		that.labelizeWithSpan = function(labelName, span, helpText, expl){
 			var lab;
       var ui = UserInterface();
+      var p = document.createElement('p');
 			divForm = document.createElement('div');
 			divInput = document.createElement('div');
 		  lab = document.createElement('label');
@@ -490,7 +304,12 @@ if (cx.test(text)) {
 			divInput.appendChild(obj.el);
 			divInput.appendChild(span);
 		  lab.appendChild(ui.textWithHelper(labelName, helpText));
-			divForm.appendChild(lab)
+			divForm.appendChild(lab);
+      if (expl != ''){
+        p.innerHTML=expl;
+        p.className='sq-exp';
+        divForm.appendChild(p);
+      }
 			divForm.appendChild(divInput)	 
 			return DomElement({el: divForm});
 		},
@@ -662,8 +481,8 @@ if (cx.test(text)) {
 
 	var Trolley = function(obj) {
 		var that, trolley = {};
-		trolley.money = obj.am;
-		trolley.money_currency = obj.curr;
+		trolley.amount = obj.am;
+		trolley.currency = obj.curr;
 		trolley.products = obj.codP;
 		that = {};
 		that.get = function() { return trolley; };
@@ -696,11 +515,22 @@ if (cx.test(text)) {
 
   var UserInterface = function() {
   	var that = {};
-    that.fbSharer = function(id, url){
-      $sqjQuery('#'+id).on('click', function(e){
-        e.preventDefault();
-			  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url), 'facebook-share-dialog', 'width=626,height=436');
-      });
+    that.PopupCenter = function(url, title, w, h) {
+      // Fixes dual-screen position Most browsers Firefox
+      var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+      width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+      height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+      var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+      var top = ((height / 2) - (h / 2)) + dualScreenTop;
+      var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+      // Puts focus on the newWindow
+      if (window.focus) {
+        newWindow.focus();
+      }
+      return newWindow;
     },
     that.switchCurrency = function(curr){
       if (curr == 'EUR'){
@@ -718,52 +548,69 @@ if (cx.test(text)) {
 			var active='blu';
 			var inactive='grigia';
 			var crea = invita = gestisci = 'inactive';
-      var title = '';
+      var title = howWorks = '';
+      var hide_c = hide_i = hide_r = 'sq-hidden-xs';
 			var c_var = i_var = d_var = '';
 			switch(page){
 				case 'create':
 					crea='active';
 					c_var='-pink';
           title = 'Crea Split';
+          hide_c = '';
+					howWorks = '<p class="sq-text-center">Queste informazioni saranno visibili nell\’invito per i tuoi amici, convincili a partecipare!</p>';
 					break;
 				case 'invitation':
 					invita='active';
 					i_var='-pink';
           title = 'Invita';
+          hide_i = '';
+					howWorks = '<p class="sq-text-center">Scegli come dividere le quote e ricorda che potrai modificare questa opzione in qualunque momento.</p>';
 					break;
 				case 'digest':
 					gestisci='active';
 					d_var='-pink';
           title = 'Gestisci';
+          hide_r = '';
+					howWorks = '';
 					break;
 			}
-			// Bootstrap 3 Implementation
 			viewPortDiv = $sqjQuery('#squeezol_view');
 			viewPortDiv.addClass("container-fluid");
       modalDiv = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-container-dashboard">'+
 								   '<div id="squeezol_view">'+
-                     '<div class="sq-row">'+
-                       '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-5" style="margin-top:-40px;">'+
-                         '<img class="squeezol-btn-header sq-img-responsive" src="' + img_url + 'logo_squeezol_blu_nowrite.png"></img>'+
+                     '<div class="sq-row sq-header">'+
+                       '<div class="sq-col-sm-2 sq-col-sm-offset-1 sq-col-xs-4 sq-col-xs-offset-4">'+
+                         '<img class="sq-img-responsive" src="'+img_url+'logo_squeezol_blu_nowrite.png">'+
+                       '</div>'+
+                       '<div class="sq-col-sm-2 sq-col-sm-offset-6 sq-col-xs-4 sq-col-xs-offset-4">'+
+                         '<img class="sq-img-responsive" src="'+img_url+'gestpay.png">'+
                        '</div>'+
                      '</div>'+
 										 '<div class="sq-row row-separata">'+
-                      '<div class="sq-col-md-3 sq-col-md-offset-1">'+
-                        '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
-                      '</div>'+
-                      '<div class="sq-col-md-4">'+
-                        '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
-                      '</div>'+
-                      '<div class="sq-col-md-3">'+
-                        '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
-                      '</div>'+
+                       '<div class="sq-col-sm-3 sq-col-sm-offset-1 sq-col-xs-4 sq-col-xs-offset-4 '+hide_c+'">'+
+                         '<p class="sq-text-left"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
+                       '</div>'+
+                       '<div class="sq-col-sm-4 sq-col-sm-offset-0 sq-col-xs-4 sq-col-xs-offset-4 '+hide_i+'">'+
+                         '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-invita'+i_var+'.png"/></p>'+
+                       '</div>'+
+                       '<div class="sq-col-sm-3 sq-col-sm-offset-0 sq-col-xs-4 sq-col-xs-offset-4 '+hide_r+'">'+
+                         '<p class="sq-text-right"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-riassunto'+d_var+'.png"/></p>'+
+                       '</div>'+
                      '</div>'+
-										 '<div class="sq-row">'+
-											'<div class="sq-col-xs-3 sq-col-xs-offset-1 separator-'+crea+'"></div>'+
-											'<div class="sq-col-xs-4 separator-'+invita+'"></div>'+
-											'<div class="sq-col-xs-3 separator-'+gestisci+'"></div>'+
+										 '<div class="sq-row sq-hidden-xs">'+
+											 '<div class="sq-col-xs-3 sq-col-xs-offset-1 separator-'+crea+'"></div>'+
+											 '<div class="sq-col-xs-4 separator-'+invita+'"></div>'+
+											 '<div class="sq-col-xs-3 separator-'+gestisci+'"></div>'+
 										 '</div>'+
-									 '</div>'+
+										 '<div class="sq-row">'+
+										   '<div class="sq-col-xs-10 sq-col-xs-offset-1">'+
+                         '<div class="sq-row sq-panel">'+
+                           '<div class="sq-col-xs-12">'+
+										       howWorks+
+                           '</div>'+
+                         '</div>'+
+										   '</div>'+
+										 '</div>'+
 									 '</div>'+
 								 '</div>';
 			viewPortDiv.append(modalDiv);
@@ -783,12 +630,12 @@ if (cx.test(text)) {
     that.drawSeparatorCollapse = function(text){
       var viewPortDiv = $sqjQuery('#squeezol_view');
       var panel = '<div class="sq-row row-separata" id="squeezol-accordion-container">'+
-                    '<div class="sq-col-md-6 sq-col-md-offset-1 sq-col-xs-12">'+
+                    '<div class="sq-col-md-5 sq-col-md-offset-1 sq-col-xs-12">'+
                       '<div class="sq-panel-group">'+
                         '<div class="sq-panel sq-panel-default">'+
-                          '<div class="sq-panel-heading sq-alert sq-alert-info">'+
+                          '<div class="sq-panel-heading sq-panel-custom">'+
                             '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">'+
-                              '<p class="sq-label">'+text+'</p>'+
+                              '<p class="sq-text-left sq-label">'+text+'</p>'+
                             '</a>'+
                           '</div>'+
                           '<div id="collapseOne" class="sq-panel-collapse sq-collapse sq-out">'+
@@ -844,7 +691,7 @@ if (cx.test(text)) {
 			return textElem;
 		},
 		that.renderAlreadyInvited = function(emailDiv, fbDiv, alreadyInvited, group) {
-			this.drawSeparator('Amici Invitati');
+			this.drawSeparator('Inviti inviati:');
 			var container = document.createElement('div');
 			container.id = 'containerCronologia';
       container.className = 'sq-row';
@@ -863,7 +710,7 @@ if (cx.test(text)) {
 					tmp.className = 'sq-row sq-fb-element';
 					tmp.innerHTML += '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-has-success sq-input-group"> <input type="hidden" class="fbEntry sq-form-control" value="'+invObj.fb_id+'"disabled></input>'+
 											 		   '<input value="'+invObj.name+'" class="sq-form-control" type="text" name="email"  disabled>'+
-                             '<span class="sq-input-group-addon sq-glyph-ok">f</span>'+
+                             '<span class="sq-input-group-addon sq-glyph-ok sq-check"></span>'+
 													 '</div>';
 				}
 				else {
@@ -871,7 +718,7 @@ if (cx.test(text)) {
 					tmp.innerHTML+= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-form-group sq-has-success sq-input-group">'+
                             
 														'<input value="'+invObj.email+'" class="sq-form-control" type="email" name="email" placeholder="email address" disabled>'+
-                            '<span class="sq-input-group-addon sq-glyph-ok">@</span>'+
+                            '<span class="sq-input-group-addon sq-glyph-ok sq-check"></span>'+
 													'</div>';
 				}
 				$sqjQuery(container).append(tmp);
@@ -914,8 +761,8 @@ if (cx.test(text)) {
 			if (id == 'emailModal') {
         if (modal == false){
           removeBtn = Button()
-					removeBtn.create('- Elimina', 'small', 'btnRemove');
-					removeBtn.addClass('sq-btn sq-btn-xs sq-btn-danger')
+					removeBtn.create('', 'ui', 'btnRemove');
+					removeBtn.addClass('sq-btn sq-btn-xs sq-btn-rm')
 					removeBtn.regHandler('click', function(e){
 				  	var event= e || window.event;
 				  	var target = event.target || event.srcElement || event.originalTarget;
@@ -942,17 +789,46 @@ if (cx.test(text)) {
 			}
 			else if (id == 'facebookModal'){				
 				modalContent.append(content);
-        modalContent.on('hide.bs.modal', function(e){
+      /*  modalContent.on('hide.bs.modal', function(e){
           location.reload(true);
-        });
-			}	
-			$sqjQuery(modalContent).modal('show');
-			return;
-		},
-		that.modalClose = function(id){
-			var currentModal = $sqjQuery('#'+id);
-			currentModal.modal('hide');
-		},
+        });*/
+			}
+      else if(id == 'authorizeModal'){
+        modalBody = $sqjQuery('<div />');
+			  modalBody.addClass('sq-modal-body');
+			  modalBody.append(content);
+			  modalContent.append($sqjQuery('<div />').addClass('sq-modal-dialog sq-modal-lg')
+				  .append($sqjQuery('<div />').addClass('sq-modal-content')
+					.append('<div class="sq-modal-header">'+
+										'<h4 class="sq-modal-title">I conti non tornano? Ora c\'è Squeezol! Ti permette di dividire il costo del carrello con amici, colleghi e parenti.</h4>'+
+									'</div>',  content, '<div id="social-login" class="sq-row">'+
+                                        '<div class="sq-col-xs-10 sq-col-xs-offset-1">'+
+                                          '<div class="sq-col-sm-6 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+                                              '<p class="sq-content-title sq-text-center">Oppure Accedi con</p>'+
+                                          '</div>'+
+                                          '<div class="sq-col-sm-3 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+                                            '<a href='+btn+'><img src="'+img_url+'fb_login.png" title="Login with Facebook" alt="Login with Facebook" style="cursor:pointer;" class="sq-img-responsive"></a>'+
+                                          '</div>'+
+                                          '<div class="sq-col-sm-3 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+                                            '<a title="Google" href="'+btn+'"><img src="'+img_url+'/g_login.png" class="sq-img-responsive" alt="Login with Google" style="cursor:pointer;"></a>'+
+                                          '</div>'+
+                                        '</div>'+
+                                      '</div>',
+                                      $sqjQuery('<div />').addClass('sq-modal-footer')
+                                      .append('<div class="sq-row sq-footer"><div class="sq-col-sm-2 sq-col-sm-offset-0 sq-col-xs-4 sq-col-xs-offset-4">'+
+                                                '<img class="sq-img-responsive" src="'+img_url+'gestpay.png"></div>'+
+                                                '<div class="sq-col-sm-2 sq-col-sm-offset-8 sq-col-xs-4 sq-col-xs-offset-4">'+
+                                                '<img class="sq-img-responsive" src="'+img_url+'logo_squeezol_blu_nowrite.png"></div>'+
+                                              '</div>'))));
+        $sqjQuery(modalContent).modal({backdrop:'static',keyboard:false});
+      }
+        $sqjQuery(modalContent).modal('show');
+          return modalContent;
+    },
+    that.modalClose = function(id){
+      var currentModal = $sqjQuery('#'+id);
+      currentModal.modal('hide');
+    },
     that.textWithHelper = function(labelName, helpText){
       var txt = document.createElement('p')
       var $question = $sqjQuery('<div />');
@@ -962,13 +838,13 @@ if (cx.test(text)) {
       $question.attr('data-placement', 'top');
       $question.attr('title', helpText);
       $question.addClass('sq-icon sq-glyph-info-sign');
-      $question.append('<p>i</p>');
+      $question.append('i');
       $sqjQuery(txt).append($question);
       return txt;
     },
     that.iconPopover = function(){
-      //$sqjQuery('.icon').popover();
-		  $sqjQuery('.sq-icon').on('mouseenter', function(){
+      $sqjQuery('.sq-icon').popover();
+		  /*$sqjQuery('.sq-icon').on('mouseenter', function(){
         $sqjQuery(this).popover('show')
       });
       $sqjQuery('.sq-icon').on('mouseout', function(){
@@ -976,8 +852,7 @@ if (cx.test(text)) {
       });
       $sqjQuery('.sq-icon').on('hidden.bs.popover', function(){
         $sqjQuery(this).css("display", "");
-			});
-
+			});*/
     };
     return that;
   };
@@ -997,7 +872,7 @@ if (cx.test(text)) {
 
 			var i18n_ita = { previousMonth : 'Mese precedente',
                        nextMonth     : 'Mese successivo',
-                       months        : ['Gennaio','February','March','April','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+                       months        : ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
                        weekdays      : ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'],
                        weekdaysShort : ['Dom','Lun','Mar','Merc','Gio','Ven','Sab']
                      }
@@ -1029,30 +904,35 @@ if (cx.test(text)) {
           wrapper, accordion, tempAcc, dateIcon;
       var opt = [];
 			var tempRowDiv, spanCurr;
-			var tmp, startDate, d1, d2;
+			var tmp, startDate, d1, d2, dI2;
 			var day = 24 * 60 * 60 * 1000;
 			var ui = UserInterface();
-      var placeholder = { 'name': 'Regalo di compleanno, viaggio, cena...',
+      var placeholder = { 'name': 'Compleanno di Mario, Laurea di Giulia...',
                           'description': 'Descrivi cosa intendi fare con la somma raccolta'}
+      var expl = { 'name': 'Scrivi il titolo che i partecipanti leggeranno nel messaggio di invito',
+                   'description': 'Aggiungi una descrizione per spiegare i dettagli ai partecipanti',
+                   'max_payment_date': 'Scegli la data entro la quale pagare la propria quota',
+                   'occurrence': 'Decidi per quale occasione stai organizzando l\'acquisto'}
       var helpText = { 'name': 'Dai un titolo allo Split. Per esempio: regalo per Marco, week end in Montagna ecc.',
                        'description': 'Il posto giusto dove inserire qualche dettaglio che invogli i tuoi amici a partecipare',
                        'max_acceptance_date': 'Scegli la data entro la quale gli invitati dovranno confermare la propria partecipazione',
-                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita è 20 giorni',
+                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima è 20 giorni, se l\'obiettivo non viene raggiunto entro questa data tutti i pagamenti verranno rimborsati',
                        'occurrence': 'Fai sapere ai partecipanti per quale occasione si effettua l\'acquisto',
                        'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sullo Split',
-                       'alert_email': 'Disattiva le notifiche email sulle azioni degli invitati',
-                       'hide_contribution': 'Nasconde ai soli partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
+                       'alert_email': 'Invia una mail ogni volta che un invitato decide di accettare o rifiutare il tuo invito',
+                       'hide_contribution': 'Nasconde ai partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
                        'hide_invitation': 'Nasconde l\' identità  dei partecipanti tra di loro.',
                        'isOpen': 'Split aperto a chiunque abbia un invito, senza PIN e a donazione libera' }
 			wrapper_row = { wrapper: 'div', className: 'sq-row'};
       wrapper_row_pad = { wrapper: 'div', className: 'sq-row pad-it'};
-			wrapper_left = { wrapper: 'div', className : 'sq-col-md-6 sq-col-md-offset-1 sq-col-xs-12' }
+			wrapper_left = { wrapper: 'div', className : 'sq-col-md-5 sq-col-md-offset-1 sq-col-xs-12' }
 			wrapper_left_small = { wrapper: 'div', className : 'sq-col-md-4 sq-col-md-offset-1 sq-col-xs-12' }
-      wrapper_right = { wrapper: 'div', className: 'sq-col-md-4 sq-col-xs-12'};
-      wrapper_btn = { wrapper: 'div', className: 'sq-col-md-4 sq-col-xs-10 sq-col-xs-offset-1'}
+      wrapper_right = { wrapper: 'div', className: 'sq-col-md-5 sq-col-xs-12'};
+      wrapper_btn = { wrapper: 'div', className: 'sq-col-md-3 sq-col-md-offset-3 sq-col-xs-4 sq-col-xs-offset-4'}
 			wrapper_push_right = { wrapper: 'div', className: 'sq-col-md-3 sq-col-md-offset-9 sq-col-xs-12'};
+      wrapper_hide = {wrapper: 'div', className: 'sq-hidden sq-display-none'};
       dateIcon = document.createElement('img');
-      dateIcon.setAttribute('src', img_url+'squeezol_icon-aziende.png')
+      dateIcon.setAttribute('src', img_url+'calendar.png')
       dateIcon.className = 'sq-img-responsive sq-date-icon';
 			//UI
       ui.drawHeader('create', 'modal');
@@ -1062,17 +942,45 @@ if (cx.test(text)) {
 		  tmp=document.createElement('div');
 			tempRowDiv = Div(tmp);
 			tempRowDiv.addClass('sq-row');
-			// Nome Colletta
+			// Nome Collettaat
 			input = TextInput();
 		  input.create('name');
       input.get().setAttribute('placeholder', placeholder['name']);
 			inputs.push(input);
 			// Data Accettazione
-			tempRowDiv.append(input.labelize('Nome Split*', helpText['name']).wrap(wrapper_left));
+			tempRowDiv.append(input.labelize('Titolo*: ', helpText['name'], expl['name']).wrap(wrapper_left));
 
+      // Data Pagamenti
+		  date2 = DateInput();
+			d2 = new Date(new Date().getTime() + 20*day);
+		  date2.create('max_payment_date', d2);
+		  date2.get().id = 'datepicker2';
+		  date2.addPicker(dp2);
+      
+		  inputs.push(date2);
+	    spanCurr = document.createElement('span');
+			spanCurr.className = 'sq-input-group-addon';
+      dI2 = DomElement({'el': dateIcon.cloneNode()});
+      dI2.get().id = 'sq-calendar';
+      dI2.regHandler('click', function(e){
+        date2.get().click();
+      });
+			spanCurr.appendChild(dI2.get());
+			tempRowDiv.append(date2.labelizeWithSpan('Data di fine Split*: ',spanCurr, helpText['max_payment_date'], expl['max_payment_date']).wrap(wrapper_right));
+		  this.initDatePickers(d1, d2);
+		  opt.push({value: 'R', text: 'Regalo di compleanno'});
+		  opt.push({value: 'V', text: 'Viaggio'}); 
+		  opt.push({value: 'C', text: 'Evento, concerto'}); 
+		  opt.push({value: 'G', text: 'Cena, pranzo, catering'}); 
+		  opt.push({value: 'N', text: 'Regalo di Nozze'}); 
+		  opt.push({value: 'A', text: 'Altro ...'}); 
+		  combo = ComboBox();
+		  combo.create(opt);
+      viewPortDiv.append(tempRowDiv.get())
+
+      // Hidden acceptance date
 			date1 = DateInput();
-			d1 = new Date(new Date().getTime() + 3*day);
-			//startDate = ('0' + d.getDate()).slice(-2) + "-" + ('0' + d.getMonth()).slice(-2) + "-" + d.getFullYear();
+			d1 = new Date(new Date().getTime()+day);
 		  date1.create('max_acceptance_date', d1);
 			date1.get().id = 'datepicker1';
 			date1.addPicker(dp1);
@@ -1080,7 +988,8 @@ if (cx.test(text)) {
       spanCurr = document.createElement('span');
 			spanCurr.className = 'sq-input-group-addon';
 			spanCurr.appendChild(dateIcon);
-			tempRowDiv.append(date1.labelizeWithSpan('Scadenza Invito', spanCurr, helpText['max_acceptance_date']).wrap(wrapper_right));
+			tempRowDiv.append(date1.labelizeWithSpan('Scadenza Invito', spanCurr, helpText['max_acceptance_date']).wrap(wrapper_hide));
+
 			// Append first row
 			viewPortDiv.append(tempRowDiv.get());
 			// Temp Div
@@ -1092,38 +1001,12 @@ if (cx.test(text)) {
 		  input.create('description');
       input.get().setAttribute('placeholder', placeholder['description']);
 		  inputs.push(input);
-		  tempRowDiv.append(input.labelize('Descrizione', helpText['description']).wrap(wrapper_left));
-			// Data Pagamenti
-		  date2 = DateInput();
-			d2 = new Date(new Date().getTime() + 20*day);
-			//startDate = ('0' + d.getDate()).slice(-2) + "-" + ('0' + d.getMonth()).slice(-2) + "-" + d.getFullYear();
-		  date2.create('max_payment_date', d2);
-		  date2.get().id = 'datepicker2';
-		  date2.addPicker(dp2);
-      
-		  inputs.push(date2);
-	    spanCurr = document.createElement('span');
-			spanCurr.className = 'sq-input-group-addon';
-			spanCurr.appendChild(dateIcon.cloneNode())
-			tempRowDiv.append(date2.labelizeWithSpan('Scadenza Pagamenti', spanCurr, helpText['max_payment_date']).wrap(wrapper_right));
-		  this.initDatePickers(d1, d2);
-		  opt.push({value: 'R', text: 'Acquisto regalo'});
-		  opt.push({value: 'V', text: 'Viaggio di gruppo'}); 
-		  opt.push({value: 'C', text: 'Evento/Concerto'}); 
-		  opt.push({value: 'G', text: 'Grigliata'}); 
-		  opt.push({value: 'N', text: 'Regalo Nozze'}); 
-		  opt.push({value: 'A', text: 'Altro ...'}); 
-		  combo = ComboBox();
-		  combo.create(opt);
-      viewPortDiv.append(tempRowDiv.get())
+		  tempRowDiv.append(input.labelize('Descrizione: ', helpText['description'], expl['description']).wrap(wrapper_left));
 
-      tmp=document.createElement('div');
-			tempRowDiv = Div(tmp);
-			tempRowDiv.addClass('sq-row');
-		  tempRowDiv.append(combo.labelize('Occasione', helpText['occurrence']).wrap(wrapper_left));
+		  tempRowDiv.append(combo.labelize('Occasione: ', helpText['occurrence'], expl['occurrence']).wrap(wrapper_right));
 			viewPortDiv.append(tempRowDiv.get())
 			ui.drawSeparator('');
-			ui.drawSeparatorCollapse('Opzioni aggiuntive');
+			ui.drawSeparatorCollapse('Opzioni');
       //squeezol-accordion
       tempAcc = document.getElementById('squeezol-accordion');
 			accordion = Div(tempAcc);
@@ -1131,7 +1014,7 @@ if (cx.test(text)) {
 		  checkBox = CheckBox();
 		  checkBox.create({name: 'alert_email', value: 'Email notifications'}); 
 		  checkBoxes.push(checkBox);
-		  accordion.append(checkBox.labelize('Disattiva notifiche', helpText['alert_email']).wrap(wrapper_row_pad));
+		  accordion.append(checkBox.labelize('Attiva notifiche email', helpText['alert_email']).wrap(wrapper_row_pad));
 						
 		  checkBox = CheckBox();
 		  checkBox.create({name: 'hide_contribution', value: 'Hide Contribution'}); 
@@ -1142,24 +1025,22 @@ if (cx.test(text)) {
 		  checkBox.create({name: 'hide_invitation', value: 'Hide Invitation'});
 		  checkBoxes.push(checkBox);
 		  accordion.append(checkBox.labelize('Nascondi partecipanti', helpText['hide_invitation']).wrap(wrapper_row_pad));
-
+      
 			checkBox = CheckBox();
 		  checkBox.create({name: 'isOpen', value: 'Open funding', checked: 'true'}); 
 			checkBoxes.push(checkBox);
-		  accordion.append(checkBox.labelize('Split a donazione libera', helpText['isOpen']).wrap(wrapper_row_pad));
-			
+		  accordion.append(checkBox.labelize('Split a donazione libera', helpText['isOpen']).wrap(wrapper_hide));
 			promo = TextInput();
 		  promo.create('promo_code');
-		  accordion.append(promo.labelize('Codice Promozionale', helpText['promo_code']).wrap(wrapper_row_pad));
-						
+		  accordion.append(promo.labelize('Codice Promozionale', helpText['promo_code']).wrap(wrapper_hide));
+		  
 			
 		  button.create('Prosegui', 'big', 'squeezol_button');
 			button.addClass('sq-btn')
 		  button.regHandler('click', buttonHandler);
-			button = Div(button.wrap(wrapper_btn));
 			tmp = document.getElementById('squeezol-accordion-container');
       tempRowDiv = Div(tmp);
-		  tempRowDiv.append(button.wrap(wrapper_row));
+		  tempRowDiv.append(button.wrap(wrapper_btn));
 		  ui.iconPopover();
       return this; 
 		};     
@@ -1430,29 +1311,97 @@ if (cx.test(text)) {
   };
 
   var InvitationObj = function() {
-		var that = {};
-		that.computeSingleContribution = function(targetAmount) {
-			var emailCount = document.getElementsByClassName('sq-email-element').length+1;
-			var fbCount = document.getElementsByClassName('sq-fb-element').length;
-			var friendCount = fbCount+emailCount;
-		  return parseFloat(targetAmount/friendCount).toFixed(2);
+    var that = {};
+    that.computeSingleContribution = function(targetAmount) {
+      var emailCount = document.getElementsByClassName('sq-email-element').length+1;
+      var fbCount = document.getElementsByClassName('sq-fb-element').length;
+      var friendCount = fbCount+emailCount;
+      return parseFloat(targetAmount/friendCount).toFixed(2);
+    },
+    that.updateFundraising = function(f){
+      var uxDiv=document.getElementById('sq-fund-text');
+			var fundText;
+      if (f=='D'){
+				fundText ='<p class="sq-content-body"><strong> Suggerisci la quota:</strong></p>'+
+                  '<p class="sq-content-body" id="sq-fundraising-text">'+
+							 			'l\'organizzatore suggerisce la quota che dovranno versare i singoli partecipanti. '+
+                    'La quota potrà essere eventualmente modificata al momento del pagamento.'+
+									'</p>';
+      }else if(f=='S'){
+				fundText = '<p class="sq-content-body"><strong> Dividi equamente:</strong></p>'+
+        		 			 '<p class="sq-content-body">'+
+									   'la quota del singolo partecipante verrà ricalcolata ogni volta che l’invitato conferma la sua adesione. '+
+                     'La quota potrà essere eventualmente modificata al momento del pagamento.'+
+									 '</p>';      	
+      }else if(f=='F'){
+				fundText = '<p class="sq-content-body"><strong> Quota fissa:</strong></p>'+
+		 				 			 '<p class="sq-content-body">'+
+									   'l\'organizzatore sceglie una quota fissa che i singoli partecipanti dovranno versare. '+
+                     'La quota NON potrà essere modifica al momento del pagamento.'+
+									 '</p>';
+      	
+      }
+			if(uxDiv){
+				uxDiv.innerHTML=fundText;
+			}
+			return fundText;
+    },
+		that.updateQuotaOption=function(f,c,curr){
+			var uxDiv=document.getElementById('sq-quota-option');
+			var quotaOption;
+			if (f=='S'){
+			  quotaOption='<div class="squeezol_quota">'+
+								 		  '<p class="sq-label">Quota con divisione equa:</p>'+
+											'<p class="sq-exp">Quota a persona se tutti gli invitati accetteranno l\'invito.</p>'+
+											'<div class="sq-input-group">'+
+												'<input id="squeezol_admin_contrib" value="'+c+'" name="email_contribution"'+
+										 			     'type="text" class="squeezolPrice sq-form-control" disabled><span class="sq-input-group-addon">'+curr+'</span>'+
+											'</div>'+ 
+									  '</div>';
+			}else if(f=='D'){
+        quotaOption='<div class="squeezol_quota">'+
+                      '<p class="sq-label">Quota suggerita a persona:</p>'+
+                      '<p class="sq-exp">La quota è un suggerimento per gli invitati.</p>'+
+              			  '<div class="sq-input-group">'+
+											  '<input id="squeezol_admin_contrib" value="'+c+'" name="email_contribution"'+
+											         'type="text" class="squeezolPrice sq-form-control"><span class="sq-input-group-addon">'+curr+'</span>'+
+											'</div>'+
+										'</div>';
+			}
+			else if(f=='F'){
+				quotaOption='<div class="squeezol_quota">'+
+        							'<p class="sq-label">Quota fissa a persona:</p>'+
+                      '<p class="sq-exp">La quota fissa non è modifcabile dagli invitati</p>'+
+											'<div class="sq-input-group">'+
+												'<input id="squeezol_admin_contrib" value="'+c+'" name="email_contribution"'+
+							         				 'type="text" class="squeezolPrice sq-form-control"><span class="sq-input-group-addon">'+curr+'</span>'+
+											'</div>'+
+										'</div>';
+			}
+			if(uxDiv){
+				uxDiv.innerHTML=quotaOption;
+			}
+			return quotaOption;
 		},
-		that.updateContribution = function(contrib, targetAmount) {
-			var rest = 0.00;
-			var tot = 0.00;
-			var totAdmin;
-			var adminContrib=document.getElementById('squeezol_admin_contrib');
-			var friendList = document.getElementsByClassName('sq-email-element');
-			var fbList = document.getElementsByClassName('sq-fb-element');
-			tot = parseFloat(contrib*(fbList.length+friendList.length+1));
-			if (tot != targetAmount){
-				rest = parseFloat(targetAmount - tot).toFixed(2);
+    that.updateContribution = function(contrib, targetAmount) {
+      var rest = 0.00;
+      var tot = 0.00;
+      var totAdmin;
+      var inv_div=document.getElementById('sq-inv-count');
+      var adminContrib=document.getElementById('squeezol_admin_contrib');
+      var friendList = document.getElementsByClassName('sq-email-element');
+      var fbList = document.getElementsByClassName('sq-fb-element');
+      var num_inv=fbList.length+friendList.length;
+      tot = parseFloat(contrib*(num_inv+1));
+      if (tot != targetAmount){
+      rest = parseFloat(targetAmount - tot).toFixed(2);
 				totAdmin= parseFloat(contrib)+parseFloat(rest);
 				adminContrib.value = parseFloat(totAdmin).toFixed(2);
 			}
 			else{
 				adminContrib.value = parseFloat(contrib).toFixed(2);
 			}
+      inv_div.innerHTML=num_inv;
 			adminContrib.disabled = true;
 			return;
 		},
@@ -1723,8 +1672,8 @@ if (cx.test(text)) {
                           '</div>'+
 													'<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-form-group sq-has-success sq-input-group">'+
 													  '<input value="'+currSent.value+'" class="sq-form-control" type="email" name="email" placeholder="email address" disabled>'+
-														'<span class="sq-input-group-addon sq-glyph-ok">'+
-                            '@<span/>'+
+														'<span class="sq-input-group-addon sq-glyph-ok sq-check">'+
+                            '<span/>'+
                             '</div>'+
 													'</div>';
 					container.appendChild(div);
@@ -1742,7 +1691,7 @@ if (cx.test(text)) {
 		that.renderGET = function(invitationUrl) {
 			var params, participantAdmin, group, alreadyInvited, socialProviders,
 			grId, grAmount, gData, pAdminId;
-			var btnText = ['Email', 'f | Invito Facebook', 'Invia E-mail'],
+			var btnText = ['Email', 'f | INVITA VIA FACEBOOK', 'Invia E-mail'],
 					btnId = ['squeezolEmail_', 'squeezolFb_', 'squeezolSubmit_' ],
 					btnSize = ['small', 'small', 'big'],
 					btnClass = ['sq-btn sq-btn-lg sq-buttonEmail', 'sq-btn sq-btn-lg sq-buttonFb', 'sq-btn'];
@@ -1753,11 +1702,17 @@ if (cx.test(text)) {
       var copiaUrl, a_temp, a_link;
 			var i, j, currBtn, ui;
 			var wrapper_left = { wrapper: 'div', className : 'sq-col-xs-2' };
-			var wrapper_center = { wrapper: 'div', className : 'sq-col-md-3 sq-col-xs-10 sq-col-xs-offset-1' };
-			var wrapper_btn = { wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1' };
+			var wrapper_center = { wrapper: 'div', className : 'sq-col-md-3 sq-col-xs-10 hidden-xs hidden-sm' };
+			var wrapper_btn = { wrapper: 'div', className : 'sq-col-md-3 sq-col-md-offset-1 sq-col-xs-10 ' };
 			var wrapper_row = { wrapper: 'div', className : 'sq-row' };
-      var wrapper_remove = { wrapper: 'div', className: 'sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1'}
+      var wrapper_remove = { wrapper: 'div', className: 'sq-col-sm-4 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1'}
 			if(answer.status === 'ok') {
+        //Set Post Message
+        if(window.addEventListener){
+          window.addEventListener("message",PostMessageReceiver,false)
+        }else if(window.attachEvent){
+          window.attachEvent("onmessage",PostMessageReceiver)
+        }
 				// Parsing Parametri
 				params=JSON.parse(answer.params);
 				grId = params.group_id;
@@ -1781,7 +1736,7 @@ if (cx.test(text)) {
 				fbDiv.id = 'squeezolFb'
 				invitationBtn = InvitationObj();
 				emailBtn = invitationBtn.createButton('+ Email', btnId[0], btnSize[0], 'sq-btn sq-btn-sm sq-buttonEmail');
-				emailModal = invitationBtn.createButton('@ | Invia Email', 'emailModal_', 'big', 'sq-btn sq-btn-lg sq-buttonEmail');
+				emailModal = invitationBtn.createButton('@ | INVITA VIA EMAIL', 'emailModal_', 'big', 'sq-btn sq-btn-lg sq-buttonEmail');
 				
 				// SEND EMAIL handler:
 				submitBtn = invitationBtn.createButton(btnText[2], btnId[2], btnSize[2], btnClass[2]);
@@ -1807,8 +1762,8 @@ if (cx.test(text)) {
 				submitDiv.appendChild(submitBtn.wrap({ wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-8'}));
 				
         var NewremoveBtn = Button()
-					NewremoveBtn.create('- Elimina', 'small', 'btnRemove');
-					NewremoveBtn.addClass('sq-btn sq-btn-xs sq-btn-danger')
+					NewremoveBtn.create('', 'ui', 'btnRemove');
+					NewremoveBtn.addClass('sq-btn sq-btn-xs sq-btn-rm')
 					NewremoveBtn.regHandler('click', function(e){
 				  	var event= e || window.event;
 				  	var target = event.target || event.srcElement || event.originalTarget;
@@ -1825,8 +1780,8 @@ if (cx.test(text)) {
 				  var contribType = sBox.options[sBox.selectedIndex].value;
 
 					removeBtn = Button()
-					removeBtn.create('- Elimina', 'small', 'btnRemove');
-					removeBtn.addClass('sq-btn sq-btn-xs sq-btn-danger')
+					removeBtn.create('', 'ui', 'btnRemove');
+					removeBtn.addClass('sq-btn sq-btn-xs sq-btn-rm')
 					removeBtn.regHandler('click', function(e){
 				  	var event= e || window.event;
 				  	var target = event.target || event.srcElement || event.originalTarget;
@@ -1838,7 +1793,7 @@ if (cx.test(text)) {
 					$sqjQuery(newEmail).append('<div class="sq-hidden-xs sq-col-sm-2 sq-col-md-2">'+
 															      '<img style="display:inline;" class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
 		  											      '</div>'+
-														      '<div class="sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+														      '<div class="sq-col-sm-6 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
 													          '<input class="sq-form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
 														      '</div>');
 					newEmail.appendChild(removeBtn.wrap(wrapper_remove));
@@ -1849,21 +1804,27 @@ if (cx.test(text)) {
             .append('<div class="sq-hidden-xs sq-col-sm-2 sq-col-md-2">'+
 								      '<img style="display:inline;" class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
 						        '</div>'+
-						        '<div class="sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+						        '<div class="sq-col-sm-6 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
 					            '<input class="sq-form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
 				            '</div>', NewremoveBtn.wrap(wrapper_remove)))
 				emailModal.regHandler('click', function() {
 					var ui = UserInterface();
 					ui.sqModal(emailDiv, submitDiv, 'emailModal');
 				});
-
+        var boxInvita = document.createElement('div');
+        boxInvita.className='sq-row row-separata';
+        var textInfo = document.createElement('p');
+        var texttt = document.createTextNode('Per invitare usa una email, un messaggio privato su Facebook oppure Condividi il link! Le informazioni compariranno automaticamente e gli invitati potranno versare la propria quota in 3 click!');
+        textInfo.appendChild(texttt);
+        
 				tmpObj = document.createElement('div');
-				tmpObj.className = 'sq-row row-separata';
+				tmpObj.className = 'sq-col-xs-10 sq-col-xs-offset-1 sq-panel sq-panel-info';
+        tmpObj.appendChild(textInfo);
 				tmpObj.appendChild(emailModal.wrap(wrapper_btn));
 
 				// FACEBOOK IFRAME handler:
         if (params.fb_url) {
-				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'big', 'sq-btn sq-btn-lg sq-buttonFb');
+				  fbBtn = invitationBtn.createButton(btnText[1], btnId[1], 'ui', 'sq-btn sq-btn-lg sq-buttonFb');
 					fbBtn.regHandler('click', function(){
 						var iFrameModal;
 						var ui=UserInterface();
@@ -1876,49 +1837,33 @@ if (cx.test(text)) {
 						else {
 							iFrameModal.innerHTML = '';
 						}
- 						var socIframe = '<button id="closeModal" type="button" class="sq-close text-step-active" data-dismiss="modal" aria-hidden="true">'+
-                              'CHIUDI &times;'+
-                            '</button>'+
-                            '<div class="sq-col-xs-10 sq-col-xs-offset-1">'+
-														  '<iframe width="620px" height="620px" class="squeezol_iframe" src="'+params.fb_url+'" frameborder="0">'+
-						                	  'NON è possibile invitare con Facebook da questo dispositivo'+
-														  '</iframe>'+
+ 						var socIframe = '<div class="ajax-widget-container sq-embed-responsive sq-embed-responsive-4by3" id="appendSqIframe">'+
+                          		'<iframe scrolling="auto" class="sq-embed-responsive-item" src="'+params.fb_url+'"></iframe>'
 														'</div>';
-                            
-
 					  iFrameModal.innerHTML=socIframe;
-						ui.sqModal(iFrameModal,'', 'facebookModal')
+						ui.sqModal(iFrameModal,'', 'facebookModal');
 					  return
 					});
 					tmpObj.appendChild(fbBtn.wrap(wrapper_center));
         }
-        /*
         else {
-          copiaUrl = document.createElement('div')
-          copiaUrl.className = 'sq-row sq-fb-link';
-          copiaUrl.setAttribute('data-placement', 'top');
-          copiaUrl.setAttribute('title', 'Aggiungi Facebook per invitare i tuoi contatti');
-          a_temp = document.createElement('a');
-          a_temp.innerHTML = 'Invita con Facebook';
-          a_link=DomElement({'el': a_temp});
-          a_link.id='sqFbLink';
-          a_link.regHandler('click', function(e) {
-            window.location.replace(answer.redirect_url);
+          fbBtn = invitationBtn.createButton('f | CONDIVIDI SU FACEBOOK', 'sq-fb-sharer', 'ui', 'sq-btn sq-btn-lg sq-buttonFb');
+          fbBtn.regHandler('click', function(){
+    			  ui.PopupCenter('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(params.link_url), 'facebook-share-dialog', '626', '436');
           });
-          copiaUrl.appendChild(a_link.get());
-          tmpObj.appendChild(copiaUrl);
-        }*/
+          tmpObj.appendChild(fbBtn.wrap(wrapper_center));
+        }
 				
         copiaUrl = document.createElement('div')
         copiaUrl.className = 'sq-col-md-3 sq-col-xs-10 sq-col-xs-offset-1 pink-link';
         copiaUrl.setAttribute('data-placement', 'top');
         copiaUrl.setAttribute('title', 'Copia URL dello Split e condividilo dove preferisci');
         a_temp = document.createElement('a');
-        a_temp.innerHTML = 'Copia url split';
+        a_temp.innerHTML = 'COPIA LINK INVITO';
         a_link=DomElement({'el': a_temp});
         a_link.id='clipBoardLink';
         a_link.regHandler('click', function(e) {
-          var message = 'Copia negli appunti con CTLR+C. Poi clicca OK';
+          var message = 'Copia il link con CTRL+C o CMD+C e invialo a chi vuoi utilizzando la tua chat preferita, ad esempio: Whatsapp, Hangouts e Telegram';
           if (answer.group.isOpen){
             window.prompt(message, params.link_url);
           }
@@ -1927,8 +1872,27 @@ if (cx.test(text)) {
           }
         });
         copiaUrl.appendChild(a_link.get());
+        /*$sqjQuery(copiaUrl).append('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="100" height="50" id="clippy" >'+
+                                 '<param name="movie" value="'+img_url+'plus.png"/>'+
+                                 '<param name="allowScriptAccess" value="always" />'+
+                                 '<param name="quality" value="high" />'+
+                                 '<param name="scale" value="noscale" />'+
+                                 '<param NAME="FlashVars" value="text=COPIA LINK INVITO">'+
+                                 '<param name="bgcolor" value="#FFF">'+
+                                 '<embed src="'+css_url+'clippy.swf"'+
+                                         'width="100"'+
+                                         'height="50"'+
+                                         'name="clippy"'+
+                                         'quality="high"'+
+                                         'allowScriptAccess="always"'+
+                                         'type="application/x-shockwave-flash"'+
+                                         'pluginspage="http://www.macromedia.com/go/getflashplayer"'+
+                                         'FlashVars="text='+params.link_url+'"'+
+                                         'bgcolor="#DA396F"/>'+
+                                  '</object>');*/
         tmpObj.appendChild(copiaUrl);
-				SqDiv.appendChild(tmpObj);
+        boxInvita.appendChild(tmpObj);
+				SqDiv.appendChild(boxInvita);
 				
 				// NEXT Button handler
 				nextBtn = invitationBtn.createButton('Prosegui', 'squeezol_next', 'big', btnClass[2]);
@@ -1941,21 +1905,24 @@ if (cx.test(text)) {
 					invError.removeErrorInfo();
 					ui.loadState(target);
           invitations.send()
-          ui.loadStop(target);
 				});
 				// Select Contribution Type handler:
 				var box = DomElement({el: document.getElementById('contributionType')});
 				box.regHandler('change', function(e){
 				  var invObj = InvitationObj();
 					var event= e || window.event;
+          var ui=UserInterface();
 					var target = event.target || event.srcElement || event.originalTarget;
-					if (target.value === 'S'){
+					if (target.value == 'S'){
 						contribution = invObj.computeSingleContribution(group.amount);
 						invitationBtn.updateContribution(contribution, group.amount);
 					}
-					else if(target.value === 'D'){
+					else {
 					  invObj.setToZero();
+            contribution = parseFloat(0).toFixed(2);
 					}
+					invObj.updateFundraising(target.value);
+          invObj.updateQuotaOption(target.value,contribution,ui.switchCurrency(group.currency));
 				});
 				// Append to View Port .invitationContainer
 				containerDiv = document.createElement('div');
@@ -1971,8 +1938,8 @@ if (cx.test(text)) {
 					
 				// Append Next Div to .invitationContainer
 				nextDiv = document.createElement('div');
-				nextDiv.className = 'sq-row';
-				nextDiv.appendChild(nextBtn.wrap({ wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-8' }));
+				nextDiv.className = 'sq-row row-separata-bottom';
+				nextDiv.appendChild(nextBtn.wrap({ wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-sm-3 sq-col-md-offset-8' }));
 				SqDiv.appendChild(nextDiv);
 			}
 			else if(answer.status === 'anauth'){
@@ -1990,101 +1957,73 @@ if (cx.test(text)) {
 		},
 		that.renderGroupData = function(group, participantAdmin, adminEmail, alreadyInvited) {
       var ui = UserInterface();
-			var groupDigest, status, contrib, options;
-			var disabled='';
+      var invObj=InvitationObj();
+			var groupDigest, status, contrib, options, fundText;
       var isOpen='';
       var groupDigest2;
-      var date1=new Date(group.max_acceptance_date);
-      var date2=new Date(group.max_payment_date);
 			var sqDiv = document.getElementById('squeezol_view');
-      if (group.isOpen == false){
-        isOpen = '<div class="sq-row target-P">'+
-                   '<input type="hidden"  id="sq-group-amount" value="'+group.amount+'"></input>'+
-                   '<p class="sq-content-body"> Obiettivo:</p>'+
-                   '<p class="sq-content-body"><strong>'+group.amount + ui.switchCurrency(group.currency) +'</strong></p>'
-                   '<p class="sq-content-body"><strong>PIN:'+group.pin+'</strong></p>'+
-                 '</div>';
+      var quotaOption;
+      if (group.fundraising == 'D'){
+        contrib = participantAdmin.single_amount;
+        options = '<option value="S">Dividi Equamente</option>'+
+	                '<option value="D" selected>Suggerisci la quota</option>'+
+									'<option value="F">Quota Fissa</option>';
       }
-      else {
-        isOpen = '<input type="hidden"  id="sq-group-amount" value="'+group.amount+'"></input>'+
-                 '<p class="sq-content-body"> Obiettivo:</p>'+
-                 '<p class="sq-content-body"><strong>'+group.amount + ui.switchCurrency(group.currency) +'</strong></p>';
-      } 
-			if (group.fundraising == 'D'){
-				contrib = participantAdmin.single_amount;
-				options = '<option value="S">Equa</option>'+
-								  '<option value="D" selected>Suggerita</option>';
-			}
-			else if(group.fundraising == 'S') {
+      else if(group.fundraising == 'S') {
         contrib = parseFloat(group.amount/(alreadyInvited.length+1)).toFixed(2);
-				options = '<option value="S" selected>Equa</option>'+
-								  '<option value="D">Suggerita</option>';
-        disabled = 'disabled';
+        options = '<option value="S" selected>Dividi Equamente</option>'+
+									'<option value="D">Suggerisci la quota</option>'+
+									'<option value="F">Quota Fissa</option>';
+        
+        
+      }
+			else  {
+				contrib = participantAdmin.single_amount;
+				options = '<option value="S">Dividi Equamente</option>'+
+									'<option value="D">Suggerisci la quota</option>'+
+									'<option value="F" selected>Quota Fissa</option>';
 			}
-     
+      fundText=invObj.updateFundraising(group.fundraising);
+      quotaOption=invObj.updateQuotaOption(group.fundraising,contrib,ui.switchCurrency(group.currency));
 			groupDigest=document.createElement('div');
 			groupDigest.id = "squeezol_btn_container";
-			groupDigest.className = "sq-row row-separata";
+			groupDigest.className = "sq-col-sm-5 sq-col-xs-10 sq-col-xs-offset-1";
       groupDigest2=document.createElement('div');
       groupDigest2.className='sq-row row-separata';
-      groupDigest2.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-1 sq-col-left">'+
-                                 '<p class="sq-content-title">'+ group.name +'<p>'+
+      groupDigest2.innerHTML = '<div class="sq-col-sm-4 sq-col-sm-offset-1 sq-col-xs-10 sq-col-xs-offset-1">'+
+                                 '<div class="sq-row">'+
+                                   '<p class="sq-label">Divisione delle quote:'+
+                                     '<div data-toggle="popover" data-placement="top" title="Aiuta gli invitati '+ 
+                                       'a capire come intendi dividere le quote dell\'acquisto."'+
+                                       'class="sq-icon sq-glyph-info-sign">i'+
+                                     '</div>'+
+                                   '</p>'+
+                                   '<p class="sq-exp">Decidi come dividere le quote con gli invitati.</p>'+
+															     '<select class="selectContrib" id="contributionType">'+options+'</select>'+
+															     '<input value="'+adminEmail+'"type="hidden" name="email" disabled>'+
+                                 '</div>'+
+                                 '<div class="sq-row row-separata" id="sq-quota-option">'+
+                                   quotaOption+
+                                 '</div>'+
+                                '</div>';
+			groupDigest.innerHTML= '<div class="sq-row">'+
+                               '<div class="sq-col-sm-6 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+                                 '<p>Invitati: <strong id="sq-inv-count">'+alreadyInvited.length+'</strong></p>'+
                                '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
-                                 '<p class="sq-content-body">Scadenza invito:</p>'+
-                                 '<p class="sq-content-body"><strong>'+
-                                   date1.getDate() + '.' + (parseInt(date1.getMonth())+1).toString() + '.' + date1.getFullYear()+
-                                 '</strong></p>'+
+                               '<div class="sq-col-sm-6 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+                                 '<input type="hidden"  id="sq-group-amount" value="'+group.amount+'"></input>'+
+                                 '<p class="sq-text-right"> Obiettivo: '+
+                                   '<strong>'+group.amount+ui.switchCurrency(group.currency)+'</strong>'+
+                                 '</p>'+
                                '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
-                                 '<p class="sq-content-body">Scadenza pagamento:</p>'+
-                                 '<p class="sq-content-body"><strong>'+
-                                   date2.getDate() + '.' + (parseInt(date2.getMonth())+1).toString() + '.' + date2.getFullYear()+
-                                 '</strong></p>'+
+                             '</div>'+
+                             '<div class="sq-row sq-withBorder">'+
+                               '<div class="sq-col-xs-12" id="sq-fund-text">'+
+                                  fundText
                                '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
-                                 isOpen+
-                               '</div>';
-
-			groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-withBorder">'+
-                                '<div class="sq-row">'+   
-                                  '<div class="sq-col-xs-10 sq-col-md-3 sq-col-left">'+
-                                    '<div class="sq-box-blu">'+
-                                      '<p><strong>'+alreadyInvited.length+'</strong></p>'+
-                                      '<p>invitati</p>'+
-                                    '</div>'+
-                                  '</div>'+
-														      '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-form-group" style="margin: 10px 0px 0px 20px;">'+
-														       	'<p class="sq-label">Tipo quota:'+
-                                      '<div data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
-                                        'quota che verrà  visualizzata dagli invitati. Altrimenti la quota proposta '+
-                                        'verrà  calcolata in base al numero di invitati"'+
-                                        'class="sq-icon sq-glyph-info-sign">'+
-                                        '<p>i</p>'+
-                                      '</div>'+
-                                    '</p>'+
-															      '<select class="selectContrib" id="contributionType">'+options+'</select>'+
-															      '<input value="'+adminEmail+'"type="hidden" name="email" disabled>'+
-														      '</div>'+
-														      '<div class="squeezol_quota sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0" style="margin: 10px 0px 0px 20px;">'+
-															      '<p class="sq-label">Quota singola:'+
-                                      '<div data-toggle="popover" data-placement="top" title="La quota è un '+
-                                        'suggerimento per gli invitati."'+
-                                        'class="sq-icon sq-glyph-info-sign">'+
-                                        '<p>i</p>'+
-                                      '</div>'+
-                                    '</p>'+
-															      '<div class="sq-input-group">'+
-															        '<input id="squeezol_admin_contrib" value="'+contrib+'" name="email_contribution"'+
-																	      'type="text" class="squeezolPrice sq-form-control" '+disabled+'><span class="sq-input-group-addon">'+ui.switchCurrency(group.currency)+'</span>'
-        														'</div>'+
-                                  '</div>'+
-                                '</div>'+
-														  '</div>';
-		  groupDigest2=Div(groupDigest2);
-			sqDiv.appendChild(groupDigest2.get());
-      groupDigest=Div(groupDigest);
-			sqDiv.appendChild(groupDigest.get());
+                             '</div>';
+      $sqjQuery(groupDigest2).append(groupDigest);
+			$sqjQuery(sqDiv).append(groupDigest2);
 		};
 		return that;
 	};
@@ -2098,21 +2037,25 @@ if (cx.test(text)) {
 				  openPay, canFinish, targetAmount, renderBtn, singleAmountBtn, inviteBtn,
           renderDiv, participantId, invAmount, alertPaid, renderRef, refContainer;
       var paidCount=0;
-			var part, totalPaid;
+			var part, totalPaid, superTemp, ttt, ttr;
 			var SqDiv=document.getElementById('squeezol_view');
 			var sqBtnContainer;
 			var i, j, k, p, spanCurr, quotaDiv, labelQuota;
 			var status, ui, state, ghianda, avatar_url, alertDes, contribution_amount;
+      var textAdd, tDiv;
       var paidText = '<p class="sq-text-center"><strong> La tua quota è stata prenotata! </strong>'+
-                    'L\'importo verrà scalato dalla tua carta solo se l\'obiettivo verrà raggiunto!'+
-                    'Invita altri amici per diminuire la quota.</br>'+
+                    'L\'importo verrà scalato dalla tua carta solo se l\'obiettivo verrà raggiunto!<br/>'+
+                    'Invita altri amici per diminuire la quota. '+
                     'Oppure continua lo shopping!'
                     +'</p>'; 
-			var wrapper = {wrapper: 'div', className: 'sq-col-md-4 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1'};
+			var wrapper = {wrapper: 'div', className: 'sq-col-md-2 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1'};
+      var wrapperQ = {wrapper: 'div', className: 'sq-col-md-5 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1'};
       var wrapper_row = {wrapper: 'div', className: 'sq-row'};
 			var wrapBtn = {wrapper: 'div', className: 'sq-col-md-2 sq-col-xs-10 sq-col-xs-offset-1'};
+      var wrapper_btn = {wrapper: 'div', className: 'sq-col-sm-4 sq-col-sm-offset-4 sq-col-xs-12 sq-col-xs-offset-0'};
       var wrapper_right = {wrapper: 'div', className: 'sq-col-md-3 sq-col-md-offset-3 sq-col-xs-10 sq-col-xs-offset-1'};
-      var helpText = { 'p_quota': 'Inserisci la quota che intendi versare. Nota: fai click su modifica dopo aver inserito l\'importo' };
+      var helpText = { 'p_quota': 'Inserisci la quota che intendi versare. Nota: fai click su modifica dopo aver inserito l\'importo', 
+                       'expl': 'Se lo ritieni necessario modifica la tua quota prima di pagare'};
 
 			if(answer.status === 'ok') {
 				params=JSON.parse(answer.params);
@@ -2131,9 +2074,9 @@ if (cx.test(text)) {
 				ui.drawHeader('digest', 'modal');
 				
 				this.renderGroupData(answer.group, params, SqDiv, participants);
-				ui.drawSeparator('Pagamenti');
+				
 				renderDiv=Div(document.createElement('div'));
-				renderDiv.addClass('sq-row');
+				renderDiv.addClass('sq-row row-separata');
 
 				renderBtn = Button();
 				singleAmountBtn = Button();
@@ -2142,7 +2085,7 @@ if (cx.test(text)) {
 				// Group completed with success
 				if(groupStatus == 'CWS') {
 					alertDes = document.createElement('div');
-					alertDes.className = 'sq-row sq-alert sq-alert-success'
+					alertDes.className = 'sq-row sq-alert sq-alert-success row-separata'
 					alertDes.innerHTML = '<p class="sq-text-center">'+
 																 '<strong> Congratulazioni! Ordine Completato</strong>'+
 																 'Lo split si è concluso con successo! '+
@@ -2153,10 +2096,11 @@ if (cx.test(text)) {
 				else if (groupStatus == 'WAC' || groupStatus == 'WPA'){
 					// Possibilita' di proporre un importo se si e' in fase di accettazione o il gruppo e' aperto e WPA
 					if (params.p_status == 'A' && !canFinish){
+            ui.drawSeparator('Quota');
 						saInput.create('single-amount');
 						saInput.get().value=parseFloat(params.p_single_amount).toFixed(2);
 						saInput.get().id='squeezol_single_amount';
-						singleAmountBtn.create('Modifica quota', 'ui', 'SqueezolModifyAmount_');
+						singleAmountBtn.create('Salva quota', 'ui', 'SqueezolModifyAmount_');
 						singleAmountBtn.get().setAttribute('data-participant', participantId);
 						singleAmountBtn.get().setAttribute('data-action', 'SA');
 						singleAmountBtn.get().className='sq-btn sq-btn-lg';
@@ -2166,10 +2110,11 @@ if (cx.test(text)) {
 						spanCurr = document.createElement('span');
 						spanCurr.className = 'sq-input-group-addon';
 						spanCurr.innerHTML = ui.switchCurrency(answer.group.currency);
-						quotaDiv.append(saInput.labelizeWithSpan('Quota personale', spanCurr, helpText['p_quota']).get());
-						renderDiv.append(quotaDiv.wrap(wrapper));
+						quotaDiv.append(saInput.labelizeWithSpan('La tua quota', spanCurr, helpText['p_quota'], helpText['expl']).get());
+						renderDiv.append(quotaDiv.wrap(wrapperQ));
 						renderDiv.append(singleAmountBtn.wrap(wrapBtn));
             SqDiv.appendChild(renderDiv.get());
+            
 					}
           
           ui.iconPopover();
@@ -2181,7 +2126,7 @@ if (cx.test(text)) {
 							renderBtn.create('Inizia i pagamenti!', 'ui', 'SqueezolStartPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'OP');
-							renderBtn.get().className='sq-btn sq-btn-lg';
+							renderBtn.get().className='sq-btn';
 							renderBtn.regHandler('click', buttonHandler);
 						}
 						// Se puo' concludere la collette
@@ -2189,9 +2134,14 @@ if (cx.test(text)) {
 							renderBtn.create('Concludi Split', 'ui', 'SqueezolFinishPay_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'CG');
-							renderBtn.get().className='squeezolButtonSuccess sq-btn sq-btn-lg';
+							renderBtn.get().className='squeezolButtonSuccess sq-btn';
 							renderBtn.regHandler('click', buttonHandler);
+              textAdd = document.createTextNode('Obiettivo raggiunto! Clicca su Concludi lo split per confermare l\'acquisto. Una notifica verrà inviata a tutti i partecipanti.');
+              tDiv = Div(document.createElement('div'));
+              tDiv.addClass('sq-col-md-7 sq-col-xs-10 sq-col-xs-offset-1');
+              tDiv.append(textAdd);
 							renderDiv.append(renderBtn.wrap(wrapper));
+              renderDiv.append(tDiv.get());
 							SqDiv.appendChild(renderDiv.get());
 							renderBtn = '';
 							renderBtn = Button();
@@ -2201,6 +2151,7 @@ if (cx.test(text)) {
 							renderBtn.get().setAttribute('data-action', 'RG');
 							renderBtn.get().className='sq-btn sq-btn-sm sq-btn-danger';
 							renderBtn.regHandler('click', buttonHandler);
+              renderBtn = Div(renderBtn.wrap(wrapper));
 						}
 						// Se i pagamenti sono aperti
 						else if(openPay==true) {
@@ -2209,22 +2160,37 @@ if (cx.test(text)) {
 								if(partObj.id==participantId) {
 									if (partObj.status==='P'){
                     alertPaid=document.createElement('div');
-                    alertPaid.className='sq-alert sq-alert-success sq-row';
+                    alertPaid.className='sq-alert sq-alert-success';
                     alertPaid.innerHTML=paidText;
                     renderBtn = Button();
                     renderBtn=Div(alertPaid);
 									}
 									else{
-										renderBtn.create('Paga ora', 'big', 'SqueezolPay_');
+										renderBtn.create('Versa la tua quota', 'ui', 'SqueezolPay_');
 										renderBtn.get().setAttribute('data-participant', participantId);
 										renderBtn.get().setAttribute('data-action', 'P');
 										renderBtn.get().className='sq-btn sq-btn-lg';
 										renderBtn.regHandler('click', buttonHandler);
+                    superTemp = document.createElement('p');
+                    superTemp.className='sq-text-left';
+                    ttt=document.createTextNode('Versa la tua quota, l\importo verrà scalato dalla carta di credito solo se l\'obiettivo verrà raggiunto');
+                    superTemp.appendChild(ttt);
+                    ttr = document.createElement('div');
+                    ttr.className = 'sq-col-xs-10 sq-col-xs-offset-1 sq-panel sq-panel-info';
+                    ttr.appendChild(superTemp);
+                    ttr = Div(ttr);
+					          ttr.append(renderBtn.wrap(wrapper_btn));
+                    renderBtn = DomElement({'el': ttr.get()});
 									}
 								}
                 if(partObj.status=='P' && paidCount==0){
                   paidCount=1;
                   refContainer = Div(document.createElement('div'));
+                  refContainer.addClass('sq-row row-separata');
+                  textAdd = document.createTextNode('Puoi rimborsare il pagamento, le quote versate torneranno disponibili secondo le tempistiche dell\'istituto bancario emittente della carta.');
+                  tDiv = Div(document.createElement('div'));
+                  tDiv.addClass('sq-col-md-7 sq-col-xs-10 sq-col-xs-offset-1');
+                  tDiv.append(textAdd);
                   renderRef=Button();
 						      renderRef.create('Rimborsa', 'small', 'SqueezolRefund_');
 						      renderRef.get().setAttribute('data-participant', participantId);
@@ -2232,7 +2198,8 @@ if (cx.test(text)) {
 						      renderRef.get().className='sq-btn sq-btn-sm sq-btn-danger';
 						      renderRef.regHandler('click', buttonHandler);
                   refContainer.append(renderRef.wrap(wrapBtn));
-                  SqDiv.appendChild(refContainer.wrap(wrapper_row));
+                  refContainer.append(tDiv.get());
+                  SqDiv.appendChild(refContainer.get());
                 }
 							}
 						}
@@ -2256,19 +2223,26 @@ if (cx.test(text)) {
 								if(partObj.id==participantId) {
 									if (partObj.status==='P'){
 										alertPaid=document.createElement('div');
-                    alertPaid.className='sq-alert sq-alert-success sq-row';
+                    alertPaid.className='sq-alert sq-alert-success';
                     alertPaid.innerHTML=paidText;
                     renderBtn=Div(alertPaid);
 									}
 									else{
-										renderBtn.create('Paga ora', 'ui', 'SqueezolPay_');
+										renderBtn.create('Versa la tua quota', 'ui', 'SqueezolPay_');
 										renderBtn.get().setAttribute('data-participant', participantId);
 										renderBtn.get().setAttribute('data-action', 'P');
-										renderBtn.get().className='sq-btn sq-btn-lg';
+										renderBtn.get().className='sq-btn';
 										renderBtn.regHandler('click', buttonHandler);
-										if(openPay==false){
-											renderBtn.get().disabled=true;
-										}
+										superTemp = document.createElement('p');
+                    superTemp.className='sq-text-center';
+                    ttt=document.createTextNode('Versa la tua quota, l\importo verrà scalato dalla carta di credito solo se l\'obiettivo verrà raggiunto');
+                    superTemp.appendChild(ttt);
+                    ttr = document.createElement('div');
+                    ttr.className = 'sq-col-xs-10 sq-col-xs-offset-1 sq-panel sq-panel-info';
+                    ttr.appendChild(superTemp);
+                    ttr = Div(ttr);
+					          ttr.append(renderBtn.wrap(wrapper_btn));
+                    renderBtn = DomElement({'el': ttr.get()});
 									}
 								} 
 							}
@@ -2276,22 +2250,33 @@ if (cx.test(text)) {
 					}
           
 					// Render
-          if (openPay == false) {
-						var superTemp = document.createElement('div');
-            superTemp.id='sq-alert-start-pay';
-						superTemp.className = 'sq-col-xs-10 sq-col-xs-offset-1  sq-alert sq-alert-info';
+          renderDiv=Div(document.createElement('div'));
+  			  renderDiv.addClass('sq-row row-separata');
+	  		  renderDiv.get().id='squeezolPayBox';
+
+          if (openPay == false && groupStatus == 'WAC') {						
+            superTemp = document.createElement('p');
+            superTemp.className='sq-text-left';
+            ttt=document.createTextNode('Al momento i partecipanti non hanno la possibilita\' di pagare. Clicca su Inizia i pagamenti: sara\' possibile a tutti versare la propria quota (una notifica verra\' inoltrata a tutti i partecipanti!)');
+            superTemp.appendChild(ttt);
+            ttr = document.createElement('div');
+            ttr.id='sq-alert-start-pay';
+            superTemp.appendChild(ttt);
+            ttr.className = 'sq-col-xs-10 sq-col-xs-offset-1 sq-panel sq-panel-info';
+            ttr.appendChild(superTemp);
+            ttr = Div(ttr);
 						if (isAdmin == true){
-							superTemp.innerHTML = '<p class="sq-text-center"> <strong>Inizia i pagamenti</strong>: sarà possibile a tutti versare la propria quota <br /> (una notifica verrà inoltrata a tutti i partecipanti!)</p>';
+							ttr.append(renderBtn.wrap(wrapper_btn));
 						}
-						else {
-						superTemp.innerHTML = '<p class="sq-text-center">Potrai versare la tua quota quando l\'organizzatore avrà iniziato i pagamenti(una notifica ti verrà inviata per email)</p>';
-						}
-						renderDiv.append(superTemp);
+						/*else {
+						  superTemp.append('<p class="sq-text-center">Potrai versare la tua quota quando l\'organizzatore avrà iniziato i pagamenti(una notifica ti verrà inviata per email)</p>');
+						}*/
+						renderDiv.append(ttr.wrap(wrapper_row));
+           // renderDiv.append(renderBtn.wrap(wrapper_right));
 					}
-					renderDiv=Div(document.createElement('div'));
-					renderDiv.addClass('sq-row row-separata');
-					renderDiv.get().id='squeezolPayBox';
-					renderDiv.append(renderBtn.wrap(wrapper));
+          else{
+					  renderDiv.append(renderBtn.get());
+          }
           if (params.invitation_url && isAdmin && (answer.group.status == 'WPA' || answer.group.status == 'WAC')){
             inviteBtn = Button();
             inviteBtn.create('Invita ancora', 'ui', 'SqueezolInvitation_');
@@ -2310,7 +2295,7 @@ if (cx.test(text)) {
 					renderBtn.get().disabled=true;
 					renderBtn.get().className='buttonWarning sq-btn sq-btn-lg';
 					alertDes = document.createElement('div');
-					alertDes.className = 'sq-row'
+					alertDes.className = 'sq-row row-separata';
 					alertDes.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-alert sq-alert-warning"><p>'+
 																 '<strong>Attenzione!</strong>'+
 																 'Lo Split è stato chiuso dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effettuare il pagamento. Le quote versate torneranno disponibili al massimo entro 30 giorni dalla data del pagamento.'+
@@ -2324,6 +2309,7 @@ if (cx.test(text)) {
 				    part=document.createElement('div');
 					  part.className = 'sq-row part';
 					  p=participants[j];
+            
 					  status=this.switchStatus(p.status);
             var img = new Image();
             if(p.avatar_url){
@@ -2332,8 +2318,14 @@ if (cx.test(text)) {
 	            avatar_url = img_url + 'default.jpg';
             } 
 					  if (p.status == 'P'){
-						  state = 'active';
-						  ghianda = 'blu';
+              if (answer.group.status == 'DES'){
+                  state = 'refused';
+                  ghianda = 'grigia';
+                  status = 'Rimborsato';
+              } else {
+						      state = 'active';
+						      ghianda = 'blu';
+              }
 					  }
 					  else if (p.status == 'A'){
 						  state = 'accepted';
@@ -2346,19 +2338,19 @@ if (cx.test(text)) {
               contribution_amount = '-';
             else
               contribution_amount = p.single_amount + ' ' + ui.switchCurrency(answer.group.currency);
-					  part.innerHTML= '<div class="sq-col-md-1 sq-col-md-offset-1 sq-col-xs-4">'+
+					  part.innerHTML= '<div class="sq-col-sm-1 sq-col-sm-offset-1 sq-col-xs-4 sq-col-xs-offset-4">'+
 						                  '<img id="thumb'+j+'" class="imgAvatar sq-thumbnail sq-img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
 													  '</div>'+
-													  '<div class="sq-col-md-4 sq-col-xs-4 sq-has-success">'+
-														  '<p class="sq-content-body sq-text-center">'+p.name+'</p>'+
+													  '<div class="sq-col-sm-4 sq-col-sm-offset-1 sq-col-xs-10 sq-col-xs-offset-0 sq-has-success">'+
+														  '<p class="sq-text-center">'+p.name+'</p>'+
 													  '</div>'+
-													  '<div class="sq-col-md-2 sq-col-xs-10">'+
+													  '<div class="sq-col-sm-2 sq-col-xs-10">'+
 														  '<h4 class="sq-text-center">'+contribution_amount+'</h4>'+
 													  '</div>'+
-													  '<div class="sq-col-md-2 sq-col-xs-10">'+
+													  '<div class="sq-col-sm-2 sq-col-xs-10">'+
 														  '<h4 class="sq-text-center text-step-'+state+'">'+status+'</h4>'+
 													  '</div>'+
-													  '<div class="sq-col-md-1 sq-hidden-xs">'+
+													  '<div class="sq-col-sm-1 sq-hidden-xs">'+
 														  '<img class="sq-img-responsive" src="' + img_url + 'ghianda_step_'+ghianda+'.png">'+
 													  '</div>';
 						  SqDiv.appendChild(part);
@@ -2440,7 +2432,8 @@ if (cx.test(text)) {
 				var groupDigest, status, sqDiv;
 				var ui, p, admin_name, participant, testo, classe;
         var totalPaid=0.00;
-        ui = UserInterface()
+				var d1=new Date(group.max_payment_date);
+        ui = UserInterface();
         sqDiv = document.getElementById('squeezol_view');
         groupDigest=document.createElement('div');
 				groupDigest.id = "squeezol_btn_container";
@@ -2467,7 +2460,7 @@ if (cx.test(text)) {
           testo = 'Quota che intendo versare';
         }
         else if (group.fundraising == 'S'){
-          testo = 'Quota da versare';
+          testo = 'Quota singola';
         }
         else if (group.fundraising == 'F'){
           testo = 'Quota fissa';
@@ -2481,19 +2474,12 @@ if (cx.test(text)) {
         }
         else
           classe='target-R';
-        groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-1 sq-col-left">'+
+        groupDigest.innerHTML= '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-7 sq-col-md-offset-1 sq-col-left">'+
                                  '<p class="sq-content-title">'+ group.name +'<p>'+
                                '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
-                                 '<p class="sq-content-body">Organizzatore:</p>'+  
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0">'+
+                                 '<p class="sq-content-body sq-text-center">Organizzatore:</p>'+  
                                  '<strong>'+admin_name+'</strong>'+
-                               '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
-                                 '<button id="sq-fb-sharer">'+
-                                   '<span class="sq-img-social">'+
-                                     '<img class="sq-img-responsive" style="display:inline;" src="'+ img_url +'/facebook_small.png">'+
-                                   '</span>Condividi'+
-                                  '</button>'+
                                '</div>';
 				groupDigest=Div(groupDigest);
 				sqDiv.appendChild(groupDigest.get());
@@ -2504,16 +2490,17 @@ if (cx.test(text)) {
                                     '<div class="sq-col-md-4">'+
                                       '<div class="sq-row">'+
                                         '<h4>TERMINA FRA</h4>'+
-                                        '<div class="sq-col-md-4 sq-no-pad">'+
+                                        '<div class="sq-col-md-4 sq-col-sm-2 sq-col-xs-4 sq-no-pad">'+
                                           '<p class="sq-target-small">'+params.daysLeft+' G</p>'+
                                         '</div>'+
-                                        '<div class="sq-col-md-4 sq-no-pad">'+
+                                        '<div class="sq-col-md-4 sq-col-sm-2 sq-col-xs-4 sq-no-pad">'+
                                           '<p class="sq-target-small">'+params.hoursLeft+' H</p>'+
                                         '</div>'+
-                                        '<div class="sq-col-md-4 sq-no-pad">'+
+                                        '<div class="sq-col-md-4 sq-col-sm-2 sq-col-xs-4 sq-no-pad">'+
                                           '<p class="sq-target-small">'+params.minutesLeft+' M</p>'+
                                         '</div>'+
                                       '</div>'+
+																			'<p class="sq-content-body">Il '+d1.getDate()+'.'+(parseInt(d1.getMonth())+1).toString()+'.'+d1.getFullYear()+'</p>'+
                                     '</div>'+
                                     '<div class="sq-col-md-4">'+
                                       '<div class="sq-row">'+
@@ -2540,12 +2527,11 @@ if (cx.test(text)) {
                                 '</div>';
         groupDigest=Div(groupDigest);
 				sqDiv.appendChild(groupDigest.get());
-        ui.fbSharer('sq-fb-sharer', params.link_url);
 			},
 			that.POSTcallback = function(answer, action, targetUrl){
 				var oldBtn, parentDiv, payBox, payBoxP, alertPaid, renderBtn;
         var renderButton=Button();
-				var participantId, form, sq_message;
+				var participantId, form, sq_message, superTemp, ttt, ttr;
 				if (action == 'OPENPAY'){
 					oldBtn = document.getElementById('SqueezolStartPay_');
 					participantId = oldBtn.getAttribute('data-participant');
@@ -2556,7 +2542,7 @@ if (cx.test(text)) {
           parentDiv.removeChild(sq_message);
           parentDiv=document.getElementById('squeezolPayBox');
           parentDiv.innerHTML='';
-					renderButton.create('Paga ora', 'big', 'SqueezolPay_');
+					renderButton.create('Versa la tua quota', 'ui', 'SqueezolPay_');
 					renderButton.get().setAttribute('data-action', 'P');
           renderButton.get().setAttribute('data-participant', participantId);
 					renderButton.regHandler('click', function(e){
@@ -2566,29 +2552,37 @@ if (cx.test(text)) {
 			      request.send(target);
 				  });
           renderButton.addClass('sq-btn')
-          renderBtn=Div(document.createElement('div'));
-          renderBtn.addClass('sq-col-md-3 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1');
-          renderBtn.append(renderButton.get());
-          parentDiv.appendChild(renderBtn.get());
+        
+          superTemp = document.createElement('p');
+          superTemp.className='sq-text-center';
+          ttt=document.createTextNode('Versa la tua quota, l\importo verrà scalato dalla carta di credito solo se l\'obiettivo verrà raggiunto');
+          superTemp.appendChild(ttt);
+          ttr = document.createElement('div');
+          superTemp.appendChild(ttt);
+          ttr.className = 'sq-col-xs-10 sq-col-xs-offset-1 sq-panel sq-panel-info';
+          ttr.appendChild(superTemp);
+          ttr = Div(ttr);
+					ttr.append(renderButton.wrap({wrapper: 'div', className: 'sq-col-sm-4 sq-col-sm-offset-4 sq-col-xs-12 sq-col-xs-offset-0'}));
+          parentDiv.appendChild(ttr.get());
 				}
 				else if (action == 'FINISH'){
 					oldBtn = document.getElementById('SqueezolFinishPay_');
 					payBox = document.getElementById('squeezolPayBox');
 					participantId = oldBtn.getAttribute('data-participant');
-					parentDiv = oldBtn.parentNode;
-					parentDiv.removeChild(oldBtn);
+          parentDiv = oldBtn.parentNode.parentNode;
+          parentDiv.removeChild(oldBtn.parentNode.nextSibling);
+          parentDiv.removeChild(oldBtn.parentNode);
 					alertPaid=document.createElement('div');
-          alertPaid.className='sq-alert sq-alert-success sq-row';
+          alertPaid.className='sq-alert sq-alert-success';
           alertPaid.innerHTML='<p class="sq-text-center">'+
-															  '<strong> Congratulazioni!</strong>'+
-																'Lo split si è concluso con successo!'+
+															  '<strong> Congratulazioni! pagamento effettuato, </strong>'+
+																'lo split si è concluso con successo!'+
 															'</p>';
           renderBtn=Div(document.createElement('div'));
           renderBtn.append(alertPaid);
 					payBoxP = payBox.parentNode;
 					payBoxP.removeChild(payBox);
           renderBtn.get().setAttribute('data-participant', participantId);
-				  renderBtn.get().className='sq-btn sq-btn-lg';
 				  parentDiv.appendChild(renderBtn.get());
 				}
         else if(action == 'PAY'){
@@ -2641,22 +2635,85 @@ if (cx.test(text)) {
 			};
 			return that;
 		};
-
+    var PostMessageReceiver = function(e) {
+      var DecodedString=decodeURIComponent(e.data);
+      var data=JSON.parse(DecodedString);
+      var authModal;
+      if (data.action == 'delete-social'){
+        $sqjQuery('#social-login').remove();
+      }
+      else if (data.action == 'close-pop'){
+        window.location.replace(auth_url+'?'+data.code);
+      }
+      else if (data.action == 'facebook'){
+        authModal = $sqjQuery('#facebookModal');
+        authModal.modal('hide');
+        if (data.fbList)
+          notifyFacebookPostMessage(data.fbList);
+      }
+    }
+    var notifyFacebookPostMessage = function(fbList){
+			var container = document.getElementById('containerCronologia')
+			var alreadyInvited = container.getElementsByClassName('sq-fb-element');
+			var currSent, inv, div;
+      var found = false;
+      console.log(fbList);
+			for (var i=0; i<fbList.length; i++){
+        div = document.createElement('div');
+			  div.className = 'sq-row sq-fb-element';
+				currSent = fbList[i];
+				for (var j=0; j<alreadyInvited.length; j++) {
+					inv = alreadyInvited[j].getElementsByTagName('input')[0];
+          if (inv.value == currSent.id) {
+            found = true;
+          }
+        }  
+		  	if (found==false) {
+					if(currSent.avatar_url){
+					  div.innerHTML='<div class="sq-col-md-1 sq-col-md-offset-1 sq-hidden-xs"><img class="sq-thumbnail imgAvatar" src="'+invObj.avatar_url+'" alt="User Avatar"></img></div>';
+				  }
+				  else {
+					  div.innerHTML='<div class="sq-col-md-1 sq-col-md-offset-1 sq-hidden-xs"><img class="imgAvatar sq-thumbnail" src="' + img_url + 'facebook_small.png" alt="User Avatar"></img> </div>';
+				  }
+				  if(currSent.id) {
+					  div.className = 'sq-row sq-fb-element';
+					  div.innerHTML += '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-4 sq-col-md-offset-0 sq-has-success sq-input-group"> <input type="hidden" class="fbEntry sq-form-control" value="'+currSent.id+'"disabled></input>'+
+											   		   '<input value="'+currSent.name+'" class="sq-form-control" type="text" name="email"  disabled>'+
+                               '<span class="sq-input-group-addon sq-glyph-ok sq-check"></span>'+
+													   '</div>';
+				  }
+					container.appendChild(div);
+				} 
+			}
+		}
     // API Call
     window.SqueezolApi = {
-			createSqButton: function(targetUrl, size) {
+			createSqButton: function(targetUrl, size, access_token) {
 				var tmpBtn, btn, div, txt;
-				var ui = UserInterface();
-				tmpBtn=document.createElement('div');
+				var popupWin, m;
+				var ui=UserInterface();
+        var sqLoading = Div(document.getElementById('sq-loading'));
+        tmpBtn=document.createElement('div');
 				tmpBtn.innerHTML = '<img src="' + img_url + 'pay_button2.png"></img>';
 				btn = Div(tmpBtn);
 				btn.addClass('squeezol_button_'+size)
 				btn.regHandler('click', function() {
-					location.href = targetUrl;
+					popupWin = ui.PopupCenter(targetUrl, "sq_login", 600, 550);
 				});
 				div = Div();
 				div.get('squeezol_btn');
+        sqLoading.remove();
 				div.append(btn.get());
+        if(window.addEventListener){
+          window.addEventListener("message", PostMessageReceiver,false);
+        }else if(window.attachEvent){
+          window.attachEvent("onmessage", PostMessageReceiver);
+        }
+        if(access_token != "")
+          window.location.replace(targetUrl);
+        else
+          popupWin = ui.PopupCenter(targetUrl, "sq_login", 600, 550);
+        
 			},
 			createGroup: function(amount, currency, codProducts, targetUrl, firstUrl, secondUrl) {
 				var trolley, groupCr, ui;

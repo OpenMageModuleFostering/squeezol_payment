@@ -5,7 +5,7 @@ class Squeezol_Payment_Model_Params extends Mage_Core_Model_Abstract {
     const CALLBACK_URL      = 'squeezol/index/oauth';
     const REQUEST_TOKEN_URL = 'https://www.squeezol.com/api/oauth2/request_token/';
     const ACCESS_TOKEN_URL  = 'https://www.squeezol.com/api/oauth2/access_token/';
-    const AUTHORIZATION_URL = 'https://www.squeezol.com/api/oauth2/authorize/';
+    const AUTHORIZATION_URL = 'https://www.squeezol.com/plugin/authorize/';
 
     const PAY_PAGE          = 'squeezol/index/pay';
     const REVIEW_PAGE       = 'squeezol/index/review';
