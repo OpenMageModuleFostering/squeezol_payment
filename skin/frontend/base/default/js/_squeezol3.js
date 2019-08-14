@@ -759,7 +759,12 @@ throw new SyntaxError('JSON.parse');
 
   var UserInterface = function() {
   	var that = {};
-    
+    that.fbSharer = function(id, url){
+      $sqjQuery('#'+id).on('click', function(e){
+        e.preventDefault();
+			  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url), 'facebook-share-dialog', 'width=626,height=436');
+      });
+    },
 		that.drawHeader = function(page, mode) {
     	var viewPortDiv, modalDiv;
 			var active='blu';
@@ -1004,8 +1009,8 @@ throw new SyntaxError('JSON.parse');
       return txt;
     },
     that.iconPopover = function(){
-      $sqjQuery('.icon').popover();
-		  /*$sqjQuery('.icon').on('mouseenter', function(){
+      //$sqjQuery('.icon').popover();
+		  $sqjQuery('.icon').on('mouseenter', function(){
         $sqjQuery(this).popover('show')
       });
       $sqjQuery('.icon').on('mouseout', function(){
@@ -1013,7 +1018,7 @@ throw new SyntaxError('JSON.parse');
       });
       $sqjQuery('.icon').on('hidden.bs.popover', function(){
         $sqjQuery(this).css("display", "");
-			});*/
+			});
 
     };
     return that;
@@ -1074,9 +1079,9 @@ throw new SyntaxError('JSON.parse');
       var helpText = { 'name': 'Dai un titolo allo Split. Per esempio: regalo per Marco, week end in Montagna ecc.',
                        'description': 'Il posto giusto dove inserire qualche dettaglio che invogli i tuoi amici a partecipare',
                        'max_acceptance_date': 'Scegli la data entro la quale gli invitati dovranno confermare la propria partecipazione',
-                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita è 25 giorni',
+                       'max_payment_date': 'Scegli la data entro la quale i partecipanti possono effettuare i pagamenti. La durata massima consentita è 20 giorni',
                        'occurrence': 'Fai sapere ai partecipanti per quale occasione si effettua l\'acquisto',
-                       'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sulla Split',
+                       'promo_code': 'Inserisci un codice promozionale valido: ti consente di avere uno sconto sullo Split',
                        'alert_email': 'Disattiva le notifiche email sulle azioni degli invitati',
                        'hide_contribution': 'Nasconde ai soli partecipanti la quota versata da ognuno. Resta visibile a tutti il totale raccolto',
                        'hide_invitation': 'Nasconde l\' identità  dei partecipanti tra di loro.',
@@ -1415,6 +1420,7 @@ throw new SyntaxError('JSON.parse');
     var that = {};
     makeData = function() {
       var temp = {};
+      var mex, action;
 			var quotaTmp= {};
 			var p;
 			p = document.getElementById('squeezol_single_amount');
@@ -1424,11 +1430,28 @@ throw new SyntaxError('JSON.parse');
 			else {
 				quotaTmp.value = 0.00;
 			}
+      action=targetBtn.getAttribute('data-action');
       temp.group_id=groupId;
       temp.participant_id=targetBtn.getAttribute('data-participant');
-      temp.action=targetBtn.getAttribute('data-action');
+      temp.action=action
 		  temp.single_amount=quotaTmp.value;
-      return SqObj(temp).toFormUrlEnc();
+      if (action == 'CG'){
+        mex = "Stai per concludere lo Split e nessuno potrà più pagare. Vuoi proseguire?"
+      }
+      else if (action == 'RG'){
+        mex = "Stai per annullare lo Split, TUTTI i partecipanti verranno rimborsati. Vuoi proseguire?"
+      }
+      else if (action == 'OP'){
+        mex = "Stai per dare a tutti la possibilità di pagare. Vuoi proseguire?"
+      }
+      else{
+        return SqObj(temp).toFormUrlEnc();
+      }
+      r=confirm(mex)
+      if (r == true) {
+        return SqObj(temp).toFormUrlEnc();
+      }     
+      return
     }
     answerCallBack = function() {
     	var answer, ajaxAnswer, response;
@@ -1950,7 +1973,7 @@ throw new SyntaxError('JSON.parse');
 				containerDiv.appendChild(fbDiv);
 				SqDiv.appendChild(containerDiv);
 					
-				// Render Amici giÃ  invitati
+				// Render Amici gia'  invitati
 				ui.renderAlreadyInvited(emailDiv, fbDiv, alreadyInvited, group);
 				ui.drawSeparator('');
 					
@@ -2181,7 +2204,7 @@ throw new SyntaxError('JSON.parse');
 							renderBtn.create('Rimborsa', 'small', 'SqueezolRefund_');
 							renderBtn.get().setAttribute('data-participant', participantId);
 							renderBtn.get().setAttribute('data-action', 'RG');
-							renderBtn.get().className='btn btn-sm btn-danger';
+							renderBtn.get().className='sq-btn sq-btn-sm sq-btn-danger';
 							renderBtn.regHandler('click', buttonHandler);
 						}
 						// Se i pagamenti sono aperti
@@ -2211,7 +2234,7 @@ throw new SyntaxError('JSON.parse');
 						      renderRef.create('Rimborsa', 'small', 'SqueezolRefund_');
 						      renderRef.get().setAttribute('data-participant', participantId);
 						      renderRef.get().setAttribute('data-action', 'RG');
-						      renderRef.get().className='btn btn-sm btn-danger';
+						      renderRef.get().className='sq-btn sq-btn-sm sq-btn-danger';
 						      renderRef.regHandler('click', buttonHandler);
                   refContainer.append(renderRef.wrap(wrapBtn));
                   SqDiv.appendChild(refContainer.wrap(wrapper_row));
@@ -2264,6 +2287,7 @@ throw new SyntaxError('JSON.parse');
 					// Render
           if (openPay == false) {
 						var superTemp = document.createElement('div');
+            superTemp.id='sq-alert-start-pay';
 						superTemp.className = 'sq-col-xs-10 sq-col-xs-offset-1  sq-alert sq-alert-info';
 						if (isAdmin == true){
 							superTemp.innerHTML = '<p class="sq-text-center"> Inizia i pagamenti: sarà possibile a tutti versare la propria quota (una notifica verrà inoltrata a tutti i partecipanti!)</p>';
@@ -2298,7 +2322,7 @@ throw new SyntaxError('JSON.parse');
 					alertDes.className = 'sq-row'
 					alertDes.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-alert sq-alert-warning"><p>'+
 																 '<strong>Attenzione!</strong>'+
-																 'Lo split è stata chiuso dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effetuare il pagamento. Le quote versate torneranno disponibili al massimo entro 30 giorni dalla data del pagamento.'+
+																 'Lo Split è stato chiuso dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effettuare il pagamento. Le quote versate torneranno disponibili al massimo entro 30 giorni dalla data del pagamento.'+
 															 '</div></p>';
 					SqDiv.appendChild(alertDes);
 				}
@@ -2328,7 +2352,7 @@ throw new SyntaxError('JSON.parse');
               state = 'refused';
 						  ghianda = 'grigia';
             }
-            if (answer.group.hide_contribution == true || !isAdmin)
+            if (answer.group.hide_contribution == true && !isAdmin)
               contribution_amount = '-';
             else
               contribution_amount = p.single_amount + ' ' + answer.group.currency;
@@ -2391,7 +2415,7 @@ throw new SyntaxError('JSON.parse');
 
 				p=document.getElementById('squeezolNotifyAmount_');
 				if (answer.status == 'ok'){
-					message='Importo corretamente modificato';
+					message='Importo correttamente modificato';
           currency=inputDiv.nextSibling.innerHTML;
           quota=document.getElementById('sq-modify-amount').innerHTML=inputDiv.value+' '+currency;
 				}
@@ -2473,14 +2497,15 @@ throw new SyntaxError('JSON.parse');
                                  '<p class="sq-content-body">Organizzatore:</p>'+  
                                  '<strong>'+admin_name+'</strong>'+
                                '</div>'+
-                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-2 sq-col-md-offset-0">'+
-                                 '<div class="sq-row sq-box-blu-digest sq-content-body" style="padding:5px;">'+
-                                   '<p class="sq-text-center"> Scelta:'+this.switchStatus(participant.status)+'</p>'+
-                                 '</div>'+
+                               '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-0">'+
+                                 '<button id="sq-fb-sharer">'+
+                                   '<span class="sq-img-social">'+
+                                     '<img class="sq-img-responsive" style="display:inline;" src="'+ img_url +'/facebook_small.png">'+
+                                   '</span>Condividi'+
+                                  '</button>'+
                                '</div>';
 				groupDigest=Div(groupDigest);
 				sqDiv.appendChild(groupDigest.get());
-
         groupDigest=document.createElement('div');
 				groupDigest.className = "sq-row row-separata";
         groupDigest.innerHTML = '<div class="sq-col-md-10 sq-col-md-offset-1">'+
@@ -2524,25 +2549,35 @@ throw new SyntaxError('JSON.parse');
                                 '</div>';
         groupDigest=Div(groupDigest);
 				sqDiv.appendChild(groupDigest.get());
-
+        ui.fbSharer('sq-fb-sharer', params.link_url);
 			},
 			that.POSTcallback = function(answer, action, targetUrl){
-				var oldBtn, parentDiv, payBox, payBoxP, alertPaid;
-				var renderBtn = Button();
-				var participantId, form;
+				var oldBtn, parentDiv, payBox, payBoxP, alertPaid, renderBtn;
+        var renderButton=Button();
+				var participantId, form, sq_message;
 				if (action == 'OPENPAY'){
 					oldBtn = document.getElementById('SqueezolStartPay_');
 					participantId = oldBtn.getAttribute('data-participant');
 					parentDiv = oldBtn.parentNode;
 					parentDiv.removeChild(oldBtn);
-					renderBtn.create('Paga ora', 'big', 'SqueezolPay_');
-					renderBtn.get().setAttribute('data-action', 'P');
-					renderBtn.regHandler('click', function(e){
+          sq_message=document.getElementById('sq-alert-start-pay');
+          parentDiv=sq_message.parentNode;
+          parentDiv.removeChild(sq_message);
+          parentDiv=document.getElementById('squeezolPayBox');
+          parentDiv.innerHTML='';
+					renderButton.create('Paga ora', 'big', 'SqueezolPay_');
+					renderButton.get().setAttribute('data-action', 'P');
+					renderButton.regHandler('click', function(e){
 			      var event= e || window.event;
 			      var target = event.target || event.srcElement || event.originalTarget;
 			      request = DigestPostAJAX(answer.group_id, target, targetUrl);
 			      request.send(target);
 				  });
+          renderButton.addClass('sq-btn')
+          renderBtn=Div(document.createElement('div'));
+          renderBtn.addClass('sq-col-md-3 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1');
+          renderBtn.append(renderButton.get());
+          parentDiv.appendChild(renderBtn.get());
 				}
 				else if (action == 'FINISH'){
 					oldBtn = document.getElementById('SqueezolFinishPay_');
@@ -2560,6 +2595,9 @@ throw new SyntaxError('JSON.parse');
           renderBtn.append(alertPaid);
 					payBoxP = payBox.parentNode;
 					payBoxP.removeChild(payBox);
+          renderBtn.get().setAttribute('data-participant', participantId);
+				  renderBtn.get().className='sq-btn sq-btn-lg';
+				  parentDiv.appendChild(renderBtn.get());
 				}
         else if(action == 'PAY'){
           if (answer.status == 'ok'){
@@ -2573,11 +2611,8 @@ throw new SyntaxError('JSON.parse');
           } else if(answer.status == 'error'){
               this.notifyAmount(answer);
           }
-          return;
         }
-				renderBtn.get().setAttribute('data-participant', participantId);
-				renderBtn.get().className='sq-btn sq-btn-lg';
-				parentDiv.appendChild(renderBtn.get());
+        return;
 			},
 			that.switchStatus = function(status){
 				var ret_st;
@@ -2630,11 +2665,6 @@ throw new SyntaxError('JSON.parse');
 				div = Div();
 				div.get('squeezol_btn');
 				div.append(btn.get());
-				//txt = document.createElement('div');
-				//txt.className = 'wizardOpen';
-				//txt.innerHTML = ui.getText('Scopri cos\'&egrave; Squeezol');
-				//div.append(txt);
-				//ui.drawWizard('top', txt);
 			},
 			createGroup: function(amount, currency, codProducts, targetUrl, firstUrl, secondUrl) {
 				var trolley, groupCr, ui;
