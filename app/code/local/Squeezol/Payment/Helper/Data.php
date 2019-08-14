@@ -61,7 +61,7 @@ class Squeezol_Payment_Helper_Data extends Mage_Core_Helper_Abstract {
                 'description'    => $product->getShortDescription(),
                 'product_id'     => $info['sku'],
                 'url'            => $product->getProductUrl(),
-                'price'          => number_format($info['price'], 2),
+                'price'          => number_format($info['price'], 2, '.', ''),
                 'price_currency' => $curr
             );
         }
@@ -86,6 +86,17 @@ class Squeezol_Payment_Helper_Data extends Mage_Core_Helper_Abstract {
         $data = $endpoint->get_groups();
 
         return json_decode($data['groups'], true);
+    }
+
+    public function getOrderByGroup($groupId) {
+        $sql  = 'SELECT * FROM ' . $this->getGTableName() . ' WHERE group_id = :group';
+        $bind = array(
+            'group' => $groupId
+        );
+
+        $group = Mage::getSingleton('core/resource') ->getConnection('core_read')->fetchRow($sql, $bind);
+
+        return $group;
     }
 
     public function getGroupByOrder($lastOrderId) {

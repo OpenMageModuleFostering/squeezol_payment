@@ -1557,11 +1557,8 @@ throw new SyntaxError('JSON.parse');
 				this.setWrongEmails(answer.emailArray);
 				this.appendErrorInfo('Una o più email inserite sono ripetute, correggi per proseguire.', document.getElementById('squeezolEmail'));
 			}
-			else if (errorType === 'Contribution') {
-				this.appendErrorInfo('Inserisci un importo valido', document.getElementById('squeezolEmail'));
-			}
 			else if (errorType == 'error') {
-				this.appendErrorInfo(answer.message, document.getElementsByClassName('squeezol_quota')[0]);
+				this.appendErrorInfo(answer.error, document.getElementById('squeezol_admin_contrib').parentNode.parentNode);
 			}
 			else {
 				console.log('Bad error code');
@@ -1695,11 +1692,14 @@ throw new SyntaxError('JSON.parse');
 		},
 		that.appendErrorInfo = function(text, domItem){
 			var div = document.createElement('div');
-			div.className = 'sq-row';
+      var error=document.getElementById('alertErrorDiv');
+      if (error){
+        $jQuery(error).remove();
+      }
+			div.className = 'sq-row row-separata';
 			div.id = 'alertErrorDiv';
-			div.innerHTML = '<div class="sq-alert sq-alert-danger sq-col-xs-7 sq-col-xs-offset-1">'+
+			div.innerHTML = '<div class="sq-alert sq-alert-danger sq-col-xs-11 sq-col-xs-offset-1">'+
 											  '<p>'+
-													'<strong>OOPS!</strong>'+
 													text+
 											  '</p>'+
 											'</div>';
@@ -1926,6 +1926,7 @@ throw new SyntaxError('JSON.parse');
 					invError.removeErrorInfo();
 					ui.loadState(target);
           invitations.send()
+          ui.loadStop(target);
 				});
 				// Select Contribution Type handler:
 				var box = DomElement({el: document.getElementById('contributionType')});
@@ -2079,7 +2080,8 @@ throw new SyntaxError('JSON.parse');
 		that.renderGET = function() {
 			var params, isAdmin, invited, participants, partObj, groupStatus, saInput,
 				  openPay, canFinish, targetAmount, renderBtn, singleAmountBtn, inviteBtn,
-          renderDiv, participantId, invAmount, alertPaid;
+          renderDiv, participantId, invAmount, alertPaid, renderRef, refContainer;
+      var paidCount=0;
 			var part, totalPaid;
 			var SqDiv=document.getElementById('squeezol_view');
 			var sqBtnContainer;
@@ -2125,7 +2127,7 @@ throw new SyntaxError('JSON.parse');
 					alertDes.className = 'sq-row sq-alert sq-alert-success'
 					alertDes.innerHTML = '<p class="sq-text-center">'+
 																 '<strong> Congratulazioni!</strong>'+
-																 'Lo split si è conclusa con successo!'+
+																 'Lo split si è concluso con successo!'+
 															 '</p>';
 					SqDiv.appendChild(alertDes);
 				}
@@ -2191,6 +2193,7 @@ throw new SyntaxError('JSON.parse');
                     alertPaid=document.createElement('div');
                     alertPaid.className='sq-alert sq-alert-success sq-row';
                     alertPaid.innerHTML=paidText;
+                    renderBtn = Button();
                     renderBtn=Div(alertPaid);
 									}
 									else{
@@ -2201,6 +2204,18 @@ throw new SyntaxError('JSON.parse');
 										renderBtn.regHandler('click', buttonHandler);
 									}
 								}
+                if(partObj.status=='P' && paidCount==0){
+                  paidCount=1;
+                  refContainer = Div(document.createElement('div'));
+                  renderRef=Button();
+						      renderRef.create('Rimborsa', 'small', 'SqueezolRefund_');
+						      renderRef.get().setAttribute('data-participant', participantId);
+						      renderRef.get().setAttribute('data-action', 'RG');
+						      renderRef.get().className='btn btn-sm btn-danger';
+						      renderRef.regHandler('click', buttonHandler);
+                  refContainer.append(renderRef.wrap(wrapBtn));
+                  SqDiv.appendChild(refContainer.wrap(wrapper_row));
+                }
 							}
 						}
 						else {
@@ -2275,16 +2290,16 @@ throw new SyntaxError('JSON.parse');
 				}
 				// Group deserted
 				else if(answer.group.status == 'DES') {
-					renderBtn.create('Split Chiusa', 'big', 'SqueezolDeserted_');
+					renderBtn.create('Split Chiuso', 'big', 'SqueezolDeserted_');
 					renderBtn.get().setAttribute('data-participant', participantId)
 					renderBtn.get().disabled=true;
 					renderBtn.get().className='buttonWarning sq-btn sq-btn-lg';
 					alertDes = document.createElement('div');
-					alertDes.className = 'sq-alert sq-alert-warning'
-					alertDes.innerHTML = '<p>'+
+					alertDes.className = 'sq-row'
+					alertDes.innerHTML = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-alert sq-alert-warning"><p>'+
 																 '<strong>Attenzione!</strong>'+
-																 'Lo split è stata chiusa dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effetuare il pagamento.'+
-															 '</p>';
+																 'Lo split è stata chiuso dall\'organizzatore o è scaduto il termine di 20 giorni entro i quali effetuare il pagamento. Le quote versate torneranno disponibili al massimo entro 30 giorni dalla data del pagamento.'+
+															 '</div></p>';
 					SqDiv.appendChild(alertDes);
 				}
 				
@@ -2364,6 +2379,9 @@ throw new SyntaxError('JSON.parse');
 					case 'SA':
 						this.notifyAmount(answer);
 						break;
+          case 'RG':
+            location.reload(true);
+            break;
 				};
 				return;
 			},
@@ -2534,10 +2552,12 @@ throw new SyntaxError('JSON.parse');
 					parentDiv.removeChild(oldBtn);
 					alertPaid=document.createElement('div');
           alertPaid.className='sq-alert sq-alert-success sq-row';
-          alertPaid.innerHTML='<p class"sq-text-center"><strong> La tua quota è stata prenotata! </strong>'+
-                              'L\'importo verrà scalato dalla tua carta solo se l\'obiettivo verrà raggiunto!'+
-                              'Invita altri amici per diminuire la quota!</p>';
-          renderBtn=Div(alertPaid);
+          alertPaid.innerHTML='<p class="sq-text-center">'+
+															  '<strong> Congratulazioni!</strong>'+
+																'Lo split si è concluso con successo!'+
+															'</p>';
+          renderBtn=Div(document.createElement('div'));
+          renderBtn.append(alertPaid);
 					payBoxP = payBox.parentNode;
 					payBoxP.removeChild(payBox);
 				}
@@ -2581,7 +2601,7 @@ throw new SyntaxError('JSON.parse');
 						gr_status='In attesa di accettazione';
 						break;
 					case 'CWS':
-						gr_status='Split Completata';
+						gr_status='Split Completato';
 						break;
 					case 'DES':
 						gr_status='Abbandonato';

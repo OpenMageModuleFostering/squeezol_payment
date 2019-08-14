@@ -41,9 +41,8 @@
 
     <squeezol_payment_index_pay>
         <reference name="head">
-            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
+            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
@@ -61,7 +60,7 @@
                 <name>js/_squeezol3.js</name>
             </action>
         </reference>
-
+        
         <reference name="content">
             <block name="squeezol_payment.create" as="squeezol_payment_create" type="squeezol_payment/start" template="squeezol_payment/create.phtml" />
         </reference>
@@ -71,7 +70,6 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
@@ -99,7 +97,6 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
@@ -127,7 +124,6 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
@@ -150,22 +146,10 @@
             <block name="squeezol_payment.review" as="squeezol_payment_review" type="squeezol_payment/start" template="squeezol_payment/review.phtml" />
         </reference>
     </squeezol_payment_index_review>
+
     <checkout_onepage_index>
         <reference name="head">
-            <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
-            <action method="addItem">
-                <type>skin_js</type>
-                <name>js/jquery.min.js</name>
-            </action>
-            <action method="addItem">
-                <type>skin_js</type>
-                <name>js/noconflict.js</name>
-            </action>
-            <action method="addItem">
-                <type>skin_js</type>
-                <name>js/bootstrap.min.js</name>
-            </action>
+
         </reference>
     </checkout_onepage_index>
 </layout>

@@ -232,11 +232,7 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
           }
           else
           {
-            $ret = $INVALID_FORM_ERROR;
-            foreach($endpoint->getErrors() as $i => $value)
-            {
-              $ret[$i] = $value;
-            }
+            $ret = $res;
           }
         } else {
           $ret = $UNAUTH_ERROR;
@@ -283,16 +279,17 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
         $payload = file_get_contents('php://input');
         $data    = json_decode($payload, true);
 
-        $group = Mage::helper('squeezol_payment')->getGroupByOrder($data['group']);
-
+        $group = Mage::helper('squeezol_payment')->getOrderByGroup($data['group']);
         $order = Mage::getModel('sales/order')->loadByIncrementId($group['order_id']);
 
-        if ($data['status'] == 'S') {
-            $order->setStatus(Mage_Sales_Model_Order::STATE_COMPLETE);
-            $order->save();
-        } else {
-            $order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
-            $order->cancel()->save();
+        if ($order && $order->getId()) {
+            if ($data['status'] == 'S') {
+                $order->setStatus(Mage_Sales_Model_Order::STATE_COMPLETE);
+                $order->save();
+            } else {
+                $order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
+                $order->cancel()->save();
+            }
         }
 
         echo 'OK';
