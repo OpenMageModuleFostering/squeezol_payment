@@ -1,14 +1,20 @@
-// JSON Object fallback for IE <= 8
-// Thank you so much Duglas :-)
-// Fuck you even more dear Bill :-)
+/*
+ * Squeezol js v 1.0 
+ * Copyright 2013-2015 Squeezol SRL.
+ * Licensed under OSL 
+ */
+
 if (typeof JSON !== 'object') {
     JSON = {};
+}
+
+if (typeof jQuery === 'undefined') {
+  throw new Error('Squeezol\'s Library requires jQuery')
 }
 
 (function () {
 	'use strict';
 	function f(n) {
-  // Format integers to have at least two digits.
   	return n < 10 ? '0' + n : n;
   }
 	if (typeof Date.prototype.toJSON !== 'function') {
@@ -35,10 +41,6 @@ if (typeof JSON !== 'object') {
       meta,
       rep;
 	function quote(string) {
-		// If the string contains no control characters, no quote characters, and no
-		// backslash characters, then we can safely slap some quotes around it.
-		// Otherwise we must also replace the offending characters with safe escape
-		// sequences.
 		escapable.lastIndex = 0;
     return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
     	var c = meta[a];
@@ -56,49 +58,32 @@ if (typeof JSON !== 'object') {
         mind = gap,
         partial,
         value = holder[key];
-		// If the value has a toJSON method, call it to obtain a replacement value.
 		if (value && typeof value === 'object' &&
     	typeof value.toJSON === 'function') {
       value = value.toJSON(key);
     }
-		// If we were called with a replacer function, then call the replacer to
-		// obtain a replacement value.
 		if (typeof rep === 'function') {
     	value = rep.call(holder, key, value);
     }
-		// What happens next depends on the value's type.
 		switch (typeof value) {
     	case 'string':
       	return quote(value);
 			case 'number':
-				// JSON numbers must be finite. Encode non-finite numbers as null.
 				return isFinite(value) ? String(value) : 'null';
 			case 'boolean':
       case 'null':
-				// If the value is a boolean or null, convert it to a string. Note:
-				// typeof null does not produce 'null'. The case is included here in
-				// the remote chance that this gets fixed someday.
 				return String(value);
-				// If the type is 'object', we might be dealing with an object or an array or null.
 			case 'object':
-				// Due to a specification blunder in ECMAScript, typeof null is 'object',
-				// so watch out for that case.
-
 				if (!value) {
         	return 'null';
         }
-				// Make an array to hold the partial results of stringifying this object value.
 				gap += indent;
         partial = [];
-				// Is the value an array?
 				if (Object.prototype.toString.apply(value) === '[object Array]') {
-					// The value is an array. Stringify every element. Use null as a placeholder
-					// for non-JSON values.
 					length = value.length;
           for (i = 0; i < length; i += 1) {
           	partial[i] = str(i, value) || 'null';
           }
-					// Join all of the elements together, separated with commas, and wrap them in brackets.
 					v = partial.length === 0
         										 ? '[]'
 														 : gap
@@ -107,7 +92,6 @@ if (typeof JSON !== 'object') {
 					gap = mind;
         	return v;
 				}
-				// If the replacer is an array, use it to select the members to be stringified.
 				if (rep && typeof rep === 'object') {
         	length = rep.length;
           for (i = 0; i < length; i += 1) {
@@ -120,8 +104,6 @@ if (typeof JSON !== 'object') {
             }
           }
         } else {
-				// Otherwise, iterate through all of the keys in the object.
-
         for (k in value) {
         	if (Object.prototype.hasOwnProperty.call(value, k)) {
           	v = str(k, value);
@@ -131,8 +113,6 @@ if (typeof JSON !== 'object') {
           }
         }
       }
-			// Join all of the member texts together, separated with commas,
-			// and wrap them in braces.
 			v = partial.length === 0
       									 ? '{}'
 												 : gap
@@ -142,7 +122,6 @@ if (typeof JSON !== 'object') {
 			return v;
     }
   }
-	// If the JSON object does not yet have a stringify method, give it one.
 	if (typeof JSON.stringify !== 'function') {
   	escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
     meta = {    // table of character substitutions
@@ -155,48 +134,30 @@ if (typeof JSON !== 'object') {
             '\\': '\\\\'
     };
   JSON.stringify = function (value, replacer, space) {
-		// The stringify method takes a value and an optional replacer, and an optional
-		// space parameter, and returns a JSON text. The replacer can be a function
-		// that can replace values, or an array of strings that will select the keys.
-		// A default replacer method can be provided. Use of the space parameter can
-		// produce text that is more easily readable.
   	var i;
     		gap = '';
         indent = '';
-		// If the space parameter is a number, make an indent string containing that
-		// many spaces.
     if (typeof space === 'number') {
     	for (i = 0; i < space; i += 1) {
       	indent += ' ';
       }
-		// If the space parameter is a string, it will be used as the indent string.
-
 		} else if (typeof space === 'string') {
     	indent = space;
     }
-		// If there is a replacer, it must be a function or an array.
-		// Otherwise, throw an error.
 		rep = replacer;
     if (replacer && typeof replacer !== 'function' &&
     	(typeof replacer !== 'object' ||
        typeof replacer.length !== 'number')) {
          throw new Error('JSON.stringify');
     }
-		// Make a fake root object containing our value under the key of ''.
-		// Return the result of stringifying the value.
 		return str('', {'': value});
   };
 }
-// If the JSON object does not yet have a parse method, give it one.
 if (typeof JSON.parse !== 'function') {
 	cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
   JSON.parse = function (text, reviver) {
-	// The parse method takes a text and an optional reviver function, and returns
-	// a JavaScript value if the text is a valid JSON text.
 	var j;
 	function walk(holder, key) {
-	// The walk method is used to recursively walk the resulting structure so
-	// that modifications can be made.
 	var k, v, value = holder[key];
   if (value && typeof value === 'object') {
   	for (k in value) {
@@ -212,10 +173,6 @@ if (typeof JSON.parse !== 'function') {
   }
   return reviver.call(holder, key, value);
 }
-// Parsing happens in four stages. In the first stage, we replace certain
-// Unicode characters with escape sequences. JavaScript handles many characters
-// incorrectly, either silently deleting them, or treating them as line endings.
-
 text = String(text);
 cx.lastIndex = 0;
 if (cx.test(text)) {
@@ -224,42 +181,22 @@ if (cx.test(text)) {
   ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
 	});
 }
-	// In the second stage, we run the text against regular expressions that look
-	// for non-JSON patterns. We are especially concerned with '()' and 'new'
-	// because they can cause invocation, and '=' because it can cause mutation.
-	// But just to be safe, we want to reject all unexpected forms.
-
-	// We split the second stage into 4 regexp operations in order to work around
-	// crippling inefficiencies in IE's and Safari's regexp engines. First we
-	// replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
-	// replace all simple value tokens with ']' characters. Third, we delete all
-	// open brackets that follow a colon or comma or that begin the text. Finally,
-	// we look to see that the remaining characters are only whitespace or ']' or
-	// ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
-	
 	if (/^[\],:{}\s]*$/
 	.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
   .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
   .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-	// In the third stage we use the eval function to compile the text into a
-	// JavaScript structure. The '{' operator is subject to a syntactic ambiguity
-	// in JavaScript: it can begin a block or an object literal. We wrap the text
-	// in parens to eliminate the ambiguity.
 	j = eval('(' + text + ')');
-	// In the optional fourth stage, we recursively walk the new structure, passing
-	// each name/value pair to a reviver function for possible transformation.
 	return typeof reviver === 'function'
   	? walk({'': j}, '')
     : j;
 	}
 
-// If the text is not JSON parseable, then a SyntaxError is thrown.
-throw new SyntaxError('JSON.parse');
-};
-}
+  throw new SyntaxError('JSON.parse');
+  };
+ }
 }());
 
-(function() {
++function($sqjQuery) {
 	// DOM ELEMENTS
 	var SqStr = function(str) {
 		var obj, that;
@@ -792,15 +729,14 @@ throw new SyntaxError('JSON.parse');
 			// Bootstrap 3 Implementation
 			viewPortDiv = $sqjQuery('#squeezol_view');
 			viewPortDiv.addClass("container-fluid");
-      modalDiv = '<div class="sq-col-xs-12 container-dashboard">'+
-                   '<div class="sq-row" style="margin-top: -30px;">'+
-                     '<div class="sq-col-sm-4 sq-col-sm-offset-4 sq-col-xs-10 sq-col-xs-offset-1" style="padding-top: 10px; padding-left:50px;">'+
-                       '<img class="squeezol-btn-header sq-img-responsive" src="' + img_url + 'squeezol.png"></img>'+
-                       '<p class="sq-content-title" style="display:inline; margin-left:20px;">'+title+'</p>'+
-                     '</div>'+
-									 '</div>'+
+      modalDiv = '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-container-dashboard">'+
 								   '<div id="squeezol_view">'+
-										 '<div class="sq-row row-separator row-separata">'+
+                     '<div class="sq-row">'+
+                       '<div class="sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-5" style="margin-top:-40px;">'+
+                         '<img class="squeezol-btn-header sq-img-responsive" src="' + img_url + 'logo_squeezol_blu_nowrite.png"></img>'+
+                       '</div>'+
+                     '</div>'+
+										 '<div class="sq-row row-separata">'+
                       '<div class="sq-col-md-3 sq-col-md-offset-1">'+
                         '<p class="sq-text-center"><img class="sq-img-responsive" style="display:inline;" src="'+img_url+'squeezol_icon-creasplit'+c_var+'.png"/></p>'+
                       '</div>'+
@@ -816,6 +752,7 @@ throw new SyntaxError('JSON.parse');
 											'<div class="sq-col-xs-4 separator-'+invita+'"></div>'+
 											'<div class="sq-col-xs-3 separator-'+gestisci+'"></div>'+
 										 '</div>'+
+									 '</div>'+
 									 '</div>'+
 								 '</div>';
 			viewPortDiv.append(modalDiv);
@@ -855,7 +792,7 @@ throw new SyntaxError('JSON.parse');
       return;
 	  },
     that.drawWizard = function(position, clickElem){
-      var div='<div class="sq-row wizard">'+
+      var div='<div class="sq-row sq-wizard">'+
                 '<div class="sq-col-xs-4">'+
 								  '<img class="sq-img-responsive" src="' + img_url + 'btn2.jpg" alt="Think">'+
                   '<h4 class="sq-text-center">1.Crea uno Split</h4>'+
@@ -948,7 +885,7 @@ throw new SyntaxError('JSON.parse');
 			$sqjQuery('#squeezolPayBox').append(bar);
 		},
 		that.sqModal = function(content, btn, id){
-			var modalContent, modalBody, btn
+			var modalContent, modalBody, btn, removeBtn;
       var modal=false;
       modalContent = $sqjQuery("#"+id);
       if (modalContent.length>0) {
@@ -965,15 +902,25 @@ throw new SyntaxError('JSON.parse');
       }
 			if (id == 'emailModal') {
         if (modal == false){
+          removeBtn = Button()
+					removeBtn.create('- Elimina', 'small', 'btnRemove');
+					removeBtn.addClass('sq-btn sq-btn-xs sq-btn-danger')
+					removeBtn.regHandler('click', function(e){
+				  	var event= e || window.event;
+				  	var target = event.target || event.srcElement || event.originalTarget;
+				  	var invObj = InvitationObj();
+				  	document.getElementById('squeezolEmail').removeChild(target.parentNode.parentNode);
+					});
 				  modalBody = $sqjQuery('<div />');
 				  modalBody.addClass('sq-modal-body');
 				  modalBody.append(content);
 				  modalContent.append($sqjQuery('<div />').addClass('sq-modal-dialog')
-														  .append($sqjQuery('<div />').addClass('sq-modal-content')
-																.append('<div class="sq-modal-header">'+
-																					'<button type="button" class="sq-close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-																					'<h4 class="sq-modal-title">Invita</h4>'+
-																				'</div>', content, $sqjQuery('<div />').addClass('sq-modal-footer').append(btn))));
+					  .append($sqjQuery('<div />').addClass('sq-modal-content')
+						.append('<div class="sq-modal-header">'+
+											'<button type="button" class="sq-close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+											'<h4 class="sq-modal-title">Invita</h4>'+
+										'</div>',  content, $sqjQuery('<div />').addClass('sq-modal-footer').append(btn))));
+          
         }
         modalContent.on('show.bs.modal', function(){
           btn = $sqjQuery("#squeezolEmail_");          
@@ -1003,20 +950,20 @@ throw new SyntaxError('JSON.parse');
       $question.attr('data-toggle', 'popover');
       $question.attr('data-placement', 'top');
       $question.attr('title', helpText);
-      $question.addClass('icon sq-glyph-info-sign');
+      $question.addClass('sq-icon sq-glyph-info-sign');
       $question.append('<p>i</p>');
       $sqjQuery(txt).append($question);
       return txt;
     },
     that.iconPopover = function(){
       //$sqjQuery('.icon').popover();
-		  $sqjQuery('.icon').on('mouseenter', function(){
+		  $sqjQuery('.sq-icon').on('mouseenter', function(){
         $sqjQuery(this).popover('show')
       });
-      $sqjQuery('.icon').on('mouseout', function(){
+      $sqjQuery('.sq-icon').on('mouseout', function(){
         $sqjQuery(this).popover('hide');
       });
-      $sqjQuery('.icon').on('hidden.bs.popover', function(){
+      $sqjQuery('.sq-icon').on('hidden.bs.popover', function(){
         $sqjQuery(this).css("display", "");
 			});
 
@@ -1822,7 +1769,7 @@ throw new SyntaxError('JSON.parse');
 				fbDiv.className = 'fbInvitation';
 				fbDiv.id = 'squeezolFb'
 				invitationBtn = InvitationObj();
-				emailBtn = invitationBtn.createButton('@ Email', btnId[0], btnSize[0], 'sq-btn sq-btn-sm sq-buttonEmail');
+				emailBtn = invitationBtn.createButton('+ Email', btnId[0], btnSize[0], 'sq-btn sq-btn-sm sq-buttonEmail');
 				emailModal = invitationBtn.createButton('@ | Invia Email', 'emailModal_', 'big', 'sq-btn sq-btn-lg sq-buttonEmail');
 				
 				// SEND EMAIL handler:
@@ -1848,6 +1795,17 @@ throw new SyntaxError('JSON.parse');
 				submitDiv.className = 'sq-row';
 				submitDiv.appendChild(submitBtn.wrap({ wrapper: 'div', className : 'sq-col-xs-10 sq-col-xs-offset-1 sq-col-md-3 sq-col-md-offset-8'}));
 				
+        var NewremoveBtn = Button()
+					NewremoveBtn.create('- Elimina', 'small', 'btnRemove');
+					NewremoveBtn.addClass('sq-btn sq-btn-xs sq-btn-danger')
+					NewremoveBtn.regHandler('click', function(e){
+				  	var event= e || window.event;
+				  	var target = event.target || event.srcElement || event.originalTarget;
+				  	var invObj = InvitationObj();
+				  	document.getElementById('squeezolEmail').removeChild(target.parentNode.parentNode);
+					});
+
+
 				// ADD EMAIL handler:
 				emailBtn.regHandler('click', function() {
 				  var invObj=InvitationObj();
@@ -1876,6 +1834,13 @@ throw new SyntaxError('JSON.parse');
 					emailDiv.appendChild(newEmail);
 				});
 				emailDiv.appendChild(emailBtn.get());
+        $sqjQuery(emailDiv).append($sqjQuery('<div />').addClass('sq-row sq-email-send')
+            .append('<div class="sq-hidden-xs sq-col-sm-2 sq-col-md-2">'+
+								      '<img style="display:inline;" class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
+						        '</div>'+
+						        '<div class="sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
+					            '<input class="sq-form-control mail__Invitation" placeholder="Aggiungi Email" type="email" name="email">'+
+				            '</div>', NewremoveBtn.wrap(wrapper_remove)))
 				emailModal.regHandler('click', function() {
 					var ui = UserInterface();
 					ui.sqModal(emailDiv, submitDiv, 'emailModal');
@@ -1916,6 +1881,22 @@ throw new SyntaxError('JSON.parse');
 					});
 					tmpObj.appendChild(fbBtn.wrap(wrapper_center));
         }
+        /*
+        else {
+          copiaUrl = document.createElement('div')
+          copiaUrl.className = 'sq-row sq-fb-link';
+          copiaUrl.setAttribute('data-placement', 'top');
+          copiaUrl.setAttribute('title', 'Aggiungi Facebook per invitare i tuoi contatti');
+          a_temp = document.createElement('a');
+          a_temp.innerHTML = 'Invita con Facebook';
+          a_link=DomElement({'el': a_temp});
+          a_link.id='sqFbLink';
+          a_link.regHandler('click', function(e) {
+            window.location.replace(answer.redirect_url);
+          });
+          copiaUrl.appendChild(a_link.get());
+          tmpObj.appendChild(copiaUrl);
+        }*/
 				
         copiaUrl = document.createElement('div')
         copiaUrl.className = 'sq-col-md-3 sq-col-xs-10 sq-col-xs-offset-1 pink-link';
@@ -2066,7 +2047,7 @@ throw new SyntaxError('JSON.parse');
                                       '<div data-toggle="popover" data-placement="top" title="Suggerisci la '+ 
                                         'quota che verrà  visualizzata dagli invitati. Altrimenti la quota proposta '+
                                         'verrà  calcolata in base al numero di invitati"'+
-                                        'class="icon sq-glyph-info-sign">'+
+                                        'class="sq-icon sq-glyph-info-sign">'+
                                         '<p>i</p>'+
                                       '</div>'+
                                     '</p>'+
@@ -2077,7 +2058,7 @@ throw new SyntaxError('JSON.parse');
 															      '<p class="sq-label">Quota singola:'+
                                       '<div data-toggle="popover" data-placement="top" title="La quota è un '+
                                         'suggerimento per gli invitati."'+
-                                        'class="icon sq-glyph-info-sign">'+
+                                        'class="sq-icon sq-glyph-info-sign">'+
                                         '<p>i</p>'+
                                       '</div>'+
                                     '</p>'+
@@ -2513,13 +2494,13 @@ throw new SyntaxError('JSON.parse');
                                     '<div class="sq-col-md-4">'+
                                       '<div class="sq-row">'+
                                         '<h4>TERMINA FRA</h4>'+
-                                        '<div class="sq-col-md-4 no-pad">'+
+                                        '<div class="sq-col-md-4 sq-no-pad">'+
                                           '<p class="sq-target-small">'+params.daysLeft+' G</p>'+
                                         '</div>'+
-                                        '<div class="sq-col-md-4 no-pad">'+
+                                        '<div class="sq-col-md-4 sq-no-pad">'+
                                           '<p class="sq-target-small">'+params.hoursLeft+' H</p>'+
                                         '</div>'+
-                                        '<div class="sq-col-md-4 no-pad">'+
+                                        '<div class="sq-col-md-4 sq-no-pad">'+
                                           '<p class="sq-target-small">'+params.minutesLeft+' M</p>'+
                                         '</div>'+
                                       '</div>'+
@@ -2527,12 +2508,12 @@ throw new SyntaxError('JSON.parse');
                                     '<div class="sq-col-md-4">'+
                                       '<div class="sq-row">'+
                                         '<p class="sq-text-center">'+
-                                          'totale: <strong>'+group.amount+' '+group.currency+'</strong>'+
+                                          'totale: <strong>'+ group.amount+' '+group.currency+'</strong>'+
                                         '</p>'+
                                       '</div>'+
-                                      '<div class="progress-radial-container">'+
-                                        '<div class="progress-radial progress-'+params.totalPerc+'">'+
-                                          '<div class="overlay">'+totalPaid+' '+group.currency+
+                                      '<div class="sq-progress-radial-container">'+
+                                        '<div class="sq-progress-radial sq-progress-'+params.totalPerc+'">'+
+                                          '<div class="sq-overlay">'+totalPaid+' '+group.currency+
                                           '</div>'+
                                         '</div>'+
                                       '</div>'+
@@ -2692,4 +2673,4 @@ throw new SyntaxError('JSON.parse');
 			}
 		};		
 		return;
-}())
+}(jQuery);

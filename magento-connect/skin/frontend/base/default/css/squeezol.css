@@ -54,7 +54,7 @@
   font-style:normal;
 }
 
-h4 {
+h4.sq-text {
   font-family: "DejaVuSansCondensed-BoldOblique" !important;
   color: #08b3c7 !important;
   font-weight: 100 !important;
@@ -64,7 +64,7 @@ h4 {
 	font-weight: 10 !important;
 }
 
-label { font-weight: bold !important; color: #08B3C7 !important; }
+#squeezol_view label { font-weight: bold !important; color: #08B3C7 !important; }
 
 .sq-popover {
   z-index:1000 !important;
@@ -228,11 +228,18 @@ div.row-separata {
 }
 
 .squeezol-btn-header {
- width:25% !important;
+ width:15% !important;
  display:inline !important;
  margin-right: -8px !important;
  padding-right: 5px !important;
  padding-bottom: 10px !important;
+}
+
+.sq-title {
+  border: 1px solid #0AB3C6;
+   border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
 }
 
 .sq-alert-info{
@@ -310,13 +317,13 @@ h4.summary strong{
   color: #404040 !important;
   font-weight: 100 !important;
 }
-.pipa { padding-top: 30px !important;}
+
 
 /* WIZARD */
-.wizard img{ 
+.sq-wizard img{ 
 	width: 80% !important;
 }
-.wizard h4 {
+.sq-wizard h4 {
 	color: #808080 !important;
 }
 
@@ -356,22 +363,15 @@ p.sq-alert-danger, #squeezolNotifyAmount_ {
 	margin-top: 5px !important;
 }
 
-.container-body {
-  height: 100% !important;
-  margin-top: -75px !important;
-  padding-top: 95px !important;
-  padding-bottom: 100px !important;
-}
 
-.container-dashboard {
-/*  background-color: #FFFFFF !important;
-  -webkit-border-radius: 1em;
-  -moz-border-radius: 1em;
-  border-radius: 1em;
+.sq-container-dashboard {
+  background-color: #FFFFFF !important;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
   border: 1px solid #dcdcdc !important;
 
   box-shadow: 3px 3px 1px #dcdcdc !important;
-*/
   padding-top:50px !important;
   padding-bottom:50px !important;
 }
@@ -387,7 +387,7 @@ input.sq-form-control, textarea.sq-form-control, select {
   font-family: AbsoluteProCond !important;
 }
 
-.form-group > select {
+.sq-form-group > select {
 	margin-left: 2px !important;
 }
 
@@ -435,7 +435,7 @@ input.sq-form-control, textarea.sq-form-control, select {
   background-color: #A9E4EB !important;
 }
 
-.glyph-ok {
+.sq-glyph-ok {
   background-color: #DFF0D8 !important;
   color: #3C763D !important;
 }
@@ -453,7 +453,7 @@ div.sq-glyph-info-sign {
   -moz-border-radius: 20px;
 }
 
-.icon p {
+.sq-icon p {
   font-family: "AbsolutePro-BoldOblique";
   color: #000 !important;
   width: 30px !important;
@@ -464,7 +464,7 @@ div.sq-glyph-info-sign {
   line-height: 20px;
 }
 
-.icon {
+.sq-icon {
   color: #7F8389 !important;
   width: 100px !important;
   height: 100px !important;
@@ -556,6 +556,7 @@ div.sq-glyph-info-sign {
 
 .sq-pink-text {
   color:#DA396F !important;
+  font-family: "DejaVuSansCondensed-BoldOblique" !important;
 }
 
 div.withPaddedBorder {
@@ -600,14 +601,14 @@ div.withPaddedBorder {
   padding: 5px;
 }
 
-.no-pad {
+.sq-no-pad {
   padding:4px;
 }
 
 /* -------------------------------------
  * Bar container
  * ------------------------------------- */
-.progress-radial {
+.sq-progress-radial {
   left: 50%;
   margin-left: -50px;
   margin-top: 10px;
@@ -625,7 +626,7 @@ div.withPaddedBorder {
 /* -------------------------------------
  * Optional centered circle w/text
  * ------------------------------------- */
-.progress-radial .overlay {
+.sq-progress-radial .sq-overlay {
   font-family: DejaVuSansCondensed-Bold;
   font-style: normal;
   position: absolute;
@@ -643,427 +644,412 @@ div.withPaddedBorder {
   color: #DA396F;
 }
 
-/* -------------------------------------
- * Text inside overlay
- * ------------------------------------- */
-
-
-.text-overlay {
-  font-family: DejaVuSansCondensed-Bold;
-  font-size: 10px;
-  font-style: normal;
-  text-align: center;
-  line-height: 10px;
-  letter-spacing: 0em;
-  opacity: 1;
-  color: #000 !important;
-}
 
 
 /* -------------------------------------
  * Mixin for progress-% class
  * ------------------------------------- */
-.progress-0 {
+.sq-progress-0 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-1 {
+.sq-progress-1 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(93.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-2 {
+.sq-progress-2 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(97.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-3 {
+.sq-progress-3 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(100.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-4 {
+.sq-progress-4 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(104.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-5 {
+.sq-progress-5 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-6 {
+.sq-progress-6 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(111.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-7 {
+.sq-progress-7 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(115.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-8 {
+.sq-progress-8 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(118.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-9 {
+.sq-progress-9 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(122.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-10 {
+.sq-progress-10 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-11 {
+.sq-progress-11 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(129.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-12 {
+.sq-progress-12 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(133.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-13 {
+.sq-progress-13 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(136.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-14 {
+.sq-progress-14 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(140.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-15 {
+.sq-progress-15 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-16 {
+.sq-progress-16 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(147.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-17 {
+.sq-progress-17 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(151.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-18 {
+.sq-progress-18 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(154.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-19 {
+.sq-progress-19 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(158.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-20 {
+.sq-progress-20 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-21 {
+.sq-progress-21 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(165.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-22 {
+.sq-progress-22 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(169.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-23 {
+.sq-progress-23 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(172.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-24 {
+.sq-progress-24 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(176.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-25 {
+.sq-progress-25 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-26 {
+.sq-progress-26 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(183.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-27 {
+.sq-progress-27 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(187.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-28 {
+.sq-progress-28 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(190.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-29 {
+.sq-progress-29 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(194.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-30 {
+.sq-progress-30 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-31 {
+.sq-progress-31 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(201.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-32 {
+.sq-progress-32 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(205.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-33 {
+.sq-progress-33 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(208.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-34 {
+.sq-progress-34 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(212.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-35 {
+.sq-progress-35 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-36 {
+.sq-progress-36 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(219.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-37 {
+.sq-progress-37 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(223.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-38 {
+.sq-progress-38 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(226.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-39 {
+.sq-progress-39 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(230.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-40 {
+.sq-progress-40 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-41 {
+.sq-progress-41 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(237.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-42 {
+.sq-progress-42 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(241.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-43 {
+.sq-progress-43 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(244.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-44 {
+.sq-progress-44 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(248.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-45 {
+.sq-progress-45 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-46 {
+.sq-progress-46 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(255.6deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-47 {
+.sq-progress-47 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(259.2deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-48 {
+.sq-progress-48 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(262.8deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-49 {
+.sq-progress-49 {
   background-image: linear-gradient(90deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(266.4deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-50 {
+.sq-progress-50 {
   background-image: linear-gradient(-90deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-51 {
+.sq-progress-51 {
   background-image: linear-gradient(-86.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-52 {
+.sq-progress-52 {
   background-image: linear-gradient(-82.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-53 {
+.sq-progress-53 {
   background-image: linear-gradient(-79.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-54 {
+.sq-progress-54 {
   background-image: linear-gradient(-75.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-55 {
+.sq-progress-55 {
   background-image: linear-gradient(-72deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-56 {
+.sq-progress-56 {
   background-image: linear-gradient(-68.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-57 {
+.sq-progress-57 {
   background-image: linear-gradient(-64.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-58 {
+.sq-progress-58 {
   background-image: linear-gradient(-61.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-59 {
+.sq-progress-59 {
   background-image: linear-gradient(-57.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-60 {
+.sq-progress-60 {
   background-image: linear-gradient(-54deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-61 {
+.sq-progress-61 {
   background-image: linear-gradient(-50.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-62 {
+.sq-progress-62 {
   background-image: linear-gradient(-46.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-63 {
+.sq-progress-63 {
   background-image: linear-gradient(-43.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-64 {
+.sq-progress-64 {
   background-image: linear-gradient(-39.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-65 {
+.sq-progress-65 {
   background-image: linear-gradient(-36deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-66 {
+.sq-progress-66 {
   background-image: linear-gradient(-32.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-67 {
+.sq-progress-67 {
   background-image: linear-gradient(-28.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-68 {
+.sq-progress-68 {
   background-image: linear-gradient(-25.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-69 {
+.sq-progress-69 {
   background-image: linear-gradient(-21.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-70 {
+.sq-progress-70 {
   background-image: linear-gradient(-18deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-71 {
+.sq-progress-71 {
   background-image: linear-gradient(-14.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-72 {
+.sq-progress-72 {
   background-image: linear-gradient(-10.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-73 {
+.sq-progress-73 {
   background-image: linear-gradient(-7.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-74 {
+.sq-progress-74 {
   background-image: linear-gradient(-3.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-75 {
+.sq-progress-75 {
   background-image: linear-gradient(0deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-76 {
+.sq-progress-76 {
   background-image: linear-gradient(3.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-77 {
+.sq-progress-77 {
   background-image: linear-gradient(7.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-78 {
+.sq-progress-78 {
   background-image: linear-gradient(10.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-79 {
+.sq-progress-79 {
   background-image: linear-gradient(14.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-80 {
+.sq-progress-80 {
   background-image: linear-gradient(18deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-81 {
+.sq-progress-81 {
   background-image: linear-gradient(21.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-82 {
+.sq-progress-82 {
   background-image: linear-gradient(25.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-83 {
+.sq-progress-83 {
   background-image: linear-gradient(28.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-84 {
+.sq-progress-84 {
   background-image: linear-gradient(32.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-85 {
+.sq-progress-85 {
   background-image: linear-gradient(36deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-86 {
+.sq-progress-86 {
   background-image: linear-gradient(39.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-87 {
+.sq-progress-87 {
   background-image: linear-gradient(43.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-88 {
+.sq-progress-88 {
   background-image: linear-gradient(46.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-89 {
+.sq-progress-89 {
   background-image: linear-gradient(50.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-90 {
+.sq-progress-90 {
   background-image: linear-gradient(54deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-91 {
+.sq-progress-91 {
   background-image: linear-gradient(57.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-92 {
+.sq-progress-92 {
   background-image: linear-gradient(61.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-93 {
+.sq-progress-93 {
   background-image: linear-gradient(64.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-94 {
+.sq-progress-94 {
   background-image: linear-gradient(68.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-95 {
+.sq-progress-95 {
   background-image: linear-gradient(72deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-96 {
+.sq-progress-96 {
   background-image: linear-gradient(75.6deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-97 {
+.sq-progress-97 {
   background-image: linear-gradient(79.2deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-98 {
+.sq-progress-98 {
   background-image: linear-gradient(82.8deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-99 {
+.sq-progress-99 {
   background-image: linear-gradient(86.4deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
-.progress-100 {
+.sq-progress-100 {
   background-image: linear-gradient(90deg, #DA396F 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #DA396F 50%, #FFFFFF 50%, #FFFFFF);
 }
 
