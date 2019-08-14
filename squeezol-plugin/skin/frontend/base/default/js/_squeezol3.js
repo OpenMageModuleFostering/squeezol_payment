@@ -702,6 +702,17 @@ if (cx.test(text)) {
 			  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url), 'facebook-share-dialog', 'width=626,height=436');
       });
     },
+    that.switchCurrency = function(curr){
+      if (curr == 'EUR'){
+        return '€';
+      }
+      else if (curr == 'USD'){
+        return '$';
+      }
+      else {
+        return curr;
+      }
+    },
 		that.drawHeader = function(page, mode) {
     	var viewPortDiv, modalDiv;
 			var active='blu';
@@ -1060,7 +1071,7 @@ if (cx.test(text)) {
 			tempRowDiv.append(input.labelize('Nome Split*', helpText['name']).wrap(wrapper_left));
 
 			date1 = DateInput();
-			d1 = new Date(new Date().getTime() + 7*day);
+			d1 = new Date(new Date().getTime() + 3*day);
 			//startDate = ('0' + d.getDate()).slice(-2) + "-" + ('0' + d.getMonth()).slice(-2) + "-" + d.getFullYear();
 		  date1.create('max_acceptance_date', d1);
 			date1.get().id = 'datepicker1';
@@ -1084,7 +1095,7 @@ if (cx.test(text)) {
 		  tempRowDiv.append(input.labelize('Descrizione', helpText['description']).wrap(wrapper_left));
 			// Data Pagamenti
 		  date2 = DateInput();
-			d2 = new Date(new Date().getTime() + 25*day);
+			d2 = new Date(new Date().getTime() + 20*day);
 			//startDate = ('0' + d.getDate()).slice(-2) + "-" + ('0' + d.getMonth()).slice(-2) + "-" + d.getFullYear();
 		  date2.create('max_payment_date', d2);
 		  date2.get().id = 'datepicker2';
@@ -1109,7 +1120,7 @@ if (cx.test(text)) {
       tmp=document.createElement('div');
 			tempRowDiv = Div(tmp);
 			tempRowDiv.addClass('sq-row');
-		  tempRowDiv.append(combo.labelize('Occorrenza', helpText['occurrence']).wrap(wrapper_left));
+		  tempRowDiv.append(combo.labelize('Occasione', helpText['occurrence']).wrap(wrapper_left));
 			viewPortDiv.append(tempRowDiv.get())
 			ui.drawSeparator('');
 			ui.drawSeparatorCollapse('Opzioni aggiuntive');
@@ -1978,6 +1989,7 @@ if (cx.test(text)) {
 			return grId
 		},
 		that.renderGroupData = function(group, participantAdmin, adminEmail, alreadyInvited) {
+      var ui = UserInterface();
 			var groupDigest, status, contrib, options;
 			var disabled='';
       var isOpen='';
@@ -1989,14 +2001,14 @@ if (cx.test(text)) {
         isOpen = '<div class="sq-row target-P">'+
                    '<input type="hidden"  id="sq-group-amount" value="'+group.amount+'"></input>'+
                    '<p class="sq-content-body"> Obiettivo:</p>'+
-                   '<p class="sq-content-body"><strong>'+group.amount + group.currency +'</strong></p>'
+                   '<p class="sq-content-body"><strong>'+group.amount + ui.switchCurrency(group.currency) +'</strong></p>'
                    '<p class="sq-content-body"><strong>PIN:'+group.pin+'</strong></p>'+
                  '</div>';
       }
       else {
         isOpen = '<input type="hidden"  id="sq-group-amount" value="'+group.amount+'"></input>'+
                  '<p class="sq-content-body"> Obiettivo:</p>'+
-                 '<p class="sq-content-body"><strong>'+group.amount + group.currency +'</strong></p>';
+                 '<p class="sq-content-body"><strong>'+group.amount + ui.switchCurrency(group.currency) +'</strong></p>';
       } 
 			if (group.fundraising == 'D'){
 				contrib = participantAdmin.single_amount;
@@ -2064,7 +2076,7 @@ if (cx.test(text)) {
                                     '</p>'+
 															      '<div class="sq-input-group">'+
 															        '<input id="squeezol_admin_contrib" value="'+contrib+'" name="email_contribution"'+
-																	      'type="text" class="squeezolPrice sq-form-control" '+disabled+'><span class="sq-input-group-addon">'+group.currency+'</span>'
+																	      'type="text" class="squeezolPrice sq-form-control" '+disabled+'><span class="sq-input-group-addon">'+ui.switchCurrency(group.currency)+'</span>'
         														'</div>'+
                                   '</div>'+
                                 '</div>'+
@@ -2091,9 +2103,11 @@ if (cx.test(text)) {
 			var sqBtnContainer;
 			var i, j, k, p, spanCurr, quotaDiv, labelQuota;
 			var status, ui, state, ghianda, avatar_url, alertDes, contribution_amount;
-      var paidText = '<p class"sq-text-center"><strong> La tua quota è stata prenotata! </strong>'+
+      var paidText = '<p class="sq-text-center"><strong> La tua quota è stata prenotata! </strong>'+
                     'L\'importo verrà scalato dalla tua carta solo se l\'obiettivo verrà raggiunto!'+
-                    'Invita altri amici per diminuire la quota!</p>'; 
+                    'Invita altri amici per diminuire la quota.</br>'+
+                    'Oppure continua lo shopping!'
+                    +'</p>'; 
 			var wrapper = {wrapper: 'div', className: 'sq-col-md-4 sq-col-md-offset-1 sq-col-xs-10 sq-col-xs-offset-1'};
       var wrapper_row = {wrapper: 'div', className: 'sq-row'};
 			var wrapBtn = {wrapper: 'div', className: 'sq-col-md-2 sq-col-xs-10 sq-col-xs-offset-1'};
@@ -2130,15 +2144,15 @@ if (cx.test(text)) {
 					alertDes = document.createElement('div');
 					alertDes.className = 'sq-row sq-alert sq-alert-success'
 					alertDes.innerHTML = '<p class="sq-text-center">'+
-																 '<strong> Congratulazioni!</strong>'+
-																 'Lo split si è concluso con successo!'+
+																 '<strong> Congratulazioni! Ordine Completato</strong>'+
+																 'Lo split si è concluso con successo! '+
 															 '</p>';
 					SqDiv.appendChild(alertDes);
 				}
 				// Waiting for accesptance or payments
 				else if (groupStatus == 'WAC' || groupStatus == 'WPA'){
 					// Possibilita' di proporre un importo se si e' in fase di accettazione o il gruppo e' aperto e WPA
-					if (params.p_status == 'A'){
+					if (params.p_status == 'A' && !canFinish){
 						saInput.create('single-amount');
 						saInput.get().value=parseFloat(params.p_single_amount).toFixed(2);
 						saInput.get().id='squeezol_single_amount';
@@ -2151,7 +2165,7 @@ if (cx.test(text)) {
 						quotaDiv.addClass('sq-input-group');
 						spanCurr = document.createElement('span');
 						spanCurr.className = 'sq-input-group-addon';
-						spanCurr.innerHTML = answer.group.currency;
+						spanCurr.innerHTML = ui.switchCurrency(answer.group.currency);
 						quotaDiv.append(saInput.labelizeWithSpan('Quota personale', spanCurr, helpText['p_quota']).get());
 						renderDiv.append(quotaDiv.wrap(wrapper));
 						renderDiv.append(singleAmountBtn.wrap(wrapBtn));
@@ -2225,19 +2239,14 @@ if (cx.test(text)) {
 						else {
 							//Attualmente non e' un Button
 							renderBtn = document.createElement('div');
-							renderBtn.innerHTML = '<div class="sq-alert sq-alert-warning sq-col-xs-6"'+
+							renderBtn.innerHTML = '<div class="sq-alert sq-alert-warning">'+
 																		  '<p>'+
 																			  '<strong>Attenzione!</strong>'+
-									                      'La fase di accettazione non si è ancora conclusa, vuoi aprire i pagamenti ai tuoi invitati?'+
+									                      'Split scaduto, eventuali pagamenti effettutati verrano rimborsati.'+ 
+                                        'Crea un nuovo ordine per rieffettuare l\'acquisto'+
 																		  '</p>'+
 																		'</div>';
-							SqDiv.appendChild(renderBtn);
-							renderBtn = Button();
-							renderBtn.create('Inizia i pagamenti!', 'big', 'SqueezolStartPay_');
-							renderBtn.get().setAttribute('data-participant', participantId);
-							renderBtn.get().setAttribute('data-action', 'OP');
-							renderBtn.get().className='squeezolButtonSuccess sq-btn';
-							renderBtn.regHandler('click', buttonHandler);
+							SqDiv.appendChild(Div(renderBtn).wrap(wrapper_row));
 						}
 					}
 					else {
@@ -2265,13 +2274,14 @@ if (cx.test(text)) {
 							}
 					  }
 					}
+          
 					// Render
           if (openPay == false) {
 						var superTemp = document.createElement('div');
             superTemp.id='sq-alert-start-pay';
 						superTemp.className = 'sq-col-xs-10 sq-col-xs-offset-1  sq-alert sq-alert-info';
 						if (isAdmin == true){
-							superTemp.innerHTML = '<p class="sq-text-center"> Inizia i pagamenti: sarà possibile a tutti versare la propria quota (una notifica verrà inoltrata a tutti i partecipanti!)</p>';
+							superTemp.innerHTML = '<p class="sq-text-center"> <strong>Inizia i pagamenti</strong>: sarà possibile a tutti versare la propria quota <br /> (una notifica verrà inoltrata a tutti i partecipanti!)</p>';
 						}
 						else {
 						superTemp.innerHTML = '<p class="sq-text-center">Potrai versare la tua quota quando l\'organizzatore avrà iniziato i pagamenti(una notifica ti verrà inviata per email)</p>';
@@ -2307,7 +2317,6 @@ if (cx.test(text)) {
 															 '</div></p>';
 					SqDiv.appendChild(alertDes);
 				}
-				
 				// Render Partecipanti
         if (answer.group.hide_invitation == false || isAdmin){
 				  ui.drawSeparator('Partecipanti');
@@ -2336,7 +2345,7 @@ if (cx.test(text)) {
             if (answer.group.hide_contribution == true && !isAdmin)
               contribution_amount = '-';
             else
-              contribution_amount = p.single_amount + ' ' + answer.group.currency;
+              contribution_amount = p.single_amount + ' ' + ui.switchCurrency(answer.group.currency);
 					  part.innerHTML= '<div class="sq-col-md-1 sq-col-md-offset-1 sq-col-xs-4">'+
 						                  '<img id="thumb'+j+'" class="imgAvatar sq-thumbnail sq-img-responsive" src="'+avatar_url+'" alt="User Avatar"></img>'+
 													  '</div>'+
@@ -2392,13 +2401,14 @@ if (cx.test(text)) {
 			},
       that.notifyAmount = function(answer) {
         var oldDiv, inputDiv, p, message, quota, currency;
+        var ui = UserInterface();
         inputDiv=document.getElementById('squeezol_single_amount');
 
 				p=document.getElementById('squeezolNotifyAmount_');
 				if (answer.status == 'ok'){
 					message='Importo correttamente modificato';
           currency=inputDiv.nextSibling.innerHTML;
-          quota=document.getElementById('sq-modify-amount').innerHTML=inputDiv.value+' '+currency;
+          quota=document.getElementById('sq-modify-amount').innerHTML=inputDiv.value+' '+ui.switchCurrency(currency);
 				}
 				else if(answer.status == 'error') {
 					message=answer.error || answer.message;
@@ -2452,7 +2462,7 @@ if (cx.test(text)) {
             participant = p;
           }
         }
-
+        totalPaid=totalPaid.toFixed(2)
         if (group.fundraising == 'D'){
           testo = 'Quota che intendo versare';
         }
@@ -2508,12 +2518,12 @@ if (cx.test(text)) {
                                     '<div class="sq-col-md-4">'+
                                       '<div class="sq-row">'+
                                         '<p class="sq-text-center">'+
-                                          'totale: <strong>'+ group.amount+' '+group.currency+'</strong>'+
+                                          'totale: <strong>'+ group.amount+' '+ui.switchCurrency(group.currency)+'</strong>'+
                                         '</p>'+
                                       '</div>'+
                                       '<div class="sq-progress-radial-container">'+
                                         '<div class="sq-progress-radial sq-progress-'+params.totalPerc+'">'+
-                                          '<div class="sq-overlay">'+totalPaid+' '+group.currency+
+                                          '<div class="sq-overlay">'+totalPaid+' '+ui.switchCurrency(group.currency)+
                                           '</div>'+
                                         '</div>'+
                                       '</div>'+
@@ -2523,7 +2533,7 @@ if (cx.test(text)) {
                                         testo+
                                       '</p>'+
                                       '<p class="sq-text-center sq-quota" id="sq-modify-amount">'+
-                                          participant.single_amount+' '+group.currency+
+                                          parseFloat(participant.single_amount).toFixed(2)+' '+ui.switchCurrency(group.currency)+
                                       '</p>'+
                                     '</div>'+
                                   '</div>'+

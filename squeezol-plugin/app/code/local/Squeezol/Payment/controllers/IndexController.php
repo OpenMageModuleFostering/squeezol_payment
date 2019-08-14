@@ -284,14 +284,23 @@ class Squeezol_Payment_IndexController extends Mage_Core_Controller_Front_Action
 
         if ($order && $order->getId()) {
             if ($data['status'] == 'S') {
-                $order->setStatus(Mage_Sales_Model_Order::STATE_COMPLETE);
+                $order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
                 $order->save();
+                $order->sendNewOrderEmail();
+                $historyItem = Mage::getResourceModel('sales/order_status_history_collection')->getUnnotifiedForInstance($order, Mage_Sales_Model_Order::HISTORY_ENTITY_NAME);
+                //track history
+                if ($historyItem) {
+                    $historyItem->setIsCustomerNotified(1);
+                    $historyItem->save();
+                }
+                $ret = array('status'=>'S', 'order_id' => $order->getId(), 'group' => $data['group']);
             } else {
+                //$order->setStatus($model->getConfigData('order_canceled'));
                 $order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
                 $order->cancel()->save();
+                $ret = array('status'=>'I', 'order_id' => $order->getId(), 'group' => $data['group']);
             }
         }
-
-        echo 'OK';
+        echo json_encode($ret);
     }
 }

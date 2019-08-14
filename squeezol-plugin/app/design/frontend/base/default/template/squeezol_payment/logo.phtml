@@ -1,0 +1,188 @@
+<style>
+.sq-pop-container {
+  position: relative;
+  height: 32px;
+  padding: 2px 12px 8px 8px;
+  display: inline-block;
+  vertical-align: baseline;
+  zoom: 1;
+  display: inline;
+  vertical-align: auto;
+}
+
+.sq-pop-container:hover .sq-popover {
+  visibility: visible !important;
+  opacity: 1;
+  padding: 4px 0 6px;
+}
+.sq-pop-container .sq-popover {
+  visibility: hidden !important;
+  opacity: 0;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  border: 2px solid;
+  border-color: #0AB3C6;
+  border-radius: 4px;
+  -webkit-transition-property: opacity, padding, visibility;
+  -moz-transition-property: opacity, padding, visibility;
+  -ms-transition-property: opacity, padding, visibility;
+  -o-transition-property: opacity, padding, visibility;
+  transition-property: opacity, padding, visibility;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -ms-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  background-color: #FFF;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 1px 2px rgba(0, 0, 0, 0.1);
+  z-index:99999;
+}
+.sq-pop-container .sq-popover:before, .sq-pop-container .sq-popover:after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 15px;
+  border: 7px outset transparent;
+}
+.sq-pop-container #sq-wizard-id:before {
+  border-top: 7px solid #0AB3C6;
+  bottom: -14px;
+}
+
+.sq-pop-container #sq-wizard-id:after {
+  border-top: 7px solid #EEF3FE;
+  bottom: -12px;
+}
+
+.sq-popover {
+  width: 250px;
+}
+
+.sq-img-responsive {
+  width: 30%;
+  display:block;
+  float: left;
+  margin-left: 2px;
+}
+
+.sq-row {
+  width: 100%;
+  clear: both;
+}
+
+.sq-row:before, .sq-row:after,
+{
+  content: " ";
+  display: table;
+  clear: both;
+  padding: 4px;
+}
+
+
+h4.sq-text-center {
+  display:block;
+  float: left;
+  line-height: 50px;
+  margin-left: 1px;
+}
+
+h3.sq-text-center {
+  text-align: center;
+}
+.sq-col-xs-6 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  float: left;
+  width: 50%;
+  
+}
+
+.sq-wizard-title {
+  text-decoration: underline;
+}
+
+</style>
+
+<script>
+(function() {
+  'use strict';
+  var img_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/';
+  var wizard, sqBox, sqImg, sqh, sqNode, sqImg, i, sqPopover,
+      sqView, eView, colXs, sqWrite, sqImgLogo, sqHow;
+  var imgSuffix = ['btn2.jpg', 'busta2.jpg', 'salva2.jpg'];
+  var sqText = ['1.Crea uno split', '2.Invita i tuoi amici', '3.Versa la tua quota'];
+  var locale = '<?php echo Mage::app()->getLocale()->getLocaleCode(); ?>';
+  var inp=document.getElementById('p_method_squeezol_payment');
+
+  if (locale=='it_IT'){
+    // How to
+    /*
+    sqHow=document.createElement('h4');
+    sqHow.setAttribute('style', 'float: left; margin-top: 2px; display:inline;');
+    sqHow.innerHTML='Scopri come';
+    */
+    sqWrite = document.createElement('div');
+    sqWrite.id='squeezol_btn';
+    sqWrite.className='sq-pop-container';
+    sqWrite.setAttribute('style', 'cursor:pointer; position: relative; left: 5px;');
+    
+    sqImgLogo = document.createElement('img');
+    sqImgLogo.setAttribute('src', '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>/frontend/base/default/images/squeezol_payment/logo_min.png');
+    sqImgLogo.setAttribute('style', 'height: 24px; margin-left:10px; margin-right: 10px; display:inline;');
+    sqWrite.appendChild(sqImgLogo);
+    //sqWrite.appendChild(sqHow);
+    inp.parentNode.appendChild(sqWrite);
+    // Wrapper wizard
+    wizard=document.createElement('div');
+    wizard.className='sq-popover';
+    wizard.id='sq-wizard-id';
+    sqBox = document.createElement('div');
+    sqBox.className='sq-row sq-wizard-title';
+    sqNode = document.createTextNode('Come funziona');
+    sqh = document.createElement('h3');
+    sqh.className='sq-text-center';
+    sqh.appendChild(sqNode);
+    sqBox.appendChild(sqh);
+    wizard.appendChild(sqBox);
+    for (i=0; i<imgSuffix.length; i++){
+      sqBox = document.createElement('div');
+      sqBox.className='sq-row';
+      sqh = document.createElement('h4');
+      sqh.className='sq-text-center';
+      sqNode = document.createTextNode(sqText[i]);
+      sqImg = document.createElement('img');
+      sqImg.className='sq-img-responsive';
+      sqImg.setAttribute('src', img_url+imgSuffix[i]);
+      sqh.appendChild(sqNode);
+      colXs = document.createElement('div');
+      colXs.className='sq-col-xs-6';
+      sqBox.appendChild(colXs.appendChild(sqImg));
+      colXs = document.createElement('div');
+      colXs.className='sq-col-xs-6';
+      sqBox.appendChild(colXs.appendChild(sqh));
+      wizard.appendChild(sqBox);
+    }
+    sqBox = document.createElement('div');
+    sqBox.className='sq-row';
+    sqNode = document.createTextNode('Dividi l\'acquisto con i tuoi amici senza anticipare...è gratis!');
+    sqh = document.createElement('h3');
+    sqh.className='sq-text-center';
+    sqh.appendChild(sqNode);
+    sqBox.appendChild(sqh);
+    wizard.appendChild(sqBox);
+    sqView=document.getElementById('squeezol_btn');
+    sqView.appendChild(wizard);
+  }
+  else {
+    inp.setAttribute('style', 'display:none;')
+  }
+  return;
+}())
+</script>
