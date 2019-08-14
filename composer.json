@@ -3,11 +3,11 @@
     "type": "magento-module",
     "license": "OSL",
     "homepage": "",
-    "description": "It enables group payment, a split of cart amount.",
+    "description": "It enables group payments, a split of cart amount",
     "authors": [
     {
         "name": "Davide Costa",
-        "email": "info@squeezol.com"
+        "email": "alessandro.caligaris1991@gmail.com"
     }
 ],
     "suggest": {

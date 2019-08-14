@@ -1,0 +1,2 @@
+var $sqjQuery = jQuery.noConflict();
+

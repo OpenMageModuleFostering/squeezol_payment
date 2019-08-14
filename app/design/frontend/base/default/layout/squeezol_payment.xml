@@ -16,10 +16,15 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
-            <!--action method="addItem">
+            
+            <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
-            </action-->
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/noconflict.js</name>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -38,11 +43,15 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
-            </action-->
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/noconflict.js</name>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -62,11 +71,15 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
-            </action-->
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/noconflict.js</name>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -86,11 +99,15 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
-            </action-->
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/noconflict.js</name>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -110,11 +127,15 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/squeezol.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
               <type>skin_js</type>
               <name>js/jquery.min.js</name>
-            </action-->
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/noconflict.js</name>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>
@@ -132,11 +153,15 @@
     <checkout_onepage_index>
         <reference name="head">
             <action method="addCss"><stylesheet>css/bootstrap.min.css</stylesheet></action>
-            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>>
+            <!--<action method="addCss"><stylesheet>css/_squeezol.css</stylesheet></action>-->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/jquery.min.js</name>
-            </action-->
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/noconflict.js</name>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/bootstrap.min.js</name>

@@ -785,7 +785,7 @@ throw new SyntaxError('JSON.parse');
 					break;
 			}
 			// Bootstrap 3 Implementation
-			viewPortDiv = jQuery('#squeezol_view');
+			viewPortDiv = $sqjQuery('#squeezol_view');
 			viewPortDiv.addClass("container-fluid");
       modalDiv = '<div class="sq-col-xs-12 container-dashboard">'+
                    '<div class="sq-row" style="margin-top: -30px;">'+
@@ -818,7 +818,7 @@ throw new SyntaxError('JSON.parse');
 			return;
     },
 	  that.drawSeparator = function(text){
-			var viewPortDiv = jQuery('#squeezol_view');
+			var viewPortDiv = $sqjQuery('#squeezol_view');
 			var separator;
 			separator = '<div class="sq-row row-separata">'+
 	  								'<div class="sq-col-md-4 sq-col-md-offset-1 sq-col-xs-12"><h4 class="sq-content-body sq-pink-text">'+text+'</h4></div>'+
@@ -828,7 +828,7 @@ throw new SyntaxError('JSON.parse');
       return;
 	  },
     that.drawSeparatorCollapse = function(text){
-      var viewPortDiv = jQuery('#squeezol_view');
+      var viewPortDiv = $sqjQuery('#squeezol_view');
       var panel = '<div class="sq-row row-separata" id="squeezol-accordion-container">'+
                     '<div class="sq-col-md-6 sq-col-md-offset-1 sq-col-xs-12">'+
                       '<div class="sq-panel-group">'+
@@ -867,22 +867,22 @@ throw new SyntaxError('JSON.parse');
               '<div class="sq-row">'+
                 '<h4 class="sq-text-center">  Dividi l\'acquisto con i tuoi amici senza anticipare... è gratis!'+
               '</div>';
-      jQuery('#squeezol_btn').popover({ title:'Come funziona',
+      $sqjQuery('#squeezol_btn').popover({ title:'Come funziona',
 		       		                          html:true ,
 																        content: div,
 																        delay: { show: 100, hide:100 },
 																        placement: position,
 															       	  trigger: 'manual' });
       
-      jQuery(clickElem).on('click', function(){
-				jQuery('#squeezol_btn').popover('toggle');
+      $sqjQuery(clickElem).on('click', function(){
+				$sqjQuery('#squeezol_btn').popover('toggle');
 			});
-			jQuery('#squeezol_btn').on('shown.bs.popover', function(){
-				jQuery('.sq-popover').attr('style','display: block; top: -20px; left: 127px;max-width:800px;');
+			$sqjQuery('#squeezol_btn').on('shown.bs.popover', function(){
+				$sqjQuery('.sq-popover').attr('style','display: block; top: -20px; left: 127px;max-width:800px;');
 			});
-			jQuery('#squeezol_btn').on('hidden.bs.popover', function(){
-				jQuery('.sq-popover').attr('style','');
-        jQuery(this).css("display", "");
+			$sqjQuery('#squeezol_btn').on('hidden.bs.popover', function(){
+				$sqjQuery('.sq-popover').attr('style','');
+        $sqjQuery(this).css("display", "");
 			});
 
 	  },
@@ -921,15 +921,15 @@ throw new SyntaxError('JSON.parse');
                             '<span class="sq-input-group-addon sq-glyph-ok">@</span>'+
 													'</div>';
 				}
-				jQuery(container).append(tmp);
+				$sqjQuery(container).append(tmp);
 			}
-			jQuery('#squeezol_view').append(container);
+			$sqjQuery('#squeezol_view').append(container);
 	  },
 		that.loadState = function(button){
-			jQuery(button).button('loading');
+			$sqjQuery(button).button('loading');
 		},
 		that.loadStop = function(button){
-			jQuery(button).button('reset');
+			$sqjQuery(button).button('reset');
 		},
 		that.progressBar = function(totalPaid, totAmount){
 			var perc = parseInt(totalPaid*100/totAmount);
@@ -940,17 +940,17 @@ throw new SyntaxError('JSON.parse');
 								'<div class="sq-progress-bar sq-progress-bar-success" role="progressbar" aria-valuenow="'+perc+'" aria-valuemin="0" aria-valuemax="100" style="width: '+perc+'%;">'+perc+'%</div>'+
 							'</div>'+
 						'</div>';
-			jQuery('#squeezolPayBox').append(bar);
+			$sqjQuery('#squeezolPayBox').append(bar);
 		},
 		that.sqModal = function(content, btn, id){
 			var modalContent, modalBody, btn
       var modal=false;
-      modalContent = jQuery("#"+id);
+      modalContent = $sqjQuery("#"+id);
       if (modalContent.length>0) {
         modal = true;
       }
       if (modal==false){
-			  modalContent = jQuery('<div />');
+			  modalContent = $sqjQuery('<div />');
 			  modalContent.addClass('sq-modal sq-fade sq-bs-example-modal-lg');
 			  modalContent.attr('id',id);
 			  modalContent.attr('tabindex', '-1');
@@ -960,21 +960,21 @@ throw new SyntaxError('JSON.parse');
       }
 			if (id == 'emailModal') {
         if (modal == false){
-				  modalBody = jQuery('<div />');
+				  modalBody = $sqjQuery('<div />');
 				  modalBody.addClass('sq-modal-body');
 				  modalBody.append(content);
-				  modalContent.append(jQuery('<div />').addClass('sq-modal-dialog')
-														  .append(jQuery('<div />').addClass('sq-modal-content')
+				  modalContent.append($sqjQuery('<div />').addClass('sq-modal-dialog')
+														  .append($sqjQuery('<div />').addClass('sq-modal-content')
 																.append('<div class="sq-modal-header">'+
 																					'<button type="button" class="sq-close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
 																					'<h4 class="sq-modal-title">Invita</h4>'+
-																				'</div>', content, jQuery('<div />').addClass('sq-modal-footer').append(btn))));
+																				'</div>', content, $sqjQuery('<div />').addClass('sq-modal-footer').append(btn))));
         }
         modalContent.on('show.bs.modal', function(){
-          btn = jQuery("#squeezolEmail_");          
-          jQuery("#squeezolEmail").empty();
+          btn = $sqjQuery("#squeezolEmail_");          
+          $sqjQuery("#squeezolEmail").empty();
           
-          jQuery("#squeezolEmail").append(btn);
+          $sqjQuery("#squeezolEmail").append(btn);
         });
 			}
 			else if (id == 'facebookModal'){				
@@ -983,16 +983,16 @@ throw new SyntaxError('JSON.parse');
           location.reload(true);
         });
 			}	
-			jQuery(modalContent).modal('show');
+			$sqjQuery(modalContent).modal('show');
 			return;
 		},
 		that.modalClose = function(id){
-			var currentModal = jQuery('#'+id);
+			var currentModal = $sqjQuery('#'+id);
 			currentModal.modal('hide');
 		},
     that.textWithHelper = function(labelName, helpText){
       var txt = document.createElement('p')
-      var $question = jQuery('<div />');
+      var $question = $sqjQuery('<div />');
       txt.className = 'sq-label';
       txt.appendChild(document.createTextNode(labelName));
       $question.attr('data-toggle', 'popover');
@@ -1000,19 +1000,19 @@ throw new SyntaxError('JSON.parse');
       $question.attr('title', helpText);
       $question.addClass('icon sq-glyph-info-sign');
       $question.append('<p>i</p>');
-      jQuery(txt).append($question);
+      $sqjQuery(txt).append($question);
       return txt;
     },
     that.iconPopover = function(){
-      jQuery('.icon').popover();
-		  /*jQuery('.icon').on('mouseenter', function(){
-        jQuery(this).popover('show')
+      $sqjQuery('.icon').popover();
+		  /*$sqjQuery('.icon').on('mouseenter', function(){
+        $sqjQuery(this).popover('show')
       });
-      jQuery('.icon').on('mouseout', function(){
-        jQuery(this).popover('hide');
+      $sqjQuery('.icon').on('mouseout', function(){
+        $sqjQuery(this).popover('hide');
       });
-      jQuery('.icon').on('hidden.bs.popover', function(){
-        jQuery(this).css("display", "");
+      $sqjQuery('.icon').on('hidden.bs.popover', function(){
+        $sqjQuery(this).css("display", "");
 			});*/
 
     };
@@ -1276,7 +1276,7 @@ throw new SyntaxError('JSON.parse');
 						error.className = 'sq-alert sq-alert-danger';
 						error.innerHTML = 'Questo campo è obbligatorio';
 						Div(wrapDiv).addClass('sq-has-error');
-						jQuery(wrapDiv).after(error);
+						$sqjQuery(wrapDiv).after(error);
 		      }
 		    }
         else if('non_field_errors' in answer) {
@@ -1285,7 +1285,7 @@ throw new SyntaxError('JSON.parse');
 				  error.className = 'sq-alert sq-alert-danger';
 					error.innerHTML = answer.non_field_errors;
 					Div(wrapDiv).addClass('sq-has-error');
-					jQuery(wrapDiv).after(error);
+					$sqjQuery(wrapDiv).after(error);
         }
         else {
           for (prop in answer){
@@ -1295,7 +1295,7 @@ throw new SyntaxError('JSON.parse');
 						  error.className = 'sq-alert sq-alert-danger';
 						  error.innerHTML = answer[prop];
 						  Div(wrapDiv).addClass('sq-has-error'); 
-						  jQuery(wrapDiv).after(error);
+						  $sqjQuery(wrapDiv).after(error);
             }
           }
         }
@@ -1586,7 +1586,7 @@ throw new SyntaxError('JSON.parse');
 						//tmpSpan.className = 'input-group-addon glyphicon glyphicon-ok form-control-feedback';
 					}
           // TODO: Decommentare, non riesco ad appendere tmpSpan
-					//jQuery(tmpSpan).appendTo(tempObj);
+					//$sqjQuery(tmpSpan).appendTo(tempObj);
 				}
 			}
 		},
@@ -1843,7 +1843,7 @@ throw new SyntaxError('JSON.parse');
 					});
 					newEmail = document.createElement('div');
 					newEmail.className = 'sq-row sq-email-send';
-					jQuery(newEmail).append('<div class="sq-hidden-xs sq-col-sm-2 sq-col-md-2">'+
+					$sqjQuery(newEmail).append('<div class="sq-hidden-xs sq-col-sm-2 sq-col-md-2">'+
 															      '<img style="display:inline;" class="imgAvatar sq-thumbnail" src="' + img_url + 'default.jpg" alt="User Avatar"></img>'+
 		  											      '</div>'+
 														      '<div class="sq-col-sm-5 sq-col-sm-offset-0 sq-col-xs-10 sq-col-xs-offset-1">'+
@@ -2352,7 +2352,7 @@ throw new SyntaxError('JSON.parse');
 			that.renderPOST = function(targetUrl) {
 				switch (answer.response){
 				  case 'OP':
-						jQuery('#squeezol_view').children().first().remove();
+						$sqjQuery('#squeezol_view').children().first().remove();
 						this.POSTcallback(answer, 'OPENPAY', targetUrl);
 						break;
 					case 'P':
